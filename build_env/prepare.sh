@@ -48,4 +48,5 @@ export LFS LC_ALL LFS_TGT PATH CONFIG_SITE
 export MAKEFLAGS="-j$(nproc)"
 EOF
 
+echo "Done!" 
 fi
