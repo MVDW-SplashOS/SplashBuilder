@@ -8,14 +8,14 @@ SplashOS is a modern Linux Distro aims to be as easy as possible for non technic
 Follow these steps to build the distro, so keep in mind that this is for advanced users only.
 Its recommanded todo this in a VM, the automatic scripts will make a new user called `distbuild` and is required as a safety user to prevent nuking your system when something goes wrong.
 
-Lets first get the repo and get into the build enviroment directory:
+let's first get the repo and get into the build enviroment directory:
 ```sh
 mkdir -p ~/Documents/GitHub && cd ~/Documents/GitHub
 git clone https://github.com/MVDW-Java/SplashOS.git
 cd SplashOS/build_env
 ```
 Make sure all the files is in `/home/<user>/Documents/GitHub/SplashOS` as the paths are hard coded for now but we will clean the scripts up soon.
-Before we gonna do anything lets check if all the packages is installed.
+Before we gonna do anything let's check if all the packages is installed.
 ```sh
 ./version_check.sh
 ```
