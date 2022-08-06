@@ -3,19 +3,20 @@
 
 SplashOS is a modern Linux Distro aims to be as easy as possible for non technical users.
 
+## 1️⃣ Preparing the build enviroment 
+Please note: these steps are for advanced users only.
 
-## 1️⃣ preparing the build enviroment 
-Follow these steps to build the distro, so keep in mind that this is for advanced users only.
-Its recommanded todo this in a VM, the automatic scripts will make a new user called `distbuild` and is required as a safety user to prevent nuking your system when something goes wrong.
+Follow these steps to build the distro.
+It is recommanded to do this in a virtual machine. The automatic scripts will make a new user called `distbuild` and is required as a safety user to prevent nuking your system when something goes wrong.
 
-let's first get the repo and get into the build enviroment directory:
+First let's get the repo and get into the build enviroment directory:
 ```sh
 mkdir -p ~/Documents/GitHub && cd ~/Documents/GitHub
 git clone https://github.com/MVDW-Java/SplashOS.git
 cd SplashOS/build_env
 ```
-Make sure all the files is in `/home/<user>/Documents/GitHub/SplashOS` as the paths are hard coded for now but we will clean the scripts up soon.
-Before we gonna do anything let's check if all the packages is installed.
+Make sure all the files is in `~/Documents/GitHub/SplashOS` as the paths are hard coded for now but we will clean the scripts up soon.
+Before we do anything let's check that all the packages is installed.
 ```sh
 ./version_check.sh
 ```
@@ -57,7 +58,7 @@ sudo su -
 source ./quick_env_export.sh [user]
 ```
 
-We can now start the prepare script that will create the `build_root`, download all required files and make a new user called `distbuild` when its not there.
+We can now start the prepare script that will create the `build_root`, download all required files, and make a new user called `distbuild` if it's not there.
 ```sh
 ./prepare.sh
 ```
@@ -68,25 +69,22 @@ The last step for the preperation is to switch the new user the script created.
 su distbuild
 ```
 
-
 ## 2️⃣ Creating the distro
 
 Because this distro is far from finished, the creation script will only compile and configure the required tools needed.
-In the previous step when we prepaired we switched to `distbuild` and because of that the environment variables are lost.
+In the previous step, when we prepared we switched to `distbuild`, so environment variables are lost.
 
 ```sh
 source ./quick_env_export.sh [user]
 ```
-Now we gonna finally create the distro
+Now we will finally create the distro
 ```sh
 ./create.sh
 ```
 
 Thats it for now, this will be expanded when this project comes farther in development.
 
-
 ## 🙏 Special thanks to
 [LFS](https://www.linuxfromscratch.org/lfs/) - For all the great documentation
 
 [Low Level Devel](https://www.youtube.com/channel/UCRWXAQsN5S3FPDHY4Ttq1Xg) - To help me understand more and provide the scripts needed to make this.
-
