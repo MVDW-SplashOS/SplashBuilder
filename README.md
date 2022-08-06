@@ -6,7 +6,7 @@ SplashOS is a modern Linux Distro aims to be as easy as possible for non technic
 
 ## 1️⃣ preparing the build enviroment 
 Follow these steps to build the distro, so keep in mind that this is for advanced users only.
-Its recommanded todo this in a VM, the automatic scripts will make a new user called `distbuild` and is required as a safty user to prevent nuking your system when something goes wrong.
+Its recommanded todo this in a VM, the automatic scripts will make a new user called `distbuild` and is required as a safety user to prevent nuking your system when something goes wrong.
 
 Lets first get the repo and get into the build enviroment directory:
 ```sh
