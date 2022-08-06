@@ -19,7 +19,7 @@ Before we gonna do anything let's check if all the packages is installed.
 ```sh
 ./version_check.sh
 ```
-it should looks something like this:
+it should look something like this:
 ```
 bash, version 5.1.4(1)-release
 /bin/sh -> /usr/bin/bash
