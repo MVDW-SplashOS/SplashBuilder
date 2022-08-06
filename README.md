@@ -48,7 +48,7 @@ texi2any (GNU texinfo) 6.7
 xz (XZ Utils) 5.2.5
 g++ compilation OK
 ```
-If there is a package not installed please install in using your package manager.
+If there is a package not installed please install it using your package manager.
 
 Now we need to get into root for the step after this one, creating the environment variables.
 
