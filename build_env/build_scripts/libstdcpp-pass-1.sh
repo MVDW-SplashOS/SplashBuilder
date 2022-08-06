@@ -10,13 +10,13 @@ cd       build
     --disable-multilib              \
     --disable-nls                   \
     --disable-libstdcxx-pch         \
-    --with-gxx-include-dir=/tools/$LFS_TGT/include/c++/10.2.0
+    --with-gxx-include-dir=/tools/$LFS_TGT/include/c++/11.2.0
 
 make
 make DESTDIR=$LFS install
 
 cd $LFS/sources
-rm -rf gcc-10.2.0
+rm -rf gcc-11.2.0
 
 . $DIST_ROOT/build_env/build_scripts/inc-end.sh $1 $(basename $0)
 

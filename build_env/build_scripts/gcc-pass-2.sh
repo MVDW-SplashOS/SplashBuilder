@@ -33,8 +33,8 @@ ln -s ../../../libgcc/gthr-posix.h $LFS_TGT/libgcc/gthr-default.h
     --disable-libstdcxx                            \
     --enable-languages=c,c++
 
-make && make DESTDIR=$LFS install
-
+make
+make DESTDIR=$LFS install
 ln -sv gcc $LFS/usr/bin/cc
 
 . $DIST_ROOT/build_env/build_scripts/inc-end.sh $1 $(basename $0)

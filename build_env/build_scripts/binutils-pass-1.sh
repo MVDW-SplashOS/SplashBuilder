@@ -1,6 +1,6 @@
 cd $LFS/sources
-tar -xf binutils-2.36.1.tar.xz
-cd binutils-2.36.1
+tar -xf binutils-2.38.tar.xz
+cd binutils-2.38
 
 mkdir -v build
 cd       build
@@ -15,5 +15,5 @@ make && make install
 
 cd $LFS/sources
 
-rm -rf binutils-2.36.1
+rm -rf binutils-2.38
 

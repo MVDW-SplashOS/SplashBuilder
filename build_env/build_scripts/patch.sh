@@ -5,7 +5,6 @@
             --build=$(build-aux/config.guess)
 
 make
-
 make DESTDIR=$LFS install
 
 

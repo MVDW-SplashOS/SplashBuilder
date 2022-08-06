@@ -4,8 +4,8 @@ echo
 sleep 1
 
 cd $LFS/sources
-tar -xf linux-5.10.17.tar.xz
-cd linux-5.10.17
+tar -xf linux-5.16.9.tar.xz
+cd linux-5.16.9
 
 make mrproper
 
@@ -15,5 +15,5 @@ rm usr/include/Makefile
 cp -rv usr/include $LFS/usr
 
 cd $LFS/sources
-rm -rf linux-5.10.17
+rm -rf linux-5.16.9
 

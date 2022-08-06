@@ -4,8 +4,8 @@ echo
 sleep 1
 
 cd $LFS/sources
-tar -xf gcc-10.2.0.tar.xz
-cd gcc-10.2.0
+tar -xf gcc-11.2.0.tar.xz
+cd gcc-11.2.0
 
 tar -xf ../mpfr-4.1.0.tar.xz
 mv -v mpfr-4.1.0 mpfr
@@ -20,25 +20,25 @@ sed -e '/m64=/s/lib64/lib/' \
 mkdir -v build
 cd       build
 
-../configure                                       \
-    --target=$LFS_TGT                              \
-    --prefix=$LFS/tools                            \
-    --with-glibc-version=2.11                      \
-    --with-sysroot=$LFS                            \
-    --with-newlib                                  \
-    --without-headers                              \
-    --enable-initfini-array                        \
-    --disable-nls                                  \
-    --disable-shared                               \
-    --disable-multilib                             \
-    --disable-decimal-float                        \
-    --disable-threads                              \
-    --disable-libatomic                            \
-    --disable-libgomp                              \
-    --disable-libquadmath                          \
-    --disable-libssp                               \
-    --disable-libvtv                               \
-    --disable-libstdcxx                            \
+../configure                  \
+    --target=$LFS_TGT         \
+    --prefix=$LFS/tools       \
+    --with-glibc-version=2.35 \
+    --with-sysroot=$LFS       \
+    --with-newlib             \
+    --without-headers         \
+    --enable-initfini-array   \
+    --disable-nls             \
+    --disable-shared          \
+    --disable-multilib        \
+    --disable-decimal-float   \
+    --disable-threads         \
+    --disable-libatomic       \
+    --disable-libgomp         \
+    --disable-libquadmath     \
+    --disable-libssp          \
+    --disable-libvtv          \
+    --disable-libstdcxx       \
     --enable-languages=c,c++
 
 make
@@ -50,4 +50,4 @@ cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
 
 
 cd $LFS/sources
-rm -rf gcc-10.2.0
+rm -rf gcc-11.2.0
