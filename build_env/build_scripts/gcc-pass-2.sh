@@ -9,7 +9,7 @@ mv -v mpc-1.2.1 mpc
 
 sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64
 
-mkdir -v build
+mkdir -pv build
 cd       build
 
 mkdir -pv $LFS_TGT/libgcc

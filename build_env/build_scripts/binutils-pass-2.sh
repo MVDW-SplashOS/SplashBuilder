@@ -2,7 +2,7 @@
 
 sed '6009s/$add_dir//' -i ltmain.sh
 
-mkdir -v build
+mkdir -pv build
 cd       build
 
 ../configure                   \

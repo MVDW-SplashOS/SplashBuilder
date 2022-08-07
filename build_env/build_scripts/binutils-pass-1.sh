@@ -2,7 +2,7 @@ cd $LFS/sources
 tar -xf binutils-2.38.tar.xz
 cd binutils-2.38
 
-mkdir -v build
+mkdir -pv build
 cd       build
 
 ../configure --prefix=$LFS/tools       \

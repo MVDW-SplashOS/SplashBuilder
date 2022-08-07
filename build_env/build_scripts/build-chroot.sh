@@ -1,9 +1,13 @@
-set -e
+#set -e
 
 echo "Preparing ${LFS:?}"
 
 chown -R root:root $LFS/{usr,lib,var,etc,bin,sbin,tools,lib64}
+
+
 mkdir -pv $LFS/{dev,proc,sys,run}
+
+
 
 if ! test -c $LFS/dev/console ; then
 mknod -m 600 $LFS/dev/console c 5 1
@@ -11,6 +15,42 @@ mknod -m 666 $LFS/dev/null c 1 3
 fi
 
 bash -e $DIST_ROOT/build_env/build_scripts/mount-virt.sh
+
+
+chroot "$LFS" /usr/bin/env -i   \
+    HOME=/root                  \
+    TERM="$TERM"                \
+    PS1='(lfs chroot) \u:\w\$ ' \
+    PATH=/usr/bin:/usr/sbin     \
+    /bin/bash --login
+
+mkdir -pv /{boot,home,mnt,opt,srv}
+mkdir -pv /etc/{opt,sysconfig}
+mkdir -pv /lib/firmware
+mkdir -pv /media/{floppy,cdrom}
+mkdir -pv /usr/{,local/}{include,src}
+mkdir -pv /usr/local/{bin,lib,sbin}
+mkdir -pv /usr/{,local/}share/{color,dict,doc,info,locale,man}
+mkdir -pv /usr/{,local/}share/{misc,terminfo,zoneinfo}
+mkdir -pv /usr/{,local/}share/man/man{1..8}
+mkdir -pv /var/{cache,local,log,mail,opt,spool}
+mkdir -pv /var/lib/{color,misc,locate}
+
+ln -sfv /run /var/run
+ln -sfv /run/lock /var/lock
+
+install -dv -m 0750 /root
+install -dv -m 1777 /tmp /var/tmp
+
+rm -rf /etc/mtab
+ln -sv /proc/self/mounts /etc/mtab
+
+cat > /etc/hosts << EOF
+127.0.0.1  localhost $(hostname)
+::1        localhost
+EOF
+
+
 
 if ! test -f $LFS/etc/passwd ; then
 cat > $LFS/etc/passwd << "EOF"
@@ -29,6 +69,8 @@ systemd-coredump:x:79:79:systemd Core Dumper:/:/bin/false
 uuidd:x:80:80:UUID Generation Daemon User:/dev/null:/bin/false
 nobody:x:99:99:Unprivileged User:/dev/null:/bin/false
 EOF
+
+
 
 cat > $LFS/etc/group << "EOF"
 root:x:0:
@@ -68,12 +110,17 @@ users:x:999:
 EOF
 fi
 
-chroot "$LFS" /usr/bin/env -i   \
-    HOME=/root                  \
-    TERM="$TERM"                \
-    PS1='(lfs chroot) \u:\w\$ ' \
-    PATH=/bin:/usr/bin:/sbin:/usr/sbin \
-    /dist/build_env/build_scripts/finish-chroot.sh
+echo "tester:x:101:101::/home/tester:/bin/bash" >> /etc/passwd
+echo "tester:x:101:" >> /etc/group
+install -o tester -d /home/tester
+
+exec /usr/bin/bash --login
+
+touch /var/log/{btmp,lastlog,faillog,wtmp}
+chgrp -v utmp /var/log/lastlog
+chmod -v 664  /var/log/lastlog
+chmod -v 600  /var/log/btmp
+
 
 bash -e $DIST_ROOT/build_env/build_scripts/umount-virt.sh
 

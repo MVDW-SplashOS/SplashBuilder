@@ -2,7 +2,7 @@
 
 sed -i s/mawk// configure
 
-mkdir build
+mkdir -p build
 pushd build
   ../configure
   make -C include

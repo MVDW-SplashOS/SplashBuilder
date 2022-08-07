@@ -12,7 +12,7 @@ ln -sfv ../lib/ld-linux-x86-64.so.2 $LFS/lib64/ld-lsb-x86-64.so.3
 
 patch -Np1 -i ../glibc-2.35-fhs-1.patch
 
-mkdir -v build
+mkdir -pv build
 cd       build
 
 echo "rootsbindir=/usr/sbin" > configparms
