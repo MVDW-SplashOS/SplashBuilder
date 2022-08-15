@@ -3,15 +3,31 @@ echo "LFS: ${LFS:?}"
 
 mkdir -p $LFS/sources
 
-for f in $(cat $DIST_ROOT/build_env/build_env_list)
-do
-    bn=$(basename $f)
-    
-    if ! test -f $LFS/sources/$bn ; then
-        wget $f -O $LFS/sources/$bn
-    fi
 
-done;
+# Include and parse yaml script
+source build_scripts/includes/parse_yaml.sh
+create_variables $DIST_ROOT/build_env/config.yml "config_"
+# Remove comment to check variables
+#parse_yaml $DIST_ROOT/build_env/config.yml "config_"
+
+
+# downloading all required tools
+for TOOL in ${config_tools_enabled_[*]}; do
+	eval "TOOL_VERSION=\${config_tools_list__${TOOL}__version}"
+	eval "TOOL_URL=\${config_tools_list__${TOOL}__url/\{VERSION\}/"$TOOL_VERSION"}"
+	
+	#echo "$TOOL:" 
+	#echo "  - version: $TOOL_VERSION"
+	#echo "  - url: $TOOL_URL"
+	
+	bn=$(basename $TOOL_URL)
+	if ! test -f $LFS/sources/$bn ; then
+		wget $TOOL_URL -O $LFS/sources/$bn
+	else
+		echo "$TOOL($TOOL_VERSION) already downloaded"
+	fi
+done
+
 
 mkdir -pv $LFS/{bin,etc,lib,sbin,usr,var,lib64,tools}
 
@@ -48,5 +64,8 @@ export LFS LC_ALL LFS_TGT PATH CONFIG_SITE
 export MAKEFLAGS="-j$(nproc)"
 EOF
 
-echo "Done!" 
+
 fi
+
+
+echo "Done!" 

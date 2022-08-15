@@ -7,6 +7,7 @@ cd $LFS/sources
 tar -xf glibc-2.35.tar.xz
 cd glibc-2.35
 
+
 ln -sfv ../lib/ld-linux-x86-64.so.2 $LFS/lib64
 ln -sfv ../lib/ld-linux-x86-64.so.2 $LFS/lib64/ld-lsb-x86-64.so.3
 
@@ -29,6 +30,7 @@ make
 
 make DESTDIR=$LFS install
 
+sed '/RTLDLIST=/s@/usr@@g' -i $LFS/usr/bin/ldd
 
 #echo
 #echo "TESTING GLIBC"

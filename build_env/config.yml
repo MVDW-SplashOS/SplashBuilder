@@ -1,0 +1,93 @@
+tools_enabled:
+    - binutils
+    - gcc
+    - glibc
+    - m4
+    - curses
+    - bash
+    - coreutils
+    - diffutils
+    - file
+    - findutils
+    - gawk
+    - grep
+    - gzip
+    - make
+    - patch
+    - sed
+    - tar
+    - xz
+
+tools_list:
+    binutils:
+        version: 2.39
+        url: https://ftp.gnu.org/gnu/binutils/binutils-{VERSION}.tar.xz
+        patch: false
+    gcc:
+        version: 12.1.0
+        url: https://ftp.gnu.org/gnu/gcc/gcc-{VERSION}/gcc-{VERSION}.tar.xz
+        patch: "https://www.linuxfromscratch.org/patches/lfs/development/gcc-{VERSION}-glibc_2.36-1.patch"
+    glibc:
+        version: 2.36
+        url: https://ftp.gnu.org/gnu/glibc/glibc-{VERSION}.tar.xz
+        patch: "https://www.linuxfromscratch.org/patches/lfs/development/glibc-{VERSION}-fhs-1.patch"
+    m4:
+        version: 1.4.19
+        url: https://ftp.gnu.org/gnu/m4/m4-{VERSION}.tar.xz
+        patch: false
+    curses:
+        version: 6.3
+        url: https://invisible-mirror.net/archives/ncurses/ncurses-{VERSION}.tar.gz
+        patch: false
+    bash:
+        version: 5.1.16
+        url: https://ftp.gnu.org/gnu/bash/bash-{VERSION}.tar.gz
+        patch: false
+    coreutils:
+        version: 9.1
+        url: https://ftp.gnu.org/gnu/coreutils/coreutils-{VERSION}.tar.xz
+        patch: https://www.linuxfromscratch.org/patches/lfs/development/coreutils-{VERSION}-i18n-1.patch
+    diffutils:
+        version: 5.1.16
+        url: https://ftp.gnu.org/gnu/diffutils/diffutils-{VERSION}.tar.xz
+        patch: false
+    file:
+        version: 5.1.16
+        url: https://astron.com/pub/file/file-{VERSION}.tar.gz
+        patch: false
+    findutils:
+        version: 4.9.0
+        url: https://ftp.gnu.org/gnu/findutils/findutils-{VERSION}.tar.xz
+        patch: false
+    gawk:
+        version: 5.1.1
+        url: https://ftp.gnu.org/gnu/gawk/gawk-{VERSION}.tar.xz
+        patch: false
+    grep:
+        version: 3.7
+        url: https://ftp.gnu.org/gnu/grep/grep-{VERSION}.tar.xz
+        patch: false
+    gzip:
+        version: 1.12
+        url: https://ftp.gnu.org/gnu/gzip/gzip-{VERSION}.tar.xz
+        patch: false
+    make:
+        version: 4.3
+        url: https://ftp.gnu.org/gnu/make/make-{VERSION}.tar.gz
+        patch: false
+    patch:
+        version: 2.7.6
+        url: https://ftp.gnu.org/gnu/patch/patch-{VERSION}.tar.xz
+        patch: false
+    sed:
+        version: 4.8
+        url: https://ftp.gnu.org/gnu/sed/sed-{VERSION}.tar.xz
+        patch: false
+    tar:
+        version: 1.34
+        url: https://ftp.gnu.org/gnu/tar/tar-{VERSION}.tar.xz
+        patch: false
+    xz:
+        version: 5.2.5
+        url: https://tukaani.org/xz/xz-{VERSION}.tar.xz
+        patch: "https://www.linuxfromscratch.org/patches/lfs/development/xz-{VERSION}-upstream_fix-1.patch"

@@ -88,3 +88,5 @@ Thats it for now, this will be expanded when this project comes farther in devel
 [LFS](https://www.linuxfromscratch.org/lfs/) - For all the great documentation
 
 [Low Level Devel](https://www.youtube.com/channel/UCRWXAQsN5S3FPDHY4Ttq1Xg) - To help me understand more and provide the scripts needed to make this.
+
+[jasperes](https://github.com/jasperes) - For the bash YAML parser.
