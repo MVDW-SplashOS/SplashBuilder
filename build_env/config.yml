@@ -7,7 +7,7 @@ tools_enabled:
     - linux
     - glibc
     - m4
-    - curses
+    - ncurses
     - bash
     - coreutils
     - diffutils
@@ -55,7 +55,7 @@ tools_list:
         version: 1.4.19
         url: https://ftp.gnu.org/gnu/m4/m4-{VERSION}.tar.xz
         patch: false
-    curses:
+    ncurses:
         version: 6.3
         url: https://invisible-mirror.net/archives/ncurses/ncurses-{VERSION}.tar.gz
         patch: false

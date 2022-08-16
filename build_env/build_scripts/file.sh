@@ -1,6 +1,6 @@
 . $DIST_ROOT/build_env/build_scripts/inc-start.sh $1 $(basename $0)
 
-mkdir -p build
+mkdir build
 pushd build
   ../configure --disable-bzlib      \
                --disable-libseccomp \

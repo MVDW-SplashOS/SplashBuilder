@@ -11,6 +11,7 @@ cd       build
     --host=$LFS_TGT            \
     --disable-nls              \
     --enable-shared            \
+    --enable-gprofng=no        \
     --disable-werror           \
     --enable-64-bit-bfd
 
