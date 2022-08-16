@@ -48,11 +48,11 @@ tools_list:
         url: https://ftp.gnu.org/gnu/coreutils/coreutils-{VERSION}.tar.xz
         patch: https://www.linuxfromscratch.org/patches/lfs/development/coreutils-{VERSION}-i18n-1.patch
     diffutils:
-        version: 5.1.16
+        version: 3.8
         url: https://ftp.gnu.org/gnu/diffutils/diffutils-{VERSION}.tar.xz
         patch: false
     file:
-        version: 5.1.16
+        version: 5.42
         url: https://astron.com/pub/file/file-{VERSION}.tar.gz
         patch: false
     findutils:
