@@ -1,4 +1,4 @@
-$DIST_ROOT/build_env/build_scripts/inc-start.sh $1 $(basename $0)
+. $DIST_ROOT/build_env/build_scripts/inc-start.sh $1 $(basename $0)
 
 # Include and parse yaml script
 source $DIST_ROOT/build_env/build_scripts/includes/parse_yaml.sh
