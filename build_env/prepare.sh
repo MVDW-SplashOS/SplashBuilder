@@ -5,10 +5,10 @@ mkdir -p $LFS/sources
 
 
 # Include and parse yaml script
-source build_scripts/includes/parse_yaml.sh
-create_variables $DIST_ROOT/build_env/config.yml "config_"
-# Remove comment to check variables
-#parse_yaml $DIST_ROOT/build_env/config.yml "config_"
+export yaml_file=$DIST_ROOT/build_env/config.yml
+export yaml_prefix="config_"
+source $DIST_ROOT/build_env/build_scripts/includes/parse_yaml.sh
+create_variables 
 
 
 # downloading all required tools
@@ -16,18 +16,29 @@ for TOOL in ${config_tools_enabled_[*]}; do
 	eval "TOOL_VERSION=\${config_tools_list__${TOOL}__version}"
 	eval "TOOL_URL=\${config_tools_list__${TOOL}__url/\{VERSION\}/"$TOOL_VERSION"}"
 	eval "TOOL_URL=\${TOOL_URL/\{VERSION\}/"$TOOL_VERSION"}" # if there is a 2nd version string in the url(too lazy for a propper fix)
-	
+	eval "TOOL_PATCH=\${config_tools_list__${TOOL}__patch/\{VERSION\}/"$TOOL_VERSION"}"
 	
 	#echo "$TOOL:" 
 	#echo "  - version: $TOOL_VERSION"
 	#echo "  - url: $TOOL_URL"
 	
 	bn=$(basename $TOOL_URL)
+	
 	if ! test -f $LFS/sources/$bn ; then
 		wget $TOOL_URL -O $LFS/sources/$bn
 	else
 		echo "$TOOL($TOOL_VERSION) already downloaded"
 	fi
+	
+	if ! [ $TOOL_PATCH == "false" ]; then
+		bnp=$(basename $TOOL_PATCH)
+		if ! test -f $LFS/sources/$bnp ; then
+			wget $TOOL_PATCH -O $LFS/sources/$bnp
+		else
+			echo "Patch for $TOOL($TOOL_VERSION) already downloaded"
+		fi
+	fi
+	
 done
 
 

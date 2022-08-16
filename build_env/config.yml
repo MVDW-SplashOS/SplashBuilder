@@ -30,7 +30,7 @@ tools_list:
     gcc:
         version: 12.1.0
         url: https://ftp.gnu.org/gnu/gcc/gcc-{VERSION}/gcc-{VERSION}.tar.xz
-        patch: "https://www.linuxfromscratch.org/patches/lfs/development/gcc-{VERSION}-glibc_2.36-1.patch"
+        patch: https://www.linuxfromscratch.org/patches/lfs/development/gcc-{VERSION}-glibc_2.36-1.patch
     mpfr:
         version: 4.1.0
         url: https://ftp.gnu.org/gnu/mpfr/mpfr-{VERSION}.tar.xz
@@ -50,7 +50,7 @@ tools_list:
     glibc:
         version: 2.36
         url: https://ftp.gnu.org/gnu/glibc/glibc-{VERSION}.tar.xz
-        patch: "https://www.linuxfromscratch.org/patches/lfs/development/glibc-{VERSION}-fhs-1.patch"
+        patch: https://www.linuxfromscratch.org/patches/lfs/development/glibc-{VERSION}-fhs-1.patch
     m4:
         version: 1.4.19
         url: https://ftp.gnu.org/gnu/m4/m4-{VERSION}.tar.xz
@@ -110,4 +110,4 @@ tools_list:
     xz:
         version: 5.2.5
         url: https://tukaani.org/xz/xz-{VERSION}.tar.xz
-        patch: "https://www.linuxfromscratch.org/patches/lfs/development/xz-{VERSION}-upstream_fix-1.patch"
+        patch: https://www.linuxfromscratch.org/patches/lfs/development/xz-{VERSION}-upstream_fix-1.patch
