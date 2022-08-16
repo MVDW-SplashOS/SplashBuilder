@@ -4,8 +4,6 @@
 # Based on https://gist.github.com/pkuczynski/8665367
 
 parse_yaml() {
-    local yaml_file=$1
-    local prefix=$2
     local s
     local w
     local fs
@@ -28,7 +26,7 @@ parse_yaml() {
             for (i in vname) {if (i > indent) {delete vname[i]}}
                 if (length($3) > 0) {
                     vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
-                    printf("%s%s%s%s=(\"%s\")\n", "'"$prefix"'",vn, $2, conj[indent-1], $3);
+                    printf("%s%s%s%s=(\"%s\")\n", "'"$yaml_prefix"'",vn, $2, conj[indent-1], $3);
                 }
             }' |
             sed -e 's/_=/+=/g' |
@@ -61,10 +59,8 @@ unset_variables() {
 }
 
 create_variables() {
-    local yaml_file="$1"
-    local prefix="$2"
     local yaml_string
-    yaml_string="$(parse_yaml "$yaml_file" "$prefix")"
+    yaml_string="$(parse_yaml)"
     unset_variables "${yaml_string}"
     eval "${yaml_string}"
 }

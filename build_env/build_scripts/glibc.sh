@@ -1,11 +1,4 @@
-echo 
-echo "Glibc"
-echo
-sleep 1
-
-cd $LFS/sources
-tar -xf glibc-2.35.tar.xz
-cd glibc-2.35
+. $DIST_ROOT/build_env/build_scripts/inc-start.sh $1 $(basename $0)
 
 
 ln -sfv ../lib/ld-linux-x86-64.so.2 $LFS/lib64
@@ -42,5 +35,4 @@ sed '/RTLDLIST=/s@/usr@@g' -i $LFS/usr/bin/ldd
 
 $LFS/tools/libexec/gcc/$LFS_TGT/11.2.0/install-tools/mkheaders
 
-cd $LFS/sources
-rm -rf glibc-2.35
+. $DIST_ROOT/build_env/build_scripts/inc-end.sh $1 $(basename $0)
