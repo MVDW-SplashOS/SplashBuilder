@@ -1,6 +1,4 @@
-cd $LFS/sources
-tar -xf binutils-2.38.tar.xz
-cd binutils-2.38
+. $DIST_ROOT/build_env/build_scripts/inc-start.sh $1 $(basename $0)
 
 mkdir -pv build
 cd       build
@@ -13,7 +11,5 @@ cd       build
 
 make && make install
 
-cd $LFS/sources
 
-rm -rf binutils-2.38
-
+. $DIST_ROOT/build_env/build_scripts/inc-end.sh $1 $(basename $0)

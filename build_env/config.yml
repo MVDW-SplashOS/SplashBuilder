@@ -1,6 +1,10 @@
 tools_enabled:
     - binutils
     - gcc
+    - mpfr
+    - gmp
+    - mpc
+    - linux
     - glibc
     - m4
     - curses
@@ -27,6 +31,22 @@ tools_list:
         version: 12.1.0
         url: https://ftp.gnu.org/gnu/gcc/gcc-{VERSION}/gcc-{VERSION}.tar.xz
         patch: "https://www.linuxfromscratch.org/patches/lfs/development/gcc-{VERSION}-glibc_2.36-1.patch"
+    mpfr:
+        version: 4.1.0
+        url: https://ftp.gnu.org/gnu/mpfr/mpfr-{VERSION}.tar.xz
+        patch: false
+    gmp:
+        version: 6.2.1
+        url: https://ftp.gnu.org/gnu/gmp/gmp-{VERSION}.tar.xz
+        patch: false
+    mpc:
+        version: 1.2.1
+        url: https://ftp.gnu.org/gnu/mpc/mpc-{VERSION}.tar.gz
+        patch: false
+    linux:
+        version: 5.19.1
+        url: https://www.kernel.org/pub/linux/kernel/v5.x/linux-{VERSION}.tar.xz
+        patch: false
     glibc:
         version: 2.36
         url: https://ftp.gnu.org/gnu/glibc/glibc-{VERSION}.tar.xz

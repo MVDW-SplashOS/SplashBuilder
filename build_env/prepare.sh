@@ -15,6 +15,8 @@ create_variables $DIST_ROOT/build_env/config.yml "config_"
 for TOOL in ${config_tools_enabled_[*]}; do
 	eval "TOOL_VERSION=\${config_tools_list__${TOOL}__version}"
 	eval "TOOL_URL=\${config_tools_list__${TOOL}__url/\{VERSION\}/"$TOOL_VERSION"}"
+	eval "TOOL_URL=\${TOOL_URL/\{VERSION\}/"$TOOL_VERSION"}" # if there is a 2nd version string in the url(too lazy for a propper fix)
+	
 	
 	#echo "$TOOL:" 
 	#echo "  - version: $TOOL_VERSION"
