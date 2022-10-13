@@ -51,22 +51,22 @@ useradd -s /bin/bash -g distbuild -m -k /dev/null distbuild
 passwd distbuild
 chown -v distbuild $LFS/{usr,lib,var,etc,bin,sbin,tools,lib64,sources}
 
-echo "distbuild ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudoers_distbuild
+sudo echo "distbuild ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudoers_distbuild
 
 dbhome=$(eval echo "~distbuild")
 
-cat > $dbhome/.bash_profile << "EOF"
+sudo cat > $dbhome/.bash_profile << "EOF"
 exec env -i HOME=$HOME TERM=$TERM PS1='\u:\w\$ ' /bin/bash
 EOF
 
-cat > $dbhome/.bashrc << EOF
+sudo cat > $dbhome/.bashrc << EOF
 set +h
 umask 022
 LFS=$LFS
 export DIST_ROOT=$DIST_ROOT
 EOF
 
-cat >> $dbhome/.bashrc << "EOF"
+sudo cat >> $dbhome/.bashrc << "EOF"
 LC_ALL=POSIX
 LFS_TGT=$(uname -m)-lfs-linux-gnu
 PATH=/usr/bin

@@ -7,19 +7,14 @@
 #  
 
 # check if root perms.
-if [[ "$EUID" = 0 ]]; then
-    echo "(1) already root"
-else
-    sudo -k # make sure to ask for password on next sudo
-    if sudo true; then
-        echo "(2) correct password"
-    else
-        echo "(3) wrong password"
-        exit 1
-    fi
+if [ "$EUID" -ne 0 ]
+then
+    echo "Please run this as root or with sudo"
+    exit 2
 fi
 
-echo "Check dependencies..."
-
-sudo ./build_env/prepare_scripts/install_requirements.sh
-sudo ./build_env/prepare_scripts/version_check.sh
+source ./build_env/prepare_scripts/install_requirements.sh
+source ./build_env/prepare_scripts/version_check.sh
+source ./build_env/prepare_scripts/quick_env_export.sh
+source ./build_env/prepare_scripts/prepare_build.sh
+source ./build_env/build.sh

@@ -1,5 +1,24 @@
 tools_enabled:
+    - acl
+    - attr
+    - autoconf
+    - automake
+    - bash
+    - bc
     - binutils
+    - bison
+    - bzip2
+    - check
+    - coreutils
+    - dbus
+    - dejagnu
+    - diffutils
+    - e2fsprogs
+    
+    
+    
+    
+    
     - gcc
     - mpfr
     - gmp
@@ -8,9 +27,7 @@ tools_enabled:
     - glibc
     - m4
     - ncurses
-    - bash
-    - coreutils
-    - diffutils
+    
     - file
     - findutils
     - gawk
@@ -23,10 +40,77 @@ tools_enabled:
     - xz
 
 tools_list:
+    acl:
+        version: 2.3.1
+        url: https://download.savannah.gnu.org/releases/acl/acl-{VERSION}.tar.xz
+        patch: false
+    attr:
+        version: 2.5.1
+        url: https://download.savannah.gnu.org/releases/attr/attr-{VERSION}.tar.gz
+        patch: false
+    autoconf:
+        version: 2.71
+        url: https://ftp.gnu.org/gnu/autoconf/autoconf-{VERSION}.tar.xz
+        patch: false
+    automake:
+        version: 1.16.5
+        url: https://ftp.gnu.org/gnu/automake/automake-{VERSION}.tar.xz
+        patch: false
+    bash:
+        version: 5.2
+        url: https://ftp.gnu.org/gnu/bash/bash-{VERSION}.tar.gz
+        patch: false
+    bc:
+        version: 6.0.4
+        url: https://github.com/gavinhoward/bc/releases/download/{VERSION}/bc-{VERSION}.tar.xz
+        patch: false
     binutils:
         version: 2.39
         url: https://ftp.gnu.org/gnu/binutils/binutils-{VERSION}.tar.xz
         patch: false
+    bison:
+        version: 3.8.2
+        url: https://ftp.gnu.org/gnu/bison/bison-{VERSION}.tar.xz
+        patch: false
+    bzip2:
+        version: 1.0.8
+        url: https://www.sourceware.org/pub/bzip2/bzip2-{VERSION}.tar.gz
+        patch: false
+    check:
+        version: 0.15.2
+        url: https://www.sourceware.org/pub/bzip2/bzip2-{VERSION}.tar.gz
+        patch: false
+    coreutils:
+        version: 9.1
+        url: https://ftp.gnu.org/gnu/coreutils/coreutils-{VERSION}.tar.xz
+        patch: https://www.linuxfromscratch.org/patches/lfs/development/coreutils-{VERSION}-i18n-1.patch
+    dbus:
+        version: 1.14.2
+        url: https://dbus.freedesktop.org/releases/dbus/dbus-{VERSION}.tar.xz
+        patch: false
+    dejagnu:
+        version: 1.6.3
+        url: https://ftp.gnu.org/gnu/dejagnu/dejagnu-{VERSION}.tar.gz
+        patch: false
+    diffutils:
+        version: 3.8
+        url: https://ftp.gnu.org/gnu/diffutils/diffutils-{VERSION}.tar.xz
+        patch: false
+    e2fsprogs:
+        version: 1.46.5
+        url: https://downloads.sourceforge.net/project/e2fsprogs/e2fsprogs/v1.46.5/e2fsprogs-{VERSION}.tar.gz
+        patch: false
+    
+    
+    
+    
+    
+    
+    
+    
+        
+        
+        
     gcc:
         version: 12.1.0
         url: https://ftp.gnu.org/gnu/gcc/gcc-{VERSION}/gcc-{VERSION}.tar.xz
@@ -59,14 +143,8 @@ tools_list:
         version: 6.3
         url: https://invisible-mirror.net/archives/ncurses/ncurses-{VERSION}.tar.gz
         patch: false
-    bash:
-        version: 5.1.16
-        url: https://ftp.gnu.org/gnu/bash/bash-{VERSION}.tar.gz
-        patch: false
-    coreutils:
-        version: 9.1
-        url: https://ftp.gnu.org/gnu/coreutils/coreutils-{VERSION}.tar.xz
-        patch: https://www.linuxfromscratch.org/patches/lfs/development/coreutils-{VERSION}-i18n-1.patch
+    
+    
     diffutils:
         version: 3.8
         url: https://ftp.gnu.org/gnu/diffutils/diffutils-{VERSION}.tar.xz
