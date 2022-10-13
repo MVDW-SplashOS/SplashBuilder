@@ -14,30 +14,71 @@ tools_enabled:
     - dejagnu
     - diffutils
     - e2fsprogs
-    
-    
-    
-    
-    
-    - gcc
-    - mpfr
-    - gmp
-    - mpc
-    - linux
-    - glibc
-    - m4
-    - ncurses
-    
+    - elfutils
+    - expat
+    - expect
     - file
     - findutils
+    - flex
     - gawk
+    - gcc
+    - gdbm
+    - gettext
+    - glibc
+    - gmp
+    - gperf
     - grep
+    - groff
+    - grub
     - gzip
+    - iana-etc
+    - inetutils
+    - intltool
+    - iproute2
+    - jinja2
+    - kbd
+    - kmod
+    - less
+    - libcap
+    - libffi
+    - libpipeline
+    - libtool
+    - linux
+    - m4
     - make
+    - man-db
+    - man-pages
+    - markupsafe
+    - meson
+    - mpc
+    - mpfr
+    - ncurses
+    - ninja
+    - openssl
     - patch
+    - perl
+    - pkg-config
+    - procps-ng
+    - psmisc
+    - python
+    - python-docs
+    - readline
     - sed
+    - shadow
+    - systemd
+    - systemd-man-pages
     - tar
+    - tcl
+    - tcl-docs
+    - texinfo
+    - tzdata
+    - util-linux
+    - vim
+    - wheel
+    - xml-parser
     - xz
+    - zlib
+    - zstd
 
 tools_list:
     acl:
@@ -75,7 +116,7 @@ tools_list:
     bzip2:
         version: 1.0.8
         url: https://www.sourceware.org/pub/bzip2/bzip2-{VERSION}.tar.gz
-        patch: false
+        patch: https://www.linuxfromscratch.org/patches/lfs/development/bzip2-1.0.8-install_docs-1.patch
     check:
         version: 0.15.2
         url: https://www.sourceware.org/pub/bzip2/bzip2-{VERSION}.tar.gz
@@ -98,94 +139,265 @@ tools_list:
         patch: false
     e2fsprogs:
         version: 1.46.5
-        url: https://downloads.sourceforge.net/project/e2fsprogs/e2fsprogs/v1.46.5/e2fsprogs-{VERSION}.tar.gz
+        url: https://downloads.sourceforge.net/project/e2fsprogs/e2fsprogs/v{VERSION}/e2fsprogs-{VERSION}.tar.gz
         patch: false
-    
-    
-    
-    
-    
-    
-    
-    
-        
-        
-        
-    gcc:
-        version: 12.1.0
-        url: https://ftp.gnu.org/gnu/gcc/gcc-{VERSION}/gcc-{VERSION}.tar.xz
-        patch: https://www.linuxfromscratch.org/patches/lfs/development/gcc-{VERSION}-glibc_2.36-1.patch
-    mpfr:
-        version: 4.1.0
-        url: https://ftp.gnu.org/gnu/mpfr/mpfr-{VERSION}.tar.xz
+    elfutils:
+        version: 0.187
+        url: https://sourceware.org/ftp/elfutils/{VERSION}/elfutils-{VERSION}.tar.gz
         patch: false
-    gmp:
-        version: 6.2.1
-        url: https://ftp.gnu.org/gnu/gmp/gmp-{VERSION}.tar.xz
+    expat:
+        version: 2.4.9
+        url: https://prdownloads.sourceforge.net/expat/expat-{VERSION}.tar.xz
         patch: false
-    mpc:
-        version: 1.2.1
-        url: https://ftp.gnu.org/gnu/mpc/mpc-{VERSION}.tar.gz
-        patch: false
-    linux:
-        version: 5.19.1
-        url: https://www.kernel.org/pub/linux/kernel/v5.x/linux-{VERSION}.tar.xz
-        patch: false
-    glibc:
-        version: 2.36
-        url: https://ftp.gnu.org/gnu/glibc/glibc-{VERSION}.tar.xz
-        patch: https://www.linuxfromscratch.org/patches/lfs/development/glibc-{VERSION}-fhs-1.patch
-    m4:
-        version: 1.4.19
-        url: https://ftp.gnu.org/gnu/m4/m4-{VERSION}.tar.xz
-        patch: false
-    ncurses:
-        version: 6.3
-        url: https://invisible-mirror.net/archives/ncurses/ncurses-{VERSION}.tar.gz
-        patch: false
-    
-    
-    diffutils:
-        version: 3.8
-        url: https://ftp.gnu.org/gnu/diffutils/diffutils-{VERSION}.tar.xz
+    expect:
+        version: 5.45.4
+        url: https://prdownloads.sourceforge.net/expect/expect{VERSION}.tar.gz
         patch: false
     file:
-        version: 5.42
+        version: 5.43
         url: https://astron.com/pub/file/file-{VERSION}.tar.gz
         patch: false
     findutils:
         version: 4.9.0
         url: https://ftp.gnu.org/gnu/findutils/findutils-{VERSION}.tar.xz
         patch: false
+    flex:
+        version: 2.6.4
+        url: https://github.com/westes/flex/releases/download/v2.6.4/flex-{VERSION}.tar.gz
+        patch: false
     gawk:
-        version: 5.1.1
+        version: 5.2.0
         url: https://ftp.gnu.org/gnu/gawk/gawk-{VERSION}.tar.xz
         patch: false
+    gcc:
+        version: 12.2.0
+        url: https://ftp.gnu.org/gnu/gcc/gcc-{VERSION}/gcc-{VERSION}.tar.xz
+        patch: false
+    gdbm:
+        version: 1.23
+        url: https://ftp.gnu.org/gnu/gdbm/gdbm-{VERSION}.tar.gz
+        patch: false
+    gettext:
+        version: 0.21
+        url: https://ftp.gnu.org/gnu/gettext/gettext-{VERSION}.tar.xz
+        patch: false
+    glibc:
+        version: 2.36
+        url: https://ftp.gnu.org/gnu/glibc/glibc-{VERSION}.tar.xz
+        patch: https://www.linuxfromscratch.org/patches/lfs/development/glibc-{VERSION}-fhs-1.patch
+    gmp:
+        version: 6.2.1
+        url: https://ftp.gnu.org/gnu/gmp/gmp-{VERSION}.tar.xz
+        patch: false
+    gperf:
+        version: 3.1
+        url: https://ftp.gnu.org/gnu/gperf/gperf-{VERSION}.tar.gz
+        patch: false
     grep:
-        version: 3.7
+        version: 3.8
         url: https://ftp.gnu.org/gnu/grep/grep-{VERSION}.tar.xz
+        patch: false
+    groff:
+        version: 1.22.4
+        url: https://ftp.gnu.org/gnu/groff/groff-{VERSION}.tar.gz
+        patch: false
+    grub:
+        version: 2.06
+        url: https://ftp.gnu.org/gnu/grub/grub-{VERSION}.tar.xz
         patch: false
     gzip:
         version: 1.12
         url: https://ftp.gnu.org/gnu/gzip/gzip-{VERSION}.tar.xz
         patch: false
+    iana-etc:
+        version: 20220922
+        url: https://github.com/Mic92/iana-etc/releases/download/{VERSION}/iana-etc-{VERSION}.tar.gz
+        patch: false
+    inetutils:
+        version: 2.3
+        url: https://ftp.gnu.org/gnu/inetutils/inetutils-{VERSION}.tar.xz
+        patch: false
+    intltool:
+        version: 0.51.0
+        url: https://launchpad.net/intltool/trunk/{VERSION}/+download/intltool-{VERSION}.tar.gz
+        patch: false
+    iproute2:
+        version: 5.19.0
+        url: https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-{VERSION}.tar.xz
+        patch: false
+    jinja2:
+        version: 3.1.2
+        url: https://files.pythonhosted.org/packages/source/J/Jinja2/Jinja2-{VERSION}.tar.gz
+        patch: false
+    kbd:
+        version: 2.5.1
+        url: https://www.kernel.org/pub/linux/utils/kbd/kbd-{VERSION}.tar.xz
+        patch: https://www.linuxfromscratch.org/patches/lfs/development/kbd-2.5.1-backspace-1.patch
+    kmod:
+        version: 30
+        url: https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-{VERSION}.tar.xz
+        patch: false
+    less:
+        version: 608
+        url: https://www.greenwoodsoftware.com/less/less-{VERSION}.tar.gz
+        patch: false
+    libcap:
+        version: 2.66
+        url: https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-{VERSION}.tar.xz
+        patch: false
+    libffi:
+        version: 3.4.3
+        url: https://github.com/libffi/libffi/releases/download/v{VERSION}/libffi-{VERSION}.tar.gz
+        patch: false
+    libpipeline:
+        version: 1.5.6
+        url: https://download.savannah.gnu.org/releases/libpipeline/libpipeline-{VERSION}.tar.gz
+        patch: false
+    libtool:
+        version: 2.4.7
+        url: https://ftp.gnu.org/gnu/libtool/libtool-{VERSION}.tar.xz
+        patch: false
+    linux:
+        version: 5.19.13
+        url: https://www.kernel.org/pub/linux/kernel/v5.x/linux-{VERSION}.tar.xz
+        patch: false
+    m4:
+        version: 1.4.19
+        url: https://ftp.gnu.org/gnu/m4/m4-{VERSION}.tar.xz
+        patch: false
     make:
         version: 4.3
         url: https://ftp.gnu.org/gnu/make/make-{VERSION}.tar.gz
+        patch: false
+    man-db:
+        version: 2.10.2
+        url: https://download.savannah.gnu.org/releases/man-db/man-db-{VERSION}.tar.xz
+        patch: false
+    man-pages:
+        version: 5.13
+        url: https://www.kernel.org/pub/linux/docs/man-pages/man-pages-{VERSION}.tar.xz
+        patch: false
+    markupsafe:
+        version: 2.1.1
+        url: https://files.pythonhosted.org/packages/source/M/MarkupSafe/MarkupSafe-{VERSION}.tar.gz
+        patch: false
+    meson:
+        version: 0.63.2
+        url: https://github.com/mesonbuild/meson/releases/download/{VERSION}/meson-{VERSION}.tar.gz
+        patch: false
+    mpc:
+        version: 1.2.1
+        url: https://ftp.gnu.org/gnu/mpc/mpc-{VERSION}.tar.gz
+        patch: false
+    mpfr:
+        version: 4.1.0
+        url: https://ftp.gnu.org/gnu/mpfr/mpfr-{VERSION}.tar.xz
+        patch: false
+    ncurses:
+        version: 6.3
+        url: https://invisible-mirror.net/archives/ncurses/ncurses-{VERSION}.tar.gz
+        patch: false
+    ninja:
+        version: 1.11.1
+        url: https://github.com/ninja-build/ninja/archive/v{VERSION}/ninja-{VERSION}.tar.gz
+        patch: false
+    openssl:
+        version: 3.0.5
+        url: https://www.openssl.org/source/openssl-{VERSION}.tar.gz
         patch: false
     patch:
         version: 2.7.6
         url: https://ftp.gnu.org/gnu/patch/patch-{VERSION}.tar.xz
         patch: false
+    perl:
+        version: 5.36.0
+        url: https://www.cpan.org/src/5.0/perl-{VERSION}.tar.xz
+        patch: false
+    pkg-config:
+        version: 0.29.2
+        url: https://pkg-config.freedesktop.org/releases/pkg-config-{VERSION}.tar.gz
+        patch: false
+    procps-ng:
+        version: 4.0.0
+        url: https://sourceforge.net/projects/procps-ng/files/Production/procps-ng-{VERSION}.tar.xz
+        patch: false
+    psmisc:
+        version: 23.5
+        url: https://sourceforge.net/projects/psmisc/files/psmisc/psmisc-{VERSION}.tar.xz
+        patch: false
+    python:
+        version: 3.10.7
+        url: https://www.python.org/ftp/python/{VERSION}/Python-{VERSION}.tar.xz
+        patch: false
+    python-docs:
+        version: 3.10.7
+        url: https://www.python.org/ftp/python/doc/{VERSION}/python-{VERSION}-docs-html.tar.bz2
+        patch: false
+    readline:
+        version: 8.2
+        url: https://ftp.gnu.org/gnu/readline/readline-{VERSION}.tar.gz
+        patch: false
     sed:
         version: 4.8
         url: https://ftp.gnu.org/gnu/sed/sed-{VERSION}.tar.xz
+        patch: false
+    shadow:
+        version: 4.12.3
+        url: https://github.com/shadow-maint/shadow/releases/download/{VERSION}/shadow-{VERSION}.tar.xz
+        patch: false
+    systemd:
+        version: 251
+        url: https://github.com/systemd/systemd/archive/v{VERSION}/systemd-{VERSION}.tar.gz
+        patch: https://www.linuxfromscratch.org/patches/lfs/development/systemd-251-glibc_2.36_fix-1.patch
+    systemd-man-pages:
+        version: 251
+        url: https://anduin.linuxfromscratch.org/LFS/systemd-man-pages-{VERSION}.tar.xz
         patch: false
     tar:
         version: 1.34
         url: https://ftp.gnu.org/gnu/tar/tar-{VERSION}.tar.xz
         patch: false
+    tcl:
+        version: 8.6.12
+        url: https://downloads.sourceforge.net/tcl/tcl{VERSION}-src.tar.gz
+        patch: false
+    tcl-docs:
+        version: 8.6.12
+        url: https://downloads.sourceforge.net/tcl/tcl{VERSION}-html.tar.gz
+        patch: false
+    texinfo:
+        version: 6.8
+        url: https://ftp.gnu.org/gnu/texinfo/texinfo-{VERSION}.tar.xz
+        patch: false
+    tzdata:
+        version: 2022
+        url: https://www.iana.org/time-zones/repository/releases/tzdata{VERSION}d.tar.gz
+        patch: false
+    util-linux:
+        version: 2.38
+        url: https://www.kernel.org/pub/linux/utils/util-linux/v{VERSION}/util-linux-{VERSION}.1.tar.xz # version (2.38).1
+        patch: false
+    vim:
+        version: 9.0.0228
+        url: https://anduin.linuxfromscratch.org/LFS/vim-{VERSION}.tar.gz
+        patch: false
+    wheel:
+        version: 0.37.1
+        url: https://anduin.linuxfromscratch.org/LFS/wheel-{VERSION}.tar.gz
+        patch: false
+    xml-parser:
+        version: 2.46
+        url: https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-{VERSION}.tar.gz
+        patch: false
     xz:
-        version: 5.2.5
+        version: 5.2.6
         url: https://tukaani.org/xz/xz-{VERSION}.tar.xz
-        patch: https://www.linuxfromscratch.org/patches/lfs/development/xz-{VERSION}-upstream_fix-1.patch
+        patch: false
+    zlib:
+        version: 1.2.12
+        url: https://zlib.net/zlib-{VERSION}.tar.xz
+        patch: false
+    zstd:
+        version: 1.5.2
+        url: https://github.com/facebook/zstd/releases/download/v{VERSION}/zstd-{VERSION}.tar.gz
+        patch: https://www.linuxfromscratch.org/patches/lfs/development/zstd-1.5.2-upstream_fixes-1.patch
