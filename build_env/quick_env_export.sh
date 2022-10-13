@@ -4,8 +4,8 @@ if [[ $# -eq 0 ]]; then
 fi
 
 
-LOCAL_DIST_ROOT="/home/$LOCAL_USERNAME/Documents/GitHub/SplashOS"
-
+LOCAL_DIST_ROOT=$(pwd)
+echo $LOCAL_DIST_ROOT
 
 if test -d $LOCAL_DIST_ROOT; then
 	export DIST_ROOT="$LOCAL_DIST_ROOT"
