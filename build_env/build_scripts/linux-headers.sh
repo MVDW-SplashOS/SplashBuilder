@@ -5,8 +5,7 @@ set -e
 make mrproper
 
 make headers
-find usr/include -name '.*' -delete
-rm usr/include/Makefile
+find usr/include -type f ! -name '*.h' -delete
 cp -rv usr/include $LFS/usr
 
 . $DIST_ROOT/build_env/build_scripts/inc-start.sh $1 $(basename $0)

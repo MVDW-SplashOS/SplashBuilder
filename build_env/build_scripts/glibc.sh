@@ -33,6 +33,6 @@ sed '/RTLDLIST=/s@/usr@@g' -i $LFS/usr/bin/ldd
 
 #readelf -l a.out | grep '/ld-linux'
 
-$LFS/tools/libexec/gcc/$LFS_TGT/12.1.0/install-tools/mkheaders
+$LFS/tools/libexec/gcc/$LFS_TGT/12.2.0/install-tools/mkheaders
 
 . $DIST_ROOT/build_env/build_scripts/inc-end.sh $1 $(basename $0)

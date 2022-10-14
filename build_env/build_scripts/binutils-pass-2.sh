@@ -17,6 +17,6 @@ cd       build
 
 make
 make DESTDIR=$LFS install
-
+rm -v $LFS/usr/lib/lib{bfd,ctf,ctf-nobfd,opcodes}.{a,la}
 
 . $DIST_ROOT/build_env/build_scripts/inc-end.sh $1 $(basename $0)
