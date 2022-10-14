@@ -17,6 +17,6 @@ source ./build_env/prepare_scripts/install_requirements.sh
 source ./build_env/prepare_scripts/version_check.sh
 source ./build_env/prepare_scripts/quick_env_export.sh
 source ./build_env/prepare_scripts/prepare_build.sh
-#source ./build_env/build.sh
+source ./build_env/create.sh
 echo "------------------------------------------"
 echo "done."

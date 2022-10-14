@@ -3,10 +3,10 @@ set -e
 echo "Dist Root: ${DIST_ROOT:?}"
 echo "LFS: ${LFS:?}"
 
-if ! test $(whoami) == "distbuild" ; then
-    echo "Must run as distbuild!"
-    exit -1
-fi
+#if ! test $(whoami) == "distbuild" ; then
+#    echo "Must run as distbuild!"
+#    exit -1
+#fi
 
 echo "Creating build environment..."
 cd $DIST_ROOT/build_env
@@ -15,7 +15,7 @@ cd $DIST_ROOT/build_env
 export yaml_file=$DIST_ROOT/build_env/config.yml
 export yaml_prefix="config_"
 source $DIST_ROOT/build_env/build_scripts/includes/parse_yaml.sh
-create_variables 
+create_variables #required function in the parse_yaml.sh
 
 
 # Remove comment to check variables
