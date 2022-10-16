@@ -1,3 +1,4 @@
+![SplashOS Logo](https://raw.githubusercontent.com/MVDW-Java/SplashOS/main/assets/logo.png)
 # 🌊 SplashOS - The modern Linux Distro for Normies
 **⚠️ THIS IS IN EARLY DEVELOPMENT AND NOT READY FOR ANY RELEASE BUILDS ⚠️**
 
