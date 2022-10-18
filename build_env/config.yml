@@ -15,7 +15,7 @@ tools_enabled:
     - diffutils
     - e2fsprogs
     - elfutils
-    - expat
+    #- expat # 404 error in stable
     - expect
     - file
     - findutils
@@ -102,15 +102,15 @@ tools_list:
         patch: false
         checksum: 4017e96f89fca45ca946f1c5db6be714
     bash:
-        version: 5.2
+        version: 5.1.16
         url: https://ftp.gnu.org/gnu/bash/bash-{VERSION}.tar.gz
         patch: false
-        checksum: cfb4cf795fc239667f187b3d6b3d396f
+        checksum: c17b20a09fc38d67fb303aeb6c130b4e
     bc:
-        version: 6.0.4
+        version: 6.0.1
         url: https://github.com/gavinhoward/bc/releases/download/{VERSION}/bc-{VERSION}.tar.xz
         patch: false
-        checksum: 1e1c90de1a11f3499237425de1673ef1
+        checksum: 4c8b8d51eb52ee66f5bcf6a6a1ca576e
     binutils:
         version: 2.39
         url: https://ftp.gnu.org/gnu/binutils/binutils-{VERSION}.tar.xz
@@ -137,10 +137,10 @@ tools_list:
         patch: https://www.linuxfromscratch.org/patches/lfs/development/coreutils-{VERSION}-i18n-1.patch
         checksum: 8b1ca4e018a7dce9bb937faec6618671
     dbus:
-        version: 1.14.4
+        version: 1.14.0
         url: https://dbus.freedesktop.org/releases/dbus/dbus-{VERSION}.tar.xz
         patch: false
-        checksum: e36f0f160751fa7ce103782166852c6b
+        checksum: ddd5570aff05191dbee8e42d751f1b7d
     dejagnu:
         version: 1.6.3
         url: https://ftp.gnu.org/gnu/dejagnu/dejagnu-{VERSION}.tar.gz
@@ -162,20 +162,20 @@ tools_list:
         patch: false
         checksum: cc04f07b53a71616b22553c0a458cf4b
     expat:
-        version: 2.4.9
+        version: 2.4.8
         url: https://prdownloads.sourceforge.net/expat/expat-{VERSION}.tar.xz
         patch: false
-        checksum: 8d7fcf7d02d08bf79d9ae5c21cc72c03
+        checksum: 0584a7318a4c007f7ec94778799d72fe
     expect:
         version: 5.45.4
         url: https://prdownloads.sourceforge.net/expect/expect{VERSION}.tar.gz
         patch: false
         checksum: 00fce8de158422f5ccd2666512329bd2
     file:
-        version: 5.43
+        version: 5.42
         url: https://astron.com/pub/file/file-{VERSION}.tar.gz
         patch: false
-        checksum: 8effd70da368210a6c6eece037f978eb
+        checksum: 4d4f70c3b08a8a70d8baf67f085d7e92
     findutils:
         version: 4.9.0
         url: https://ftp.gnu.org/gnu/findutils/findutils-{VERSION}.tar.xz
@@ -187,10 +187,10 @@ tools_list:
         patch: false
         checksum: 2882e3179748cc9f9c23ec593d6adc8d
     gawk:
-        version: 5.2.0
+        version: 5.1.1
         url: https://ftp.gnu.org/gnu/gawk/gawk-{VERSION}.tar.xz
         patch: false
-        checksum: 2f724d925873fc82f5e7b1d605ba9a42
+        checksum: 83650aa943ff2fd519b2abedf8506ace
     gcc:
         version: 12.2.0
         url: https://ftp.gnu.org/gnu/gcc/gcc-{VERSION}/gcc-{VERSION}.tar.xz
@@ -202,10 +202,10 @@ tools_list:
         patch: false
         checksum: 8551961e36bf8c70b7500d255d3658ec
     gettext:
-        version: 0.21.1
+        version: 0.21
         url: https://ftp.gnu.org/gnu/gettext/gettext-{VERSION}.tar.xz
         patch: false
-        checksum: 27fcc8a42dbc8f334f23a08f1f2fe00a
+        checksum: 40996bbaf7d1356d3c22e33a8b255b31
     glibc:
         version: 2.36
         url: https://ftp.gnu.org/gnu/glibc/glibc-{VERSION}.tar.xz
@@ -222,10 +222,10 @@ tools_list:
         patch: false
         checksum: 9e251c0a618ad0824b51117d5d9db87e
     grep:
-        version: 3.8
+        version: 3.7
         url: https://ftp.gnu.org/gnu/grep/grep-{VERSION}.tar.xz
         patch: false
-        checksum: dc6e4d18d4659e6e7552fc4a183c8ac9
+        checksum: 7c9cca97fa18670a21e72638c3e1dabf
     groff:
         version: 1.22.4
         url: https://ftp.gnu.org/gnu/groff/groff-{VERSION}.tar.gz
@@ -257,10 +257,10 @@ tools_list:
         patch: false
         checksum: 12e517cac2b57a0121cda351570f1e63
     iproute2:
-        version: 6.0.0
+        version: 5.19.0
         url: https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-{VERSION}.tar.xz
         patch: false
-        checksum: 5da6cb3154ee09b9a8b4004d1c2df4cd
+        checksum: 415bd9eeb8515a585e245809d2fe45a6
     jinja2:
         version: 3.1.2
         url: https://files.pythonhosted.org/packages/source/J/Jinja2/Jinja2-{VERSION}.tar.gz
@@ -277,20 +277,20 @@ tools_list:
         patch: false
         checksum: 85202f0740a75eb52f2163c776f9b564
     less:
-        version: 608
+        version: 590
         url: https://www.greenwoodsoftware.com/less/less-{VERSION}.tar.gz
         patch: false
-        checksum: 1cdec714569d830a68f4cff11203cdba
+        checksum: f029087448357812fba450091a1172ab
     libcap:
-        version: 2.66
+        version: 2.65
         url: https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-{VERSION}.tar.xz
         patch: false
-        checksum: 00afd6e13bc94b2543b1a70770bdb41f
+        checksum: 3543e753dd941255c4def6cc67a462bb
     libffi:
-        version: 3.4.3
+        version: 3.4.2
         url: https://github.com/libffi/libffi/releases/download/v{VERSION}/libffi-{VERSION}.tar.gz
         patch: false
-        checksum: b57b0ac1d1072681cee9148a417bd2ec
+        checksum: 294b921e6cf9ab0fbaea4b639f8fdbe8
     libpipeline:
         version: 1.5.6
         url: https://download.savannah.gnu.org/releases/libpipeline/libpipeline-{VERSION}.tar.gz
@@ -302,10 +302,10 @@ tools_list:
         patch: false
         checksum: 2fc0b6ddcd66a89ed6e45db28fa44232
     linux:
-        version: 6.0.2
-        url: https://www.kernel.org/pub/linux/kernel/v6.x/linux-{VERSION}.tar.xz
+        version: 5.19.2
+        url: https://www.kernel.org/pub/linux/kernel/v5.x/linux-{VERSION}.tar.xz
         patch: false
-        checksum: 5a7ea40f0ec23b0800e8b52cb44ed04c
+        checksum: 391274e2e49a881403b0ff2e0712bf82
     m4:
         version: 1.4.19
         url: https://ftp.gnu.org/gnu/m4/m4-{VERSION}.tar.xz
@@ -332,10 +332,10 @@ tools_list:
         patch: false
         checksum: 9809f9fdd98bc835b0c21aa8f79cbf30
     meson:
-        version: 0.63.3
+        version: 0.63.1
         url: https://github.com/mesonbuild/meson/releases/download/{VERSION}/meson-{VERSION}.tar.gz
         patch: false
-        checksum: b2f2757b5dd84cc754b9df53ce37a175
+        checksum: 078e59d11a72b74c3bd78cb8205e9ed7
     mpc:
         version: 1.2.1
         url: https://ftp.gnu.org/gnu/mpc/mpc-{VERSION}.tar.gz
@@ -352,10 +352,10 @@ tools_list:
         patch: false
         checksum: a2736befde5fee7d2b7eb45eb281cdbe
     ninja:
-        version: 1.11.1
+        version: 1.11.0
         url: https://github.com/ninja-build/ninja/archive/v{VERSION}/ninja-{VERSION}.tar.gz
         patch: false
-        checksum: 32151c08211d7ca3c1d832064f6939b0
+        checksum: 7d1a1a2f5cdc06795b3054df5c17d5ef
     openssl:
         version: 3.0.5
         url: https://www.openssl.org/source/openssl-{VERSION}.tar.gz
@@ -387,30 +387,30 @@ tools_list:
         patch: false
         checksum: 014f0b5d5ab32478a2c57812ad01e1fb
     python:
-        version: 3.10.8
+        version: 3.10.6
         url: https://www.python.org/ftp/python/{VERSION}/Python-{VERSION}.tar.xz
         patch: false
-        checksum: e92356b012ed4d0e09675131d39b1bde
+        checksum: afc7e14f7118d10d1ba95ae8e2134bf0
     python_docs:
-        version: 3.10.8
+        version: 3.10.6
         url: https://www.python.org/ftp/python/doc/{VERSION}/python-{VERSION}-docs-html.tar.bz2
         patch: false
-        checksum: e19fa51f7055c0e869d609f2dfbcc5d9
+        checksum: 8f32c4f4f0b18ec56e8b3822bbaeb017
     readline:
-        version: 8.2
+        version: 8.1.2
         url: https://ftp.gnu.org/gnu/readline/readline-{VERSION}.tar.gz
         patch: false
-        checksum: 4aa1b31be779e6b84f9a96cb66bc50f6
+        checksum: 12819fa739a78a6172400f399ab34f81
     sed:
         version: 4.8
         url: https://ftp.gnu.org/gnu/sed/sed-{VERSION}.tar.xz
         patch: false
         checksum: 6d906edfdb3202304059233f51f9a71d
     shadow:
-        version: 4.12.3
+        version: 4.12.2
         url: https://github.com/shadow-maint/shadow/releases/download/{VERSION}/shadow-{VERSION}.tar.xz
         patch: false
-        checksum: 710bcc89c39683609aacfef9f08bd854
+        checksum: 52637cb34c357acf85c617cf95da34a6
     systemd:
         version: 251
         url: https://github.com/systemd/systemd/archive/v{VERSION}/systemd-{VERSION}.tar.gz
@@ -467,10 +467,10 @@ tools_list:
         patch: false
         checksum: 80bb18a8e6240fcf7ec2f7b57601c170
     xz:
-        version: 5.2.7
+        version: 5.2.6
         url: https://tukaani.org/xz/xz-{VERSION}.tar.xz
         patch: false
-        checksum: 6c130d21e260d4476e971985e7394e83
+        checksum: d9cd5698e1ec06cf638c0d2d645e8175
     zlib:
         version: 1.2.13
         url: https://zlib.net/zlib-{VERSION}.tar.xz
