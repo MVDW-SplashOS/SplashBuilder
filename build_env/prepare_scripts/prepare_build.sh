@@ -17,7 +17,7 @@ for TOOL in ${config_tools_enabled_[*]}; do
 	eval "TOOL_URL=\${config_tools_list__${TOOL}__url/\{VERSION\}/"$TOOL_VERSION"}"
 	eval "TOOL_URL=\${TOOL_URL/\{VERSION\}/"$TOOL_VERSION"}" # if there is a 2nd version string in the url(too lazy for a propper fix)
 	eval "TOOL_PATCH=\${config_tools_list__${TOOL}__patch/\{VERSION\}/"$TOOL_VERSION"}"
-	
+	eval "TOOL_MD5=\${config_tools_list__${TOOL}__checksum}"
 	#echo "$TOOL:" 
 	#echo "  - version: $TOOL_VERSION"
 	#echo "  - url: $TOOL_URL"
@@ -29,6 +29,15 @@ for TOOL in ${config_tools_enabled_[*]}; do
 	else
 		echo "$TOOL($TOOL_VERSION) already downloaded"
 	fi
+	
+	if [[ $(md5sum "$LFS/sources/$bn") = $TOOL_MD5* ]] ; then
+		echo "Checksum vailid"
+	else
+		echo "Error: Checksum of $TOOL not vailid."
+		exit
+	fi
+	
+	
 	
 	if ! [ $TOOL_PATCH == "false" ]; then
 		bnp=$(basename $TOOL_PATCH)
