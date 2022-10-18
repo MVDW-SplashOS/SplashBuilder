@@ -1,12 +1,14 @@
 set -e
 
+source ./build_env/prepare_scripts/quick_env_export.sh
+
 echo "Dist Root: ${DIST_ROOT:?}"
 echo "LFS: ${LFS:?}"
 
-#if ! test $(whoami) == "distbuild" ; then
-#    echo "Must run as distbuild!"
-#    exit -1
-#fi
+if ! test $(whoami) == "distbuild" ; then
+    echo "Must run as distbuild!"
+    exit -1
+fi
 
 echo "Creating build environment..."
 cd $DIST_ROOT/build_env
