@@ -63,38 +63,40 @@ mkdir -pv $LFS/tools
 
 if ! test $(id -u distbuild) ; then
 
+	[ ! -e /home/distbuild ] || rm -rf /home/distbuild 
+	
 	groupadd distbuild
 	useradd -s /bin/bash -g distbuild -m -k /dev/null distbuild
 	passwd distbuild
-
+	
 
 	echo "distbuild ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudoers_distbuild
 
 	dbhome=$(eval echo "~distbuild")
 
-cat > $dbhome/.bash_profile << "EOF"
-exec env -i HOME=$HOME TERM=$TERM PS1='\u:\w\$ ' /bin/bash
-EOF
+	cat > $dbhome/.bash_profile << "EOF"
+		exec env -i HOME=$HOME TERM=$TERM PS1='\u:\w\$ ' /bin/bash
+	EOF
 
-cat > $dbhome/.bashrc << "EOF"
-set +h
-umask 022
-LFS=$LFS
-export DIST_ROOT=$DIST_ROOT
-LC_ALL=POSIX
-LFS_TGT=$(uname -m)-lfs-linux-gnu
-PATH=/usr/bin
-if [ ! -L /bin ]; then PATH=/bin:$PATH; fi
-PATH=$LFS/tools/bin:$PATH
-CONFIG_SITE=$LFS/usr/share/config.site
-export LFS LC_ALL LFS_TGT PATH CONFIG_SITE
-EOF
+	cat > $dbhome/.bashrc << "EOF"
+		set +h
+		umask 022
+		LFS=$LFS
+		export DIST_ROOT=$DIST_ROOT
+		LC_ALL=POSIX
+		LFS_TGT=$(uname -m)-lfs-linux-gnu
+		PATH=/usr/bin
+		if [ ! -L /bin ]; then PATH=/bin:$PATH; fi
+		PATH=$LFS/tools/bin:$PATH
+		CONFIG_SITE=$LFS/usr/share/config.site
+		export LFS LC_ALL LFS_TGT PATH CONFIG_SITE
+	EOF
 	
 	[ ! -e /etc/bash.bashrc ] || mv -v /etc/bash.bashrc /etc/bash.bashrc.NOUSE
 
 fi
 
-chown -v lfs $LFS/{usr{,/*},lib,var,etc,bin,sbin,tools,lib64}
+chown -v distbuild $LFS/{usr{,/*},lib,var,etc,bin,sbin,tools,lib64}
 chown -v distbuild $DIST_ROOT/build_env/sources
 
 echo "Done!" 
