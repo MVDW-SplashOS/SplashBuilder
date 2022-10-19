@@ -89,7 +89,8 @@ if ! test $(id -u distbuild) ; then
 		CONFIG_SITE=$LFS/usr/share/config.site
 		export LFS LC_ALL LFS_TGT PATH CONFIG_SITE
 	EOF
-
+	
+	[ ! -e /etc/bash.bashrc ] || mv -v /etc/bash.bashrc /etc/bash.bashrc.NOUSE
 
 fi
 
