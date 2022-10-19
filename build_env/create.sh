@@ -1,7 +1,7 @@
 set -e
 
 #source ./build_env/prepare_scripts/quick_env_export.sh
-source ~/.bash_profile
+#source ~/.bash_profile
 export MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
 
 echo "Dist Root: ${DIST_ROOT:?}"
