@@ -53,6 +53,7 @@ done
 
 
 mkdir -pv $LFS/{etc,var,lib64} $LFS/usr/{bin,lib,sbin}
+ln -sv /tools/lib/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2
 
 for i in bin lib sbin; do
 	ln -sv usr/$i $LFS/$i
