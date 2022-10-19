@@ -41,8 +41,8 @@ for TOOL in ${config_tools_enabled_[*]}; do
 	
 	if ! [ $TOOL_PATCH == "false" ]; then
 		bnp=$(basename $TOOL_PATCH)
-		if ! test -f $LFS/sources/$bnp ; then
-			wget $TOOL_PATCH -O $DIST_ROOT/build_env/$bnp
+		if ! test -f $DIST_ROOT/build_env/sources/$bnp ; then
+			wget $TOOL_PATCH -O $DIST_ROOT/build_env/sources/$bnp
 		else
 			echo "Patch for $TOOL($TOOL_VERSION) already downloaded"
 		fi
