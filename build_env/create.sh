@@ -1,6 +1,7 @@
 set -e
 
-source ./build_env/prepare_scripts/quick_env_export.sh
+#source ./build_env/prepare_scripts/quick_env_export.sh
+source ~/.bash_profile
 
 echo "Dist Root: ${DIST_ROOT:?}"
 echo "LFS: ${LFS:?}"
