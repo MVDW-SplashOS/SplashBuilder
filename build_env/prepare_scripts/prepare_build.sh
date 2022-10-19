@@ -76,7 +76,7 @@ if ! test $(id -u distbuild) ; then
 		exec env -i HOME=$HOME TERM=$TERM PS1='\u:\w\$ ' /bin/bash
 	EOF
 
-	cat > $dbhome/.bashrc << EOF
+	cat > $dbhome/.bashrc << "EOF"
 		set +h
 		umask 022
 		LFS=$LFS
