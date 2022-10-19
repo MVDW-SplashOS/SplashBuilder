@@ -24,13 +24,13 @@ for TOOL in ${config_tools_enabled_[*]}; do
 	
 	bn=$(basename $TOOL_URL)
 	
-	if ! test -f $DIST_ROOT/build_env/$bn ; then
-		wget $TOOL_URL -O $DIST_ROOT/build_env/$bn
+	if ! test -f $DIST_ROOT/build_env/sources/$bn ; then
+		wget $TOOL_URL -O $DIST_ROOT/build_env/sources/$bn
 	else
 		echo "$TOOL($TOOL_VERSION) already downloaded"
 	fi
 	
-	if [[ $(md5sum "$DIST_ROOT/build_env/$bn") = $TOOL_MD5* ]] ; then
+	if [[ $(md5sum "$DIST_ROOT/build_env/sources/$bn") = $TOOL_MD5* ]] ; then
 		echo "Checksum vailid"
 	else
 		echo "Error: Checksum of $TOOL not vailid."
