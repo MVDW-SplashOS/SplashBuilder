@@ -1,7 +1,7 @@
 echo "Dist Root: ${DIST_ROOT:?}"
 echo "LFS: ${LFS:?}"
 
-mkdir -p $LFS/sources
+mkdir -p $DIST_ROOT/build_env/sources
 
 
 # Include and parse yaml script
@@ -42,7 +42,7 @@ for TOOL in ${config_tools_enabled_[*]}; do
 	if ! [ $TOOL_PATCH == "false" ]; then
 		bnp=$(basename $TOOL_PATCH)
 		if ! test -f $LFS/sources/$bnp ; then
-			wget $TOOL_PATCH -O $LFS/sources/$bnp
+			wget $TOOL_PATCH -O $DIST_ROOT/build_env/$bnp
 		else
 			echo "Patch for $TOOL($TOOL_VERSION) already downloaded"
 		fi

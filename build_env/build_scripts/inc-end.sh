@@ -4,7 +4,7 @@ echo
 echo "Cleaning up..."
 echo
 
-cd $LFS/sources
+cd $DIST_ROOT/build_env/sources
 DIR=$(echo $FILE | awk -F"\\\\.t" '{print $1}')
 rm -rf $DIR
 
