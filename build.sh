@@ -61,4 +61,7 @@ export LC_ALL=C
 
 
 # Step 1 - Check, install and configure host system
-source ./build_scripts/host_system_configuration.sh
+source ./build_scripts/prepare/system_requirements.sh
+
+# Step 2 - Make partitions
+source ./build_scripts/prepare/partitions.sh

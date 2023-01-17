@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # 
-# SplashOS Builder - Host System Configuration
+# SplashOS Builder - System Requirements Script
 #
 # ----------------
 #
@@ -78,3 +78,18 @@ if [ -x dummy ]
   then echo "g++ compilation OK";
   else echo "g++ compilation failed"; fi
 rm -f dummy.c dummy
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
