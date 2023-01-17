@@ -1,0 +1,76 @@
+#!/bin/sh
+
+# 
+# SplashOS Builder - Host System Configuration
+#
+# ----------------
+#
+# This script is for checking, installing and configuring the host system.
+# Based on the version-check script from LFS but modified to also install and configure when needed.
+
+# 
+echo "Checking host system configuration... "
+
+
+# Step 1.1 - Check bash
+MYSH=$(readlink -f /bin/sh)
+if grep -q bash $MYSH 
+then
+	echo "Bash [OK]"
+else
+	
+	rm /bin/sh
+	ln -s /bin/bash /bin/sh
+	echo "ERROR2: /bin/sh does not point to bash"
+
+fi
+unset MYSH
+
+
+
+
+
+#echo -n "Binutils: "; ld --version | head -n1 | cut -d" " -f3-
+#bison --version | head -n1
+
+#if [ -h /usr/bin/yacc ]; then
+#  echo "/usr/bin/yacc -> `readlink -f /usr/bin/yacc`";
+#elif [ -x /usr/bin/yacc ]; then
+#  echo yacc is `/usr/bin/yacc --version | head -n1`
+#else
+#  echo "yacc not found"
+#fi
+
+#echo -n "Coreutils: "; chown --version | head -n1 | cut -d")" -f2
+#diff --version | head -n1
+#find --version | head -n1
+#gawk --version | head -n1
+
+#if [ -h /usr/bin/awk ]; then
+#  echo "/usr/bin/awk -> `readlink -f /usr/bin/awk`";
+#elif [ -x /usr/bin/awk ]; then
+#  echo awk is `/usr/bin/awk --version | head -n1`
+#else
+#  echo "awk not found"
+#fi
+
+#gcc --version | head -n1
+#g++ --version | head -n1
+#grep --version | head -n1
+#gzip --version | head -n1
+#cat /proc/version
+#m4 --version | head -n1
+#make --version | head -n1
+#patch --version | head -n1
+#echo Perl `perl -V:version`
+#python3 --version
+#sed --version | head -n1
+#tar --version | head -n1
+#makeinfo --version | head -n1  # texinfo version
+#xz --version | head -n1
+
+#echo 'int main(){}' > dummy.c && g++ -o dummy dummy.c
+#if [ -x dummy ]
+#  then echo "g++ compilation OK";
+#  else echo "g++ compilation failed"; fi
+#rm -f dummy.c dummy
