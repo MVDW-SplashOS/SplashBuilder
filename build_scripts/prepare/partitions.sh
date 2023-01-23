@@ -10,6 +10,12 @@
 
 mapfile -t disks < <(sudo fdisk -l | awk '/^\/dev/ {print $1}')
 
+splash_partition_root_device=/dev/vda3
+splash_partition_root=/mnt/splashos
+
+printf $Blue
+
+echo "---------------------------------------------------"
 echo "Please select the partition to build SplashOS on: "
 count_partitions=-1
 
@@ -21,9 +27,20 @@ for line in "${disks[@]}"; do
 	
 done
 
+printf $BBlue
+printf "Where should SplashOS be installed on [0-${count_partitions}]?"
+printf $White
+printf " "
 
-echo "Where should SplashOS be installed on [0-${count_partitions}]? "
 
-#mkfs -v -t ext4 /dev/splashos
+yes | mkfs -v -t ext4 $splash_partition_root_device 
+mkdir -p $splash_partition_root
+if grep -qs $splash_partition_root /proc/mounts; then
+	echo "Partition already mounted"
+else
+	echo "Partition not mounted, mounting..."
+	mount -v -t ext4 $splash_partition_root /mnt/splashos
+fi
+
 
 

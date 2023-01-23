@@ -8,7 +8,8 @@
 # This tool is made to create a full SplashOS install.
 #  
 
-# Include color code
+# Include dependency's
+source ./build_scripts/global_functions.sh
 source ./build_scripts/style/color.sh
 
 # check if root perms.
@@ -33,28 +34,7 @@ printf "This script will reconfigure your system and install packages to build S
 printf "This script might break your system so use at your own risk, use a virtual machine to be safe.\n\n"
 
 
-
-ask_continue() {
-	printf $UBlue
-	printf "Do you want to continue (y/n)?"
-	printf $White 
-	printf " "
-	read choice
-	
-	case "$choice" in 
-		y|Y )
-			printf "Continueing operation...\n\n";;
-			
-		n|N )
-			printf "Quitting...\n\n"
-			
-			exit 1;;
-		* )
-			printf "invalid awnser\n\n" 
-			ask_continue;;
-	esac
-}
-ask_continue
+f_prompt "Do you want to continue (y/n)?"
 
 # Override localisation settings
 export LC_ALL=C
@@ -65,3 +45,9 @@ source ./build_scripts/prepare/system_requirements.sh
 
 # Step 2 - Make partitions
 source ./build_scripts/prepare/partitions.sh
+
+# Step 3 - Download dependencies
+source ./build_scripts/prepare/dependencies.sh
+
+
+echo "Splash Builder Done."
