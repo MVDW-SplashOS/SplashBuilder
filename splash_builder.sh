@@ -40,14 +40,51 @@ f_prompt "Do you want to continue (y/n)?"
 export LC_ALL=C
 
 
-# Step 1 - Check, install and configure host system
+# All steps required to build SplashOS:
+# 
+# Step 1: Prepare the host system
+#     |
+#     |-- 1.0 - Check, install and configure host system
+#     |
+#     |-- 1.1 - Make partitions
+#     |
+#     |-- 1.2 - Download dependencies
+#     |
+#     |-- 1.3 - Create directory layout
+#     |
+#     |-- 1.4 - Setup bash enviroment
+#
+#
+# Step 2:
+#     |
+#
+
+
+
+# -------------------------------------------------------------
+#
+#      STEP 1: Prepare the host system
+#
+# -------------------------------------------------------------
+
+# Step 1.0 - Check, install and configure host system
 source ./build_scripts/prepare/system_requirements.sh
 
-# Step 2 - Make partitions
+# Step 1.1 - Make partitions
 source ./build_scripts/prepare/partitions.sh
 
-# Step 3 - Download dependencies
+# Step 1.2 - Download dependencies
 source ./build_scripts/prepare/dependencies.sh
 
+# Step 1.3 - Create directory layout
+source ./build_scripts/prepare/directory_layout.sh
+
+# Step 1.4 - Setup bash enviroment
+source ./build_scripts/prepare/bash_enviroment.sh
+
+
+
+
+echo $MAKEFLAGS
 
 echo "Splash Builder Done."
