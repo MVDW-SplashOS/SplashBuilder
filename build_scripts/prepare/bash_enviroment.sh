@@ -20,7 +20,7 @@ case "$choice" in
 		umask 022
 		splash_partition_root=$splash_partition_root
 		LC_ALL=POSIX
-		SPLASHOS_TGT=$(uname -m)-splashos
+		SPLASHOS_TGT=$(uname -m)-pc-linux-gnu
 		PATH=/usr/bin
 		if [ ! -L /bin ]; then PATH=/bin:$PATH; fi
 		PATH=$splash_partition_root/tools/bin:$PATH

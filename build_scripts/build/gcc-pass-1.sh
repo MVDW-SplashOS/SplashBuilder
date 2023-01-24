@@ -1,10 +1,10 @@
 # Include and parse yaml script
-export yaml_file=$DIST_ROOT/build_env/config.yml
+export yaml_file=./config.yml
 export yaml_prefix="config_"
-source $DIST_ROOT/build_env/build_scripts/includes/parse_yaml.sh
+source ./build_scripts/parse_yaml.sh
 create_variables 
 
-. $DIST_ROOT/build_env/build_scripts/inc-start.sh $1 $(basename $0)
+. ./build_scripts/build/inc-start.sh $1 $(basename $0)
 
 #
 #tar -xf "../mpfr-${config_tools_list__mpfr__version}.tar.xz"
@@ -29,10 +29,10 @@ mkdir -pv build
 cd       build
 
 ../configure                  \
-    --target=$LFS_TGT         \
-    --prefix=$LFS/tools       \
+    --target=$SPLASHOS_TGT         \
+    --prefix=$splash_partition_root/tools       \
     --with-glibc-version=2.36 \
-    --with-sysroot=$LFS       \
+    --with-sysroot=$splash_partition_root       \
     --with-newlib             \
     --without-headers         \
     --enable-default-pie      \
@@ -55,7 +55,7 @@ make install
 
 cd ..
 cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
-  `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h
+  `dirname $($SPLASHOS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h
 
 
 #. $DIST_ROOT/build_env/build_scripts/inc-end.sh $1 $(basename $0)
