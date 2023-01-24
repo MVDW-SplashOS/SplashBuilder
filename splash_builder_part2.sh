@@ -19,7 +19,7 @@ then
 	printf "ERROR: "
 	printf $IRed
 	printf "Please run this as root or with sudo\n"
-	exit 2
+	#exit 2
 fi
 
 # Print SplashOS builder info
@@ -59,7 +59,10 @@ export LC_ALL=C
 #     |
 #
 
-
+export yaml_file=./config.yml
+export yaml_prefix="config_"
+source ./build_scripts/parse_yaml.sh
+create_variables 
 
 # -------------------------------------------------------------
 #
@@ -67,20 +70,13 @@ export LC_ALL=C
 #
 # -------------------------------------------------------------
 
-# Step 1.0 - Check, install and configure host system
-source ./build_scripts/prepare/system_requirements.sh
 
-# Step 1.1 - Make partitions
-source ./build_scripts/prepare/partitions.sh
-
-# Step 1.2 - Download dependencies
-source ./build_scripts/prepare/dependencies.sh
 
 # Step 1.3 - Create directory layout
-source ./build_scripts/prepare/directory_layout.sh
+
 
 # Step 1.4 - Setup bash enviroment
-source ./build_scripts/prepare/bash_enviroment.sh
+#source ./build_scripts/prepare/bash_enviroment.sh
 
 # -------------------------------------------------------------
 #
