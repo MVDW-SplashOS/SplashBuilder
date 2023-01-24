@@ -1,9 +1,11 @@
 echo "Resetting building enviroment."
 
 
-echo ${splash_partition_root:?}
+
 
 source ./build_scripts/prepare/bash_enviroment.sh
+
+echo ${splash_partition_root:?}
 
 rm -rf $splash_partition_root/*
 
@@ -19,6 +21,6 @@ case $(uname -m) in
   x86_64) chown -v splashbuilder $splash_partition_root/lib64 ;;
 esac
 
-chown splashbuilder -R ./sources
-chmod 777 -R ./sources
+chown -v splashbuilder -R ./sources
+chmod -v 777 -R ./sources
 echo "Success resetting build enviroment."

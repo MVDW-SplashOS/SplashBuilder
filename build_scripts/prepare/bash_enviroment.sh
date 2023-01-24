@@ -18,7 +18,7 @@ case "$choice" in
 		cat > ~/.bashrc <<-EOF
 		set +h
 		umask 022
-		splash_partition_root=$splash_partition_root
+		splash_partition_root=/dev/splashos
 		LC_ALL=POSIX
 		SPLASHOS_TGT=$(uname -m)-lfs-linux-gnu
 		PATH=/usr/bin
