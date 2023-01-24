@@ -18,14 +18,14 @@ case "$choice" in
 		cat > ~/.bashrc <<-EOF
 		set +h
 		umask 022
-		LFS=/mnt/lfs
+		splash_partition_root=$splash_partition_root
 		LC_ALL=POSIX
-		LFS_TGT=$(uname -m)-lfs-linux-gnu
+		SPLASHOS_TGT=$(uname -m)-splashos
 		PATH=/usr/bin
 		if [ ! -L /bin ]; then PATH=/bin:$PATH; fi
-		PATH=$LFS/tools/bin:$PATH
-		CONFIG_SITE=$LFS/usr/share/config.site
-		export LFS LC_ALL LFS_TGT PATH CONFIG_SITE
+		PATH=$splash_partition_root/tools/bin:$PATH
+		CONFIG_SITE=$splash_partition_root/usr/share/config.site
+		export splash_partition_root LC_ALL SPLASHOS_TGT PATH CONFIG_SITE
 		EOF
 		
 		
