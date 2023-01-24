@@ -24,13 +24,13 @@ for TOOL in ${config_tools_enabled_[*]}; do
 	
 	bn=$(basename $TOOL_URL)
 	
-	if ! test -f $splash_partition_root/sources/$bn ; then
-		wget $TOOL_URL -O $splash_partition_root/sources/$bn
+	if ! test -f ./sources/$bn ; then
+		wget $TOOL_URL -O ./sources/$bn
 	else
 		echo "$TOOL($TOOL_VERSION) already downloaded"
 	fi
 	
-	if [[ $(md5sum "$splash_partition_root/sources/$bn") = $TOOL_MD5* ]] ; then
+	if [[ $(md5sum "./sources/$bn") = $TOOL_MD5* ]] ; then
 		echo "Checksum vailid"
 	else
 		echo "Error: Checksum of $TOOL not vailid."
@@ -41,8 +41,8 @@ for TOOL in ${config_tools_enabled_[*]}; do
 	
 	if ! [ $TOOL_PATCH == "false" ]; then
 		bnp=$(basename $TOOL_PATCH)
-		if ! test -f $splash_partition_root/sources/$bnp ; then
-			wget $TOOL_PATCH -O $splash_partition_root/sources/$bnp
+		if ! test -f ./sources/$bnp ; then
+			wget $TOOL_PATCH -O ./sources/$bnp
 		else
 			echo "Patch for $TOOL($TOOL_VERSION) already downloaded"
 		fi

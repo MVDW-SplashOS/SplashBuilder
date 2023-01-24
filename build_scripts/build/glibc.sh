@@ -34,5 +34,6 @@ sed '/RTLDLIST=/s@/usr@@g' -i $splash_partition_root/usr/bin/ldd
 #readelf -l a.out | grep '/ld-linux'
 
 $splash_partition_root/tools/libexec/gcc/$SPLASHOS_TGT/12.2.0/install-tools/mkheaders
+pwd
 
 #. $DIST_ROOT/build_env/build_scripts/inc-end.sh $1 $(basename $0)

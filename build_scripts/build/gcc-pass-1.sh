@@ -56,6 +56,6 @@ make install
 cd ..
 cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
   `dirname $($SPLASHOS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h
-
+pwd
 
 #. $DIST_ROOT/build_env/build_scripts/inc-end.sh $1 $(basename $0)

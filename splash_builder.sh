@@ -92,7 +92,7 @@ bash -e build_scripts/build/binutils-pass-1.sh "binutils-${config_tools_list__bi
 bash -e build_scripts/build/gcc-pass-1.sh "gcc-${config_tools_list__gcc__version}.tar.xz"
 bash -e build_scripts/build/linux-headers.sh "linux-${config_tools_list__linux__version}.tar.xz"
 bash -e build_scripts/build/glibc.sh "glibc-${config_tools_list__glibc__version}.tar.xz"
-bash -e build_scripts/build/libstdcpp-pass-1.sh "gcc-${config_tools_list__gcc__version}.tar.xz"
+#bash -e build_scripts/build/libstdcpp-pass-1.sh "gcc-${config_tools_list__gcc__version}.tar.xz"
 
 
 echo $MAKEFLAGS

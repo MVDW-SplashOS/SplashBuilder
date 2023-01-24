@@ -11,7 +11,8 @@ cd       build
     --disable-nls                   \
     --disable-libstdcxx-pch         \
     --with-gxx-include-dir=/tools/$SPLASHOS_TGT/include/c++/12.2.0
-
+    
+    
 make
 make DESTDIR=$splash_partition_root install
 

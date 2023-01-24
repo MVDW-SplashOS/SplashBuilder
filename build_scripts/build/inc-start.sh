@@ -5,7 +5,7 @@ echo "Processing $2"
 echo "-------------------------------------------------------"
 sleep 1
 
-cd $splash_partition_root/sources
+cd ./sources
 echo "Extracting..."
 tar -xf $FILE
 DIR=$(echo $FILE | awk -F"\\\\.t" '{print $1}')
