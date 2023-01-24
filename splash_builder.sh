@@ -82,7 +82,17 @@ source ./build_scripts/prepare/directory_layout.sh
 # Step 1.4 - Setup bash enviroment
 source ./build_scripts/prepare/bash_enviroment.sh
 
+# -------------------------------------------------------------
+#
+#      STEP 2: Compiling a cross-toolchain
+#
+# -------------------------------------------------------------
 
+bash -e build_scripts/build/binutils-pass-1.sh "binutils-${config_tools_list__binutils__version}.tar.xz"
+#bash -e build_scripts/build/gcc-pass-1.sh "gcc-${config_tools_list__gcc__version}.tar.xz"
+#bash -e build_scripts/build/linux-headers.sh "linux-${config_tools_list__linux__version}.tar.xz"
+#bash -e build_scripts/build/glibc.sh "glibc-${config_tools_list__glibc__version}.tar.xz"
+#bash -e build_scripts/build/libstdcpp-pass-1.sh "gcc-${config_tools_list__gcc__version}.tar.xz"
 
 
 echo $MAKEFLAGS
