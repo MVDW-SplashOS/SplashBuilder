@@ -24,10 +24,12 @@ mv -vn mpc-1.2.1 mpc
 
 sed -e '/m64=/s/lib64/lib/' \
         -i.orig gcc/config/i386/t-linux64
+        
 
 mkdir -pv build
 cd       build
-
+    
+    
 ../configure                  \
     --target=$SPLASHOS_TGT         \
     --prefix=$splash_partition_root/tools       \
@@ -35,8 +37,6 @@ cd       build
     --with-sysroot=$splash_partition_root       \
     --with-newlib             \
     --without-headers         \
-    --enable-default-pie      \
-    --enable-default-ssp      \
     --disable-nls             \
     --disable-shared          \
     --disable-multilib        \
