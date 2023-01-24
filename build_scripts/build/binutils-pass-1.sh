@@ -1,4 +1,4 @@
-. ./inc-start.sh $1 $(basename $0)
+. ./build_scripts/build/inc-start.sh $1 $(basename $0)
 
 mkdir -pv build
 cd       build
