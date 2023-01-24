@@ -83,6 +83,7 @@ source ./build_scripts/prepare/directory_layout.sh
 source ./build_scripts/prepare/create_user.sh
 
 
+
 echo $MAKEFLAGS
 
 echo "Splash Builder Done."

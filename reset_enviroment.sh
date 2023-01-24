@@ -1,7 +1,11 @@
-echo "resetting..."
-rm -rf /mnt/splashos/*
+echo "Resetting building enviroment."
 
-echo $splash_partition_root
+
+echo ${splash_partition_root:?}
+
+source ./build_scripts/prepare/bash_enviroment.sh
+
+rm -rf $splash_partition_root/*
 
 mkdir -pv $splash_partition_root/{etc,var,lib64,tools} $splash_partition_root/usr/{bin,lib,sbin}
 
@@ -14,3 +18,7 @@ chown -v splashbuilder $splash_partition_root/{usr{,/*},lib,var,etc,bin,sbin,too
 case $(uname -m) in
   x86_64) chown -v splashbuilder $splash_partition_root/lib64 ;;
 esac
+
+chown -v splashbuilder ./sources
+
+echo "Success resetting build enviroment."

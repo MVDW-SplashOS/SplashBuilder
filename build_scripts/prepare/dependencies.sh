@@ -1,8 +1,8 @@
 echo "test partition set: ${splash_partition_root:?}"
 
 
-mkdir -p $splash_partition_root/sources
-chmod -v a+wt $splash_partition_root/sources
+mkdir -p ./sources
+chmod -v a+wt ./sources
 
 # Include and parse yaml script
 export yaml_file=./config.yml
