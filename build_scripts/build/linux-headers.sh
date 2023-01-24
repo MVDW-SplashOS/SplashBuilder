@@ -1,5 +1,8 @@
 set -e
 
+echo ${splash_partition_root:?}
+echo ${SPLASHOS_TGT:?}
+
 . ./build_scripts/build/inc-start.sh $1 $(basename $0)
 
 make mrproper

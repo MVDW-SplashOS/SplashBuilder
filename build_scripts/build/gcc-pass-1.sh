@@ -1,4 +1,7 @@
 # Include and parse yaml script
+echo ${splash_partition_root:?}
+echo ${SPLASHOS_TGT:?}
+
 export yaml_file=./config.yml
 export yaml_prefix="config_"
 source ./build_scripts/parse_yaml.sh

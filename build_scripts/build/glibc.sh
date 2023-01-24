@@ -1,5 +1,6 @@
 . ./build_scripts/build/inc-start.sh $1 $(basename $0)
-
+echo ${splash_partition_root:?}
+echo ${SPLASHOS_TGT:?}
 
 ln -sfv ../lib/ld-linux-x86-64.so.2 $splash_partition_root/lib64
 ln -sfv ../lib/ld-linux-x86-64.so.2 $splash_partition_root/lib64/ld-lsb-x86-64.so.3

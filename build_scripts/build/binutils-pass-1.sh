@@ -1,5 +1,8 @@
 . ./build_scripts/build/inc-start.sh $1 $(basename $0)
 
+echo ${splash_partition_root:?}
+echo ${SPLASHOS_TGT:?}
+
 mkdir -pv build
 cd       build
 
