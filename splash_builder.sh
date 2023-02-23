@@ -12,6 +12,8 @@
 source ./build_scripts/global_functions.sh
 source ./build_scripts/style/color.sh
 
+set -e
+
 # check if root perms.
 if [ "$EUID" -ne 0 ]
 then
@@ -82,10 +84,11 @@ source ./build_scripts/prepare/directory_layout.sh
 # Step 1.4 - Create and setup SplashBuilder user
 source ./build_scripts/prepare/create_user.sh
 
+bruh="bruh";
 
 
-echo ${splash_partition_root:?}
-echo ${SPLASHOS_TGT:?}
+su -s /bin/bash -c 'test -n "$splash_partition_root" || { echo "splash_partition_root is not set"; exit 1; }; echo "$splash_partition_root"' splashbuilder
+su -s /bin/bash -c 'test -n "$SPLASHOS_TGT" || { echo "SPLASHOS_TGT is not set"; exit 1; }; echo "$SPLASHOS_TGT"' splashbuilder
 
 
 
