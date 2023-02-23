@@ -29,7 +29,7 @@ unset MYSH
 # TODO: install when needed, do more checks
 
 # 
-if [ -x "$(command -v apt-get)" ]; then sudo apt-get install binutils bison gawk gcc g++ make patch texinfo libisl-dev -y
+if [ -x "$(command -v apt-get)" ]; then sudo apt-get install binutils bison gawk gcc g++ make patch texinfo libisl-dev wget -y
 elif [ -x "$(command -v dnf)" ];     then sudo dnf install binutils bison gawk gcc g++ make patch texinfo -y
 else echo "FAILED TO INSTALL PACKAGES: Package manager not found.">&2; fi
 

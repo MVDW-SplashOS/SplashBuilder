@@ -1,6 +1,7 @@
+
+# Resetting Build Enviroment
+
 echo "Resetting building enviroment."
-
-
 
 
 source ./build_scripts/prepare/bash_enviroment.sh
