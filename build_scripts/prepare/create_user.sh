@@ -1,5 +1,5 @@
 
-if ! test $(id -u distbuild) ; then
+if ! test $(id -u splashbuilder) ; then
 
 [ ! -e /home/splashbuilder ] || rm -rf /home/splashbuilder 
 
@@ -12,12 +12,12 @@ echo "splashbuilder ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudoers_distbuild
 
 dbhome=$(eval echo "~splashbuilder")
 
-cat > ~/.bash_profile <<-EOF
+cat > $dbhome/.bash_profile  << "EOF"
 exec env -i HOME=$HOME TERM=$TERM PS1='\u:\w\$ ' /bin/bash 
 EOF
 
 
-cat > ~/.bashrc <<-EOF
+cat > $dbhome/.bashrc  << "EOF"
 set +h
 umask 022
 splash_partition_root=/dev/splashos
@@ -31,8 +31,9 @@ MAKEFLAGS="-j$(nproc)"
 export splash_partition_root LC_ALL SPLASHOS_TGT PATH CONFIG_SITE MAKEFLAGS
 EOF
 
+fi
 
-[ ! -e /etc/bash.bashrc ] || mv -v /etc/bash.bashrc /etc/bash.bashrc.NOUSE;;
+[ ! -e /etc/bash.bashrc ] || mv -v /etc/bash.bashrc /etc/bash.bashrc.NOUSE;
 
 
 
