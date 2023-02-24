@@ -1,3 +1,5 @@
+dbhome=$(eval echo "~splashbuilder")
+
 
 if ! test $(id -u splashbuilder) ; then
 
@@ -10,17 +12,22 @@ passwd splashbuilder #TODO: Set the default password in the config file.
 
 echo "splashbuilder ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudoers_distbuild
 
-dbhome=$(eval echo "~splashbuilder")
+
 
 cat > $dbhome/.bash_profile  << "EOF"
 exec env -i HOME=$HOME TERM=$TERM PS1='\u:\w\$ ' /bin/bash 
 EOF
 
 
+
+
+fi
+
+
 cat > $dbhome/.bashrc  << "EOF"
 set +h
 umask 022
-splash_partition_root=/dev/splashos
+splash_partition_root=/home/mvdw/Documents/GitHub/SplashOS/splashos
 LC_ALL=POSIX
 SPLASHOS_TGT=$(uname -m)-lfs-linux-gnu
 PATH=/usr/bin
@@ -31,7 +38,8 @@ MAKEFLAGS="-j$(nproc)"
 export splash_partition_root LC_ALL SPLASHOS_TGT PATH CONFIG_SITE MAKEFLAGS
 EOF
 
-fi
+
+
 
 [ ! -e /etc/bash.bashrc ] || mv -v /etc/bash.bashrc /etc/bash.bashrc.NOUSE;
 

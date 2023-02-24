@@ -43,6 +43,13 @@ f_prompt "Do you want to continue (y/n)?"
 export LC_ALL=C
 
 
+# Loading the config file 
+export yaml_file=./config.yml
+export yaml_prefix="config_"
+source ./build_scripts/parse_yaml.sh
+create_variables 
+
+
 # All steps required to build SplashOS:
 # 
 #

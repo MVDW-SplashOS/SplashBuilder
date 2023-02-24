@@ -7,7 +7,7 @@ sleep 1
 
 cd ./sources
 echo "Extracting..."
-tar -xf $FILE
+tar --overwrite -xvf  $FILE
 DIR=$(echo $FILE | awk -F"\\\\.t" '{print $1}')
 cd $DIR
 echo "Changed to build path"

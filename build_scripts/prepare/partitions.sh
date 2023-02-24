@@ -11,7 +11,7 @@
 mapfile -t disks < <(sudo fdisk -l | awk '/^\/dev/ {print $1}')
 
 splash_partition_root_device=/dev/vdb1
-splash_partition_root=/mnt/splashos
+splash_partition_root=/home/mvdw/Documents/GitHub/SplashOS/splashos
 
 printf $Blue
 
@@ -46,7 +46,7 @@ if findmnt -rno source $splash_partition_root; then
 	echo "Partition already mounted"
 else
 	echo "Partition not mounted, mounting..."
-	mount -v -t ext4 $splash_partition_root_device /mnt/splashos
+	#mount -v -t ext4 $splash_partition_root_device /mnt/splashos
 fi
 
 
