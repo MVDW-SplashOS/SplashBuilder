@@ -84,11 +84,17 @@ source ./build_scripts/prepare/directory_layout.sh
 # Step 1.4 - Create and setup SplashBuilder user
 source ./build_scripts/prepare/create_user.sh
 
-bruh="bruh";
 
 
-su -s /bin/bash -c 'test -n "$splash_partition_root" || { echo "splash_partition_root is not set"; exit 1; }; echo "$splash_partition_root"' splashbuilder
-su -s /bin/bash -c 'test -n "$SPLASHOS_TGT" || { echo "SPLASHOS_TGT is not set"; exit 1; }; echo "$SPLASHOS_TGT"' splashbuilder
+test="fail"
+su splashbuilder <<EOSU
+echo 'test ${test} ${splash_partition_root} :: $(whoami)'
+
+EOSU
+
+exit;
+#su -l splashbuilder -c 'test -n "${splash_partition_root}" || { echo "splash_partition_root is not set for user $(whoami) : $splash_partition_root"; exit 1; }; echo "${splash_partition_root}"' 
+su -s /bin/bash -c 'test -n "$SPLASHOS_TGT" || { echo "SPLASHOS_TGT is not set $(whoami)"; exit 1; }; echo "$SPLASHOS_TGT"' splashbuilder
 
 
 
