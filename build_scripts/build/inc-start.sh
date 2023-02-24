@@ -5,7 +5,7 @@ echo "Processing $2"
 echo "-------------------------------------------------------"
 sleep 1
 
-cd ./sources
+cd $DIST_ROOT/sources
 echo "Extracting..."
 tar --overwrite -xvf  $FILE
 DIR=$(echo $FILE | awk -F"\\\\.t" '{print $1}')
