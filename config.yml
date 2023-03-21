@@ -107,7 +107,7 @@ tools_list:
         version: 5.2.15
         url: https://ftp.gnu.org/gnu/bash/bash-{VERSION}.tar.gz
         patch: false
-        checksum: 4017e96f89fca45ca946f1c5db6be714
+        checksum: 4281bb43497f3905a308430a8d6a30a5
     bc:
         version: 6.2.4
         url: https://github.com/gavinhoward/bc/releases/download/{VERSION}/bc-{VERSION}.tar.xz
@@ -315,7 +315,7 @@ tools_list:
         checksum: 2fc0b6ddcd66a89ed6e45db28fa44232
     linux:
         version: 6.1.11
-        url: https://www.kernel.org/pub/linux/kernel/v5.x/linux-{VERSION}.tar.xz
+        url: https://www.kernel.org/pub/linux/kernel/v6.x/linux-{VERSION}.tar.xz
         patch: false
         checksum: f91621912cd58ac6d4128d4057980e7d
     m4:
@@ -429,7 +429,7 @@ tools_list:
         patch: https://www.linuxfromscratch.org/patches/lfs/11.3/systemd-252-security_fix-1.patch
         checksum: b9456750a212dd54d81caeb3c38134b6
     systemd_man_pages:
-        version: 252
+        version: 252-2
         url: https://anduin.linuxfromscratch.org/LFS/systemd-man-pages-{VERSION}.tar.xz
         patch: false
         checksum: c1df1aefdbc4840b5f82a8783f3b72c1
@@ -459,18 +459,18 @@ tools_list:
         patch: false
         checksum: 884250fd2a8a55f6322900ad4ab94d7b
     util_linux:
-        version: 2.38.1
+        version: 2.38
         url: https://www.kernel.org/pub/linux/utils/util-linux/v{VERSION}/util-linux-{VERSION}.1.tar.xz # version (2.38).1
         patch: false
         checksum: cd11456f4ddd31f7fbfdd9488c0c0d02
     vim:
         version: 9.0.1273
-        url: https://anduin.linuxfromscratch.org/LFS/vim-{VERSION}.tar.gz
+        url: https://anduin.linuxfromscratch.org/LFS/vim-{VERSION}.tar.xz
         patch: false
         checksum: 9c80755d2d95ec4ef713f66e57671797
     wheel:
         version: 0.38.4
-        url: https://anduin.linuxfromscratch.org/LFS/wheel-{VERSION}.tar.gz
+        url: https://pypi.org/packages/source/w/wheel/wheel-{VERSION}.tar.gz
         patch: false
         checksum: 83bb4e7bd4d687d398733f341a64ab91
     xml_parser:
