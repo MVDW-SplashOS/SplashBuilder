@@ -15,7 +15,8 @@ tools_enabled:
     - diffutils
     - e2fsprogs
     - elfutils
-    #- expat # 404 error in stable
+    #- eudev
+    - expat
     - expect
     - file
     - findutils
@@ -36,9 +37,10 @@ tools_enabled:
     - intltool
     - iproute2
     - jinja2
-    - #kbd  # 404 error in stable
+    - kbd
     - kmod
     - less
+    #- lfsbootscripts
     - libcap
     - libffi
     - libpipeline
@@ -102,20 +104,20 @@ tools_list:
         patch: false
         checksum: 4017e96f89fca45ca946f1c5db6be714
     bash:
-        version: 5.1.16
+        version: 5.2.15
         url: https://ftp.gnu.org/gnu/bash/bash-{VERSION}.tar.gz
         patch: false
-        checksum: c17b20a09fc38d67fb303aeb6c130b4e
+        checksum: 4281bb43497f3905a308430a8d6a30a5
     bc:
-        version: 6.0.1
+        version: 6.2.4
         url: https://github.com/gavinhoward/bc/releases/download/{VERSION}/bc-{VERSION}.tar.xz
         patch: false
-        checksum: 4c8b8d51eb52ee66f5bcf6a6a1ca576e
+        checksum: 5245ff400df17b66be7621c7a6498953
     binutils:
-        version: 2.39
+        version: 2.40
         url: https://ftp.gnu.org/gnu/binutils/binutils-{VERSION}.tar.xz
         patch: false
-        checksum: f7e986ae9ff06405cafb2e585ee36d27
+        checksum: 007b59bd908a737c06e5a8d3d2c737eb
     bison:
         version: 3.8.2
         url: https://ftp.gnu.org/gnu/bison/bison-{VERSION}.tar.xz
@@ -124,7 +126,7 @@ tools_list:
     bzip2:
         version: 1.0.8
         url: https://www.sourceware.org/pub/bzip2/bzip2-{VERSION}.tar.gz
-        patch: https://www.linuxfromscratch.org/patches/lfs/development/bzip2-1.0.8-install_docs-1.patch
+        patch: https://www.linuxfromscratch.org/patches/lfs/11.3/bzip2-1.0.8-install_docs-1.patch
         checksum: 67e051268d0c475ea773822f7500d0e5
     check:
         version: 0.15.2
@@ -134,48 +136,53 @@ tools_list:
     coreutils:
         version: 9.1
         url: https://ftp.gnu.org/gnu/coreutils/coreutils-{VERSION}.tar.xz
-        patch: https://www.linuxfromscratch.org/patches/lfs/development/coreutils-{VERSION}-i18n-1.patch
+        patch: https://www.linuxfromscratch.org/patches/lfs/11.3/coreutils-9.1-i18n-1.patch
         checksum: 8b1ca4e018a7dce9bb937faec6618671
     dbus:
-        version: 1.14.0
+        version: 1.14.6
         url: https://dbus.freedesktop.org/releases/dbus/dbus-{VERSION}.tar.xz
         patch: false
-        checksum: ddd5570aff05191dbee8e42d751f1b7d
+        checksum: e809d7aa905ad82adeaf1d59db5445b1
     dejagnu:
         version: 1.6.3
         url: https://ftp.gnu.org/gnu/dejagnu/dejagnu-{VERSION}.tar.gz
         patch: false
         checksum: 68c5208c58236eba447d7d6d1326b821
     diffutils:
-        version: 3.8
+        version: 3.9
         url: https://ftp.gnu.org/gnu/diffutils/diffutils-{VERSION}.tar.xz
         patch: false
-        checksum: 6a6b0fdc72acfe3f2829aab477876fbc
+        checksum: cf0a65266058bf22fe3feb69e57ffc5b
     e2fsprogs:
-        version: 1.46.5
+        version: 1.47.0
         url: https://downloads.sourceforge.net/project/e2fsprogs/e2fsprogs/v{VERSION}/e2fsprogs-{VERSION}.tar.gz
         patch: false
-        checksum: 3da91854c960ad8a819b48b2a404eb43
+        checksum: 6b4f18a33873623041857b4963641ee9
     elfutils:
-        version: 0.187
+        version: 0.188
         url: https://sourceware.org/ftp/elfutils/{VERSION}/elfutils-{VERSION}.tar.bz2
         patch: false
-        checksum: cc04f07b53a71616b22553c0a458cf4b
+        checksum: efb25a91873b2eec4df9f31e6a4f4e5c
+    eudev:
+        version: 3.2.11
+        url: https://github.com/eudev-project/eudev/releases/download/{VERSION}/eudev-{VERSION}.tar.gz
+        patch: false
+        checksum: efb25a91873b2eec4df9f31e6a4f4e5c
     expat:
-        version: 2.4.8
+        version: 2.5.0
         url: https://prdownloads.sourceforge.net/expat/expat-{VERSION}.tar.xz
         patch: false
-        checksum: 0584a7318a4c007f7ec94778799d72fe
+        checksum: ac6677b6d1b95d209ab697ce8b688704
     expect:
         version: 5.45.4
         url: https://prdownloads.sourceforge.net/expect/expect{VERSION}.tar.gz
         patch: false
         checksum: 00fce8de158422f5ccd2666512329bd2
     file:
-        version: 5.42
+        version: 5.44
         url: https://astron.com/pub/file/file-{VERSION}.tar.gz
         patch: false
-        checksum: 4d4f70c3b08a8a70d8baf67f085d7e92
+        checksum: a60d586d49d015d842b9294864a89c7a
     findutils:
         version: 4.9.0
         url: https://ftp.gnu.org/gnu/findutils/findutils-{VERSION}.tar.xz
@@ -187,10 +194,10 @@ tools_list:
         patch: false
         checksum: 2882e3179748cc9f9c23ec593d6adc8d
     gawk:
-        version: 5.1.1
+        version: 5.2.1
         url: https://ftp.gnu.org/gnu/gawk/gawk-{VERSION}.tar.xz
         patch: false
-        checksum: 83650aa943ff2fd519b2abedf8506ace
+        checksum: 02956bc5d117a7437bb4f7039f23b964
     gcc:
         version: 12.2.0
         url: https://ftp.gnu.org/gnu/gcc/gcc-{VERSION}/gcc-{VERSION}.tar.xz
@@ -202,15 +209,15 @@ tools_list:
         patch: false
         checksum: 8551961e36bf8c70b7500d255d3658ec
     gettext:
-        version: 0.21
+        version: 0.21.1
         url: https://ftp.gnu.org/gnu/gettext/gettext-{VERSION}.tar.xz
         patch: false
-        checksum: 40996bbaf7d1356d3c22e33a8b255b31
+        checksum: 27fcc8a42dbc8f334f23a08f1f2fe00a
     glibc:
-        version: 2.36
+        version: 2.37
         url: https://ftp.gnu.org/gnu/glibc/glibc-{VERSION}.tar.xz
-        patch: https://www.linuxfromscratch.org/patches/lfs/development/glibc-{VERSION}-fhs-1.patch
-        checksum: 00e9b89e043340f688bc93ec03239b57
+        patch: https://www.linuxfromscratch.org/patches/lfs/11.3/glibc-2.37-fhs-1.patch
+        checksum: e89cf3dcb64939d29f04b4ceead5cc4e
     gmp:
         version: 6.2.1
         url: https://ftp.gnu.org/gnu/gmp/gmp-{VERSION}.tar.xz
@@ -222,10 +229,10 @@ tools_list:
         patch: false
         checksum: 9e251c0a618ad0824b51117d5d9db87e
     grep:
-        version: 3.7
+        version: 3.8
         url: https://ftp.gnu.org/gnu/grep/grep-{VERSION}.tar.xz
         patch: false
-        checksum: 7c9cca97fa18670a21e72638c3e1dabf
+        checksum: dc6e4d18d4659e6e7552fc4a183c8ac9
     groff:
         version: 1.22.4
         url: https://ftp.gnu.org/gnu/groff/groff-{VERSION}.tar.gz
@@ -234,7 +241,7 @@ tools_list:
     grub:
         version: 2.06
         url: https://ftp.gnu.org/gnu/grub/grub-{VERSION}.tar.xz
-        patch: false
+        patch: https://www.linuxfromscratch.org/patches/lfs/11.3/grub-2.06-upstream_fixes-1.patch
         checksum: cf0fd928b1e5479c8108ee52cb114363
     gzip:
         version: 1.12
@@ -242,25 +249,25 @@ tools_list:
         patch: false
         checksum: 9608e4ac5f061b2a6479dc44e917a5db
     iana_etc:
-        version: 20221007
+        version: 20230202
         url: https://github.com/Mic92/iana-etc/releases/download/{VERSION}/iana-etc-{VERSION}.tar.gz
         patch: false
-        checksum: 4ba9c780b4cf3b0629a82fbe840cc14a
+        checksum: e64685d046cd0dfe94b5c66e294cf9ef
     inetutils:
-        version: 2.3
+        version: 2.4
         url: https://ftp.gnu.org/gnu/inetutils/inetutils-{VERSION}.tar.xz
         patch: false
-        checksum: e73e2ed42d73ceb47616b20131236036
+        checksum: 319d65bb5a6f1847c4810651f3b4ba74
     intltool:
         version: 0.51.0
         url: https://launchpad.net/intltool/trunk/{VERSION}/+download/intltool-{VERSION}.tar.gz
         patch: false
         checksum: 12e517cac2b57a0121cda351570f1e63
     iproute2:
-        version: 5.19.0
+        version: 6.1.0
         url: https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-{VERSION}.tar.xz
         patch: false
-        checksum: 415bd9eeb8515a585e245809d2fe45a6
+        checksum: f3ff4461e25dbc5ef1fb7a9167a9523d
     jinja2:
         version: 3.1.2
         url: https://files.pythonhosted.org/packages/source/J/Jinja2/Jinja2-{VERSION}.tar.gz
@@ -269,7 +276,7 @@ tools_list:
     kbd:
         version: 2.5.1
         url: https://www.kernel.org/pub/linux/utils/kbd/kbd-{VERSION}.tar.xz
-        patch: https://www.linuxfromscratch.org/patches/lfs/development/kbd-2.5.1-backspace-1.patch
+        patch: https://www.linuxfromscratch.org/patches/lfs/11.3/kbd-2.5.1-backspace-1.patch
         checksum: 10f10c0a9d897807733f2e2419814abb
     kmod:
         version: 30
@@ -277,90 +284,95 @@ tools_list:
         patch: false
         checksum: 85202f0740a75eb52f2163c776f9b564
     less:
-        version: 590
+        version: 608
         url: https://www.greenwoodsoftware.com/less/less-{VERSION}.tar.gz
         patch: false
-        checksum: f029087448357812fba450091a1172ab
+        checksum: 1cdec714569d830a68f4cff11203cdba
+    lfsbootscripts:
+        version: 20230101
+        url: https://www.linuxfromscratch.org/lfs/downloads/11.3/lfs-bootscripts-{VERSION}.tar.xz
+        patch: false
+        checksum: 569217b0b56f98fd267d38d72ee20132
     libcap:
-        version: 2.65
+        version: 2.67
         url: https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-{VERSION}.tar.xz
         patch: false
-        checksum: 3543e753dd941255c4def6cc67a462bb
+        checksum: 06333f4301657298890fd8d6f1fb4793
     libffi:
-        version: 3.4.2
+        version: 3.4.4
         url: https://github.com/libffi/libffi/releases/download/v{VERSION}/libffi-{VERSION}.tar.gz
         patch: false
-        checksum: 294b921e6cf9ab0fbaea4b639f8fdbe8
+        checksum: 0da1a5ed7786ac12dcbaf0d499d8a049
     libpipeline:
-        version: 1.5.6
+        version: 1.5.7
         url: https://download.savannah.gnu.org/releases/libpipeline/libpipeline-{VERSION}.tar.gz
         patch: false
-        checksum: 829c9ba46382b0b3e12dd11fcbc1bb27
+        checksum: 1a48b5771b9f6c790fb4efdb1ac71342
     libtool:
         version: 2.4.7
         url: https://ftp.gnu.org/gnu/libtool/libtool-{VERSION}.tar.xz
         patch: false
         checksum: 2fc0b6ddcd66a89ed6e45db28fa44232
     linux:
-        version: 5.19.2
-        url: https://www.kernel.org/pub/linux/kernel/v5.x/linux-{VERSION}.tar.xz
+        version: 6.1.11
+        url: https://www.kernel.org/pub/linux/kernel/v6.x/linux-{VERSION}.tar.xz
         patch: false
-        checksum: 391274e2e49a881403b0ff2e0712bf82
+        checksum: f91621912cd58ac6d4128d4057980e7d
     m4:
         version: 1.4.19
         url: https://ftp.gnu.org/gnu/m4/m4-{VERSION}.tar.xz
         patch: false
         checksum: 0d90823e1426f1da2fd872df0311298d
     make:
-        version: 4.3
+        version: 4.4
         url: https://ftp.gnu.org/gnu/make/make-{VERSION}.tar.gz
         patch: false
-        checksum: fc7a67ea86ace13195b0bce683fd4469
+        checksum: d7575a26a94ee8427130e9db23cdaa78
     man_db:
-        version: 2.10.2
+        version: 2.11.2
         url: https://download.savannah.gnu.org/releases/man-db/man-db-{VERSION}.tar.xz
         patch: false
-        checksum: e327f7af3786d15e5851658ae7ef47ed
+        checksum: a7d59fb2df6158c44f8f7009dcc6d875
     man_pages:
-        version: 6.00
+        version: 6.03
         url: https://www.kernel.org/pub/linux/docs/man-pages/man-pages-{VERSION}.tar.xz
         patch: false
-        checksum: 1a30556c061af0616bd8af882e040edb
+        checksum: c62b7c944bb0887a35edab7cab301357
     markupsafe:
-        version: 2.1.1
+        version: 2.1.2
         url: https://files.pythonhosted.org/packages/source/M/MarkupSafe/MarkupSafe-{VERSION}.tar.gz
         patch: false
-        checksum: 9809f9fdd98bc835b0c21aa8f79cbf30
+        checksum: 02f337b98aef11bd0fee9c5ae860173b
     meson:
-        version: 0.63.1
+        version: 1.0.0
         url: https://github.com/mesonbuild/meson/releases/download/{VERSION}/meson-{VERSION}.tar.gz
         patch: false
-        checksum: 078e59d11a72b74c3bd78cb8205e9ed7
+        checksum: 009b78125467cd9ee4d467175a5c12e1
     mpc:
-        version: 1.2.1
+        version: 1.3.1
         url: https://ftp.gnu.org/gnu/mpc/mpc-{VERSION}.tar.gz
         patch: false
-        checksum: 9f16c976c25bb0f76b50be749cd7a3a8
+        checksum: 5c9bc658c9fd0f940e8e3e0f09530c62
     mpfr:
-        version: 4.1.0
+        version: 4.2.0
         url: https://ftp.gnu.org/gnu/mpfr/mpfr-{VERSION}.tar.xz
         patch: false
-        checksum: bdd3d5efba9c17da8d83a35ec552baef
+        checksum: a25091f337f25830c16d2054d74b5af7
     ncurses:
-        version: 6.3
+        version: 6.4
         url: https://invisible-mirror.net/archives/ncurses/ncurses-{VERSION}.tar.gz
         patch: false
-        checksum: a2736befde5fee7d2b7eb45eb281cdbe
+        checksum: 5a62487b5d4ac6b132fe2bf9f8fad29b
     ninja:
-        version: 1.11.0
+        version: 1.11.1
         url: https://github.com/ninja-build/ninja/archive/v{VERSION}/ninja-{VERSION}.tar.gz
         patch: false
-        checksum: 7d1a1a2f5cdc06795b3054df5c17d5ef
+        checksum: 32151c08211d7ca3c1d832064f6939b0
     openssl:
-        version: 3.0.5
+        version: 3.0.8
         url: https://www.openssl.org/source/openssl-{VERSION}.tar.gz
         patch: false
-        checksum: 163bb3e58c143793d1dc6a6ec7d185d5
+        checksum: 61e017cf4fea1b599048f621f1490fbd
     patch:
         version: 2.7.6
         url: https://ftp.gnu.org/gnu/patch/patch-{VERSION}.tar.xz
@@ -377,107 +389,107 @@ tools_list:
         patch: false
         checksum: f6e931e319531b736fadc017f470e68a
     procps_ng:
-        version: 4.0.0
+        version: 4.0.2
         url: https://sourceforge.net/projects/procps-ng/files/Production/procps-ng-{VERSION}.tar.xz
         patch: false
-        checksum: eedf93f2f6083afb7abf72188018e1e5
+        checksum: 691748c4767f19b9d94ed9d088e40c4d
     psmisc:
-        version: 23.5
+        version: 23.6
         url: https://sourceforge.net/projects/psmisc/files/psmisc/psmisc-{VERSION}.tar.xz
         patch: false
-        checksum: 014f0b5d5ab32478a2c57812ad01e1fb
+        checksum: ed3206da1184ce9e82d607dc56c52633
     python:
-        version: 3.10.6
+        version: 3.11.2
         url: https://www.python.org/ftp/python/{VERSION}/Python-{VERSION}.tar.xz
         patch: false
-        checksum: afc7e14f7118d10d1ba95ae8e2134bf0
+        checksum: a957cffb58a89303b62124896881950b
     python_docs:
-        version: 3.10.6
+        version: 3.11.2
         url: https://www.python.org/ftp/python/doc/{VERSION}/python-{VERSION}-docs-html.tar.bz2
         patch: false
-        checksum: 8f32c4f4f0b18ec56e8b3822bbaeb017
+        checksum: eb4132c780b60b5782a4f66b29b08d5c
     readline:
-        version: 8.1.2
+        version: 8.2
         url: https://ftp.gnu.org/gnu/readline/readline-{VERSION}.tar.gz
-        patch: false
-        checksum: 12819fa739a78a6172400f399ab34f81
+        patch: https://www.linuxfromscratch.org/patches/lfs/11.3/readline-8.2-upstream_fix-1.patch
+        checksum: 4aa1b31be779e6b84f9a96cb66bc50f6
     sed:
-        version: 4.8
+        version: 4.9
         url: https://ftp.gnu.org/gnu/sed/sed-{VERSION}.tar.xz
         patch: false
-        checksum: 6d906edfdb3202304059233f51f9a71d
+        checksum: 6aac9b2dbafcd5b7a67a8a9bcb8036c3
     shadow:
-        version: 4.12.2
+        version: 4.13
         url: https://github.com/shadow-maint/shadow/releases/download/{VERSION}/shadow-{VERSION}.tar.xz
         patch: false
-        checksum: 52637cb34c357acf85c617cf95da34a6
+        checksum: b1ab01b5462ddcf43588374d57bec123
     systemd:
-        version: 251
+        version: 252
         url: https://github.com/systemd/systemd/archive/v{VERSION}/systemd-{VERSION}.tar.gz
-        patch: https://www.linuxfromscratch.org/patches/lfs/development/systemd-251-glibc_2.36_fix-1.patch
-        checksum: 8090fcccc3a2ec20995e89d56fed61b1
+        patch: https://www.linuxfromscratch.org/patches/lfs/11.3/systemd-252-security_fix-1.patch
+        checksum: b9456750a212dd54d81caeb3c38134b6
     systemd_man_pages:
-        version: 251
+        version: 252-2
         url: https://anduin.linuxfromscratch.org/LFS/systemd-man-pages-{VERSION}.tar.xz
         patch: false
-        checksum: 87053ffef1cfb74e4fe28f627e12a2a4
+        checksum: c1df1aefdbc4840b5f82a8783f3b72c1
     tar:
         version: 1.34
         url: https://ftp.gnu.org/gnu/tar/tar-{VERSION}.tar.xz
         patch: false
         checksum: 9a08d29a9ac4727130b5708347c0f5cf
     tcl:
-        version: 8.6.12
+        version: 8.6.13
         url: https://downloads.sourceforge.net/tcl/tcl{VERSION}-src.tar.gz
         patch: false
-        checksum: 87ea890821d2221f2ab5157bc5eb885f
+        checksum: 0e4358aade2f5db8a8b6f2f6d9481ec2
     tcl_docs:
-        version: 8.6.12
+        version: 8.6.13
         url: https://downloads.sourceforge.net/tcl/tcl{VERSION}-html.tar.gz
         patch: false
-        checksum: a0d1a5b60bbb68f2f0bd3066a19c527a
+        checksum: 4452f2f6d557f5598cca17b786d6eb68
     texinfo:
-        version: 6.8
+        version: 7.0.2
         url: https://ftp.gnu.org/gnu/texinfo/texinfo-{VERSION}.tar.xz
         patch: false
-        checksum: a91b404e30561a5df803e6eb3a53be71
+        checksum: be9500f3a361525622850ecb1b1fc024
     tzdata:
-        version: 2022e
+        version: 2022g
         url: https://www.iana.org/time-zones/repository/releases/tzdata{VERSION}.tar.gz
         patch: false
-        checksum: 97bf180d57c3e51a49742d1d87ceed40
+        checksum: 884250fd2a8a55f6322900ad4ab94d7b
     util_linux:
         version: 2.38
         url: https://www.kernel.org/pub/linux/utils/util-linux/v{VERSION}/util-linux-{VERSION}.1.tar.xz # version (2.38).1
         patch: false
         checksum: cd11456f4ddd31f7fbfdd9488c0c0d02
     vim:
-        version: 9.0.0739
-        url: https://anduin.linuxfromscratch.org/LFS/vim-{VERSION}.tar.gz
+        version: 9.0.1273
+        url: https://anduin.linuxfromscratch.org/LFS/vim-{VERSION}.tar.xz
         patch: false
-        checksum: d28503800dcd471edf8c308f5a74f177
+        checksum: 9c80755d2d95ec4ef713f66e57671797
     wheel:
-        version: 0.37.1
-        url: https://anduin.linuxfromscratch.org/LFS/wheel-{VERSION}.tar.gz
+        version: 0.38.4
+        url: https://pypi.org/packages/source/w/wheel/wheel-{VERSION}.tar.gz
         patch: false
-        checksum: f490f1399e5903706cb1d4fbed9ecb28
+        checksum: 83bb4e7bd4d687d398733f341a64ab91
     xml_parser:
         version: 2.46
         url: https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-{VERSION}.tar.gz
         patch: false
         checksum: 80bb18a8e6240fcf7ec2f7b57601c170
     xz:
-        version: 5.2.6
+        version: 5.4.1
         url: https://tukaani.org/xz/xz-{VERSION}.tar.xz
         patch: false
-        checksum: d9cd5698e1ec06cf638c0d2d645e8175
+        checksum: 47d831c659e94071d5dd384d0d1ed4c6
     zlib:
         version: 1.2.13
         url: https://zlib.net/zlib-{VERSION}.tar.xz
         patch: false
         checksum: 7d9fc1d78ae2fa3e84fe98b77d006c63
     zstd:
-        version: 1.5.2
+        version: 1.5.4
         url: https://github.com/facebook/zstd/releases/download/v{VERSION}/zstd-{VERSION}.tar.gz
-        patch: https://www.linuxfromscratch.org/patches/lfs/development/zstd-1.5.2-upstream_fixes-1.patch
-        checksum: 072b10f71f5820c24761a65f31f43e73
+        patch: false
+        checksum: 2352b1f9ccc7446641046bb3d440c3ed

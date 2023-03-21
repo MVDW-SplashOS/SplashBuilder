@@ -17,12 +17,12 @@ create_variables
 #tar -xf "../mpc-${config_tools_list__mpc__version}.tar.gz"
 #mv -vn "mpc-${config_tools_list__mpc__version}" mpc
 
-tar -xf ../mpfr-4.1.0.tar.xz
-mv -vn mpfr-4.1.0 mpfr
+tar -xf ../mpfr-4.2.0.tar.xz
+mv -v mpfr-4.2.0 mpfr
 tar -xf ../gmp-6.2.1.tar.xz
-mv -vn gmp-6.2.1 gmp
-tar -xf ../mpc-1.2.1.tar.gz
-mv -vn mpc-1.2.1 mpc
+mv -v gmp-6.2.1 gmp
+tar -xf ../mpc-1.3.1.tar.gz
+mv -v mpc-1.3.1 mpc
 
 
 sed -e '/m64=/s/lib64/lib/' \
@@ -36,14 +36,15 @@ cd       build
 ../configure                  \
     --target=$SPLASHOS_TGT         \
     --prefix=$splash_partition_root/tools       \
-    --with-glibc-version=2.36 \
+    --with-glibc-version=2.37 \
     --with-sysroot=$splash_partition_root       \
     --with-newlib             \
     --without-headers         \
+    --enable-default-pie      \
+    --enable-default-ssp      \
     --disable-nls             \
     --disable-shared          \
     --disable-multilib        \
-    --disable-decimal-float   \
     --disable-threads         \
     --disable-libatomic       \
     --disable-libgomp         \
@@ -52,7 +53,7 @@ cd       build
     --disable-libvtv          \
     --disable-libstdcxx       \
     --enable-languages=c,c++
-
+    
 make
 make install
 

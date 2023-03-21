@@ -5,7 +5,7 @@ echo ${SPLASHOS_TGT:?}
 ln -sfv ../lib/ld-linux-x86-64.so.2 $splash_partition_root/lib64
 ln -sfv ../lib/ld-linux-x86-64.so.2 $splash_partition_root/lib64/ld-lsb-x86-64.so.3
 
-patch -Np1 -i ../glibc-2.36-fhs-1.patch
+patch -Np1 -i ../glibc-2.37-fhs-1.patch
 
 mkdir -pv build
 cd       build
