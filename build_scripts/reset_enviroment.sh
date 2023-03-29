@@ -19,6 +19,6 @@ done
 chown -v splashbuilder $splash_partition_root/{usr{,/*},lib64,lib,var,etc,bin,sbin,tools}
 
 
-chown -v splashbuilder -R ./sources
-chmod -v 777 -R ./sources
+#chown -v splashbuilder -R ./sources
+#chmod -v 777 -R ./sources
 echo "Success resetting build enviroment."
