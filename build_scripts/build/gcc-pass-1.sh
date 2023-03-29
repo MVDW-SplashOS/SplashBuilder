@@ -7,7 +7,7 @@ export yaml_prefix="config_"
 source ./build_scripts/parse_yaml.sh
 create_variables 
 
-. ./build_scripts/build/inc-start.sh $1 $(basename $0)
+. $DIST_ROOT/build_scripts/build/inc-start.sh $1 $(basename $0)
 
 #
 #tar -xf "../mpfr-${config_tools_list__mpfr__version}.tar.xz"
@@ -62,4 +62,4 @@ cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
   `dirname $($SPLASHOS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h
 pwd
 
-#. $DIST_ROOT/build_env/build_scripts/inc-end.sh $1 $(basename $0)
+. $DIST_ROOT/build_scripts/build/inc-end.sh $1 $(basename $0)

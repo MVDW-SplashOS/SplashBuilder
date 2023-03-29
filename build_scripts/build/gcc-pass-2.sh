@@ -7,7 +7,7 @@ export yaml_prefix="config_"
 source ./build_scripts/parse_yaml.sh
 create_variables 
 
-. ./build_scripts/build/inc-start.sh $1 $(basename $0)
+. $DIST_ROOT/build_scripts/build/inc-start.sh $1 $(basename $0)
 
 #
 #tar -xf "../mpfr-${config_tools_list__mpfr__version}.tar.xz"
@@ -56,4 +56,4 @@ make install
 
 ln -sv gcc $LFS/usr/bin/cc
 
-#. $DIST_ROOT/build_env/build_scripts/inc-end.sh $1 $(basename $0)
+. $DIST_ROOT/build_scripts/build/inc-end.sh $1 $(basename $0)

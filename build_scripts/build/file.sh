@@ -14,6 +14,6 @@ popd
 make FILE_COMPILE=$(pwd)/build/src/file
 make DESTDIR=$splash_partition_root install
 
-rm -v $SPLASHOS_TGT/usr/lib/libmagic.la
+rm -vf $splash_partition_root/usr/lib/libmagic.la
 
 . $DIST_ROOT/build_scripts/build/inc-end.sh $1 $(basename $0)
