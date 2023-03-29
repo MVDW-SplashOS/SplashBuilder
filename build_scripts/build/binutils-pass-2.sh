@@ -21,7 +21,7 @@ cd       build
     
     
 make
-make install
+make DESTDIR=$splash_partition_root install
 
 rm -v $splash_partition_root/usr/lib/lib{bfd,ctf,ctf-nobfd,opcodes}.{a,la}
 

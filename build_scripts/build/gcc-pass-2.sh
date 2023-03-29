@@ -52,7 +52,7 @@ cd       build
     --enable-languages=c,c++
     
 make
-make install
+make DESTDIR=$splash_partition_root install
 
 ln -sv gcc $LFS/usr/bin/cc
 
