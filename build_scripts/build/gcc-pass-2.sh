@@ -54,6 +54,6 @@ cd       build
 make
 make DESTDIR=$splash_partition_root install
 
-ln -sv gcc $LFS/usr/bin/cc
+ln -sv gcc $splash_partition_root/usr/bin/cc
 
 . $DIST_ROOT/build_scripts/build/inc-end.sh $1 $(basename $0)
