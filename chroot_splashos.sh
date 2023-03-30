@@ -50,7 +50,11 @@ echo $splash_partition_root
 
 # Copy Required scripts to the Chroot Enviroment
 cp -r ./build_scripts/chroot/* $splash_partition_root
+cp -r ./build_scripts/parse_yaml.sh $splash_partition_root/splash_builder
+cp -r ./config.yaml $splash_partition_root
 
+# Copy sources directory to Chroot enviroment
+cp -r ./sources $splash_partition_root
 
 # Change Ownership
 chown -R root:root $splash_partition_root/{usr,lib,var,etc,bin,sbin,tools,lib64}
