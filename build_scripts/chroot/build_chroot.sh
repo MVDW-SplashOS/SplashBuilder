@@ -20,5 +20,5 @@ bash -e /splash_builder/bison.sh "bison-${config_tools_list__bison__version}.tar
 bash -e /splash_builder/perl.sh "perl-${config_tools_list__perl__version}.tar.xz"
 bash -e /splash_builder/python.sh "Python-${config_tools_list__python__version}.tar.xz"
 bash -e /splash_builder/texinfo.sh "texinfo-${config_tools_list__texinfo__version}.tar.xz"
-bash -e /splash_builder/utillinux.sh "util-linux-${config_tools_list__util_linux__version}.tar.xz"
+bash -e /splash_builder/utillinux.sh "util-linux-${config_tools_list__util_linux__version}.1.tar.xz"
 bash -e /splash_builder/cleanup.sh
