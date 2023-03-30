@@ -29,7 +29,7 @@ set +h
 umask 022
 splash_partition_root=/home/mvdw/Documents/GitHub/SplashOS/splashos
 LC_ALL=POSIX
-SPLASHOS_TGT=$(uname -m)-lfs-linux-gnu
+SPLASHOS_TGT=$(uname -m)-splash-linux-gnu
 PATH=/usr/bin
 if [ ! -L /bin ]; then PATH=/bin:$PATH; fi
 PATH=$splash_partition_root/tools/bin:$PATH

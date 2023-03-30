@@ -44,7 +44,7 @@ export LC_ALL=C
 
 # TEMPORARY: Setup required variables.
 export splash_partition_root=/home/mvdw/Documents/GitHub/SplashOS/splashos
-export SPLASHOS_TGT=$(uname -m)-lfs-linux-gnu
+export SPLASHOS_TGT=$(uname -m)-splash-linux-gnu
 
 echo $splash_partition_root
 
