@@ -24,7 +24,7 @@ install -dv -m 1777 /tmp /var/tmp
 
 
 # Creating Essential Files and Symlinks
-ln -sv /proc/self/mounts /etc/mtab
+ln -sfv /proc/self/mounts /etc/mtab
 
 cat > /etc/hosts << EOF
 127.0.0.1  localhost $(hostname)
@@ -89,7 +89,7 @@ echo "tester:x:101:101::/home/tester:/bin/bash" >> /etc/passwd
 echo "tester:x:101:" >> /etc/group
 install -o tester -d /home/tester
 
-exec /usr/bin/bash --login
+#exec /usr/bin/bash --login
 
 touch /var/log/{btmp,lastlog,faillog,wtmp}
 chgrp -v utmp /var/log/lastlog
