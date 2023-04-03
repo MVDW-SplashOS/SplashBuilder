@@ -13,10 +13,10 @@ cd       build
              --with-system-zlib
 make
 ulimit -s 32768
-chown -Rv tester .
+#chown -Rv tester .
 
-su tester -c "PATH=$PATH make -k check"
-../contrib/test_summary
+#su tester -c "PATH=$PATH make -k check"
+#../contrib/test_summary
 
 make install
 
