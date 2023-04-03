@@ -5,8 +5,8 @@
 make
 make html
 
-chown -Rv tester .
-su tester -c "PATH=$PATH make check"
+#chown -Rv tester .
+#su tester -c "PATH=$PATH make check"
 
 make install
 

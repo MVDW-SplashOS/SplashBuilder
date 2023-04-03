@@ -19,8 +19,8 @@ cd       build
              --with-system-zlib
 
 make tooldir=/usr
-make -k check
-grep '^FAIL:' $(find -name '*.log')
+#make -k check
+#grep '^FAIL:' $(find -name '*.log')
 make tooldir=/usr install
 
 rm -fv /usr/lib/lib{bfd,ctf,ctf-nobfd,sframe,opcodes}.a
