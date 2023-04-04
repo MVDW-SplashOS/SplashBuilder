@@ -23,7 +23,7 @@ make install
 chown -v -R root:root \
     /usr/lib/gcc/$(gcc -dumpmachine)/12.2.0/include{,-fixed}
 
-ln -svr /usr/bin/cpp /usr/lib
+ln -sfvr /usr/bin/cpp /usr/lib
 ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/12.2.0/liblto_plugin.so \
         /usr/lib/bfd-plugins/
 
