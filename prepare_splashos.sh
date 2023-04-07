@@ -81,7 +81,8 @@ source ./build_scripts/prepare/directory_layout.sh
 # Step 1.4 - Create and setup SplashBuilder user
 source ./build_scripts/prepare/create_user.sh
 
+chmod 777 -R $splash_partition_root
 
 echo "----------------------------------"
 echo "The preperation of the build enviroment has been finished!"
-echo "please run the build_splashos.sh as user splashbuilder with 'su splashbuilder'"
+echo "please run the build_splashos.sh as user splashbuilder with 'sudo su splashbuilder'"
