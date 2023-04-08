@@ -1,5 +1,8 @@
 . /splash_builder/inc-start.sh $1 $(basename $0)
 
+sed -e '/m64=/s/lib64/lib/' \
+        -i.orig gcc/config/i386/t-linux64
+
 mkdir -v build
 cd       build
 
