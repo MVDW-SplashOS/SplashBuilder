@@ -55,3 +55,13 @@ bash -e /splash_builder/mandb.sh "man-db-${config_tools_list__man_db__version}.t
 bash -e /splash_builder/procpsng.sh "procps-ng-${config_tools_list__procps_ng__version}.tar.xz"
 bash -e /splash_builder/utillinux-pass-2.sh "util-linux-${config_tools_list__util_linux__version}.tar.xz"
 bash -e /splash_builder/e2fsprogs.sh "e2fsprogs-${config_tools_list__e2fsprogs__version}.tar.gz"
+
+# Cleanup system
+rm -rf /tmp/*
+find /usr/lib /usr/libexec -name \*.la -delete
+find /usr -depth -name $(uname -m)-lfs-linux-gnu\* | xargs rm -rf
+userdel -r tester
+
+echo "---------------------------"
+echo "Build part 2/2 has been finished, please configure the system by running './configure_chroot.sh'"
+
