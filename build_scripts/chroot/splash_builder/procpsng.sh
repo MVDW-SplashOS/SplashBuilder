@@ -7,6 +7,7 @@
             --with-systemd
 
 make
+make check
 make install
 
 . /splash_builder/inc-end.sh $1 $(basename $0)
