@@ -11,7 +11,7 @@
 mapfile -t disks < <(sudo fdisk -l | awk '/^\/dev/ {print $1}')
 
 splash_partition_root_device=/dev/vdb1
-splash_partition_root=/home/mvdw/Documents/GitHub/SplashOS/splashos
+splash_partition_root=/mnt/splashos
 
 printf $Blue
 

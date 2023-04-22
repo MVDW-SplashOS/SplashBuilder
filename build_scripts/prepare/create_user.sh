@@ -27,7 +27,7 @@ fi
 cat > $dbhome/.bashrc  << "EOF"
 set +h
 umask 022
-splash_partition_root=/home/mvdw/Documents/GitHub/SplashOS/splashos
+splash_partition_root=/mnt/splashos
 LC_ALL=POSIX
 SPLASHOS_TGT=$(uname -m)-splash-linux-gnu
 PATH=/usr/bin
