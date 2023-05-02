@@ -1,3 +1,31 @@
+#############################
+#
+#      PATH SECTION
+#
+#############################
+
+# What type of location should SplashOS build in?
+# Choice the following options:
+#   - directory 
+#   - partition (recommended)
+path_type: directory
+
+# What partition should be mounted?
+# Note: only required when path_type is set on "partition"
+path_device: /dev/null
+
+# The path where SplashOS should be build in
+# When path_type is set on the "partition" the "path_device" will be mounted on that location.
+path_build: /mnt/splashos
+
+#############################
+#
+#      TOOLS SECTION 
+#
+#############################
+
+# Advanced users only, don't change unless you know what you are doing.
+# Enable or Disable packages to build.
 tools_enabled:
     - acl
     - attr
@@ -82,6 +110,8 @@ tools_enabled:
     - zlib
     - zstd
 
+# Advanced users only, don't change unless you know what you are doing.
+# Package settings 
 tools_list:
     acl:
         version: 2.3.1
@@ -459,8 +489,8 @@ tools_list:
         patch: false
         checksum: 884250fd2a8a55f6322900ad4ab94d7b
     util_linux:
-        version: 2.38
-        url: https://www.kernel.org/pub/linux/utils/util-linux/v{VERSION}/util-linux-{VERSION}.1.tar.xz # version (2.38).1
+        version: 2.38.1
+        url: https://www.kernel.org/pub/linux/utils/util-linux/v{VERSION}/util-linux-{VERSION}.tar.xz
         patch: false
         checksum: cd11456f4ddd31f7fbfdd9488c0c0d02
     vim:
