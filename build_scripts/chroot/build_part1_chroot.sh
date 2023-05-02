@@ -28,7 +28,7 @@ bash -e /splash_builder/bison-pass-1.sh "bison-${config_tools_list__bison__versi
 bash -e /splash_builder/perl-pass-1.sh "perl-${config_tools_list__perl__version}.tar.xz"
 bash -e /splash_builder/python-pass-1.sh "Python-${config_tools_list__python__version}.tar.xz"
 bash -e /splash_builder/texinfo-pass-1.sh "texinfo-${config_tools_list__texinfo__version}.tar.xz"
-bash -e /splash_builder/utillinux-pass-1.sh "util-linux-${config_tools_list__util_linux__version}.1.tar.xz"
+bash -e /splash_builder/utillinux-pass-1.sh "util-linux-${config_tools_list__util_linux__version}.tar.xz"
 bash -e /splash_builder/cleanup.sh
 
 
