@@ -60,5 +60,12 @@ f_prompt
 
 export LC_ALL=C
 
+
+# Include and parse yaml script
+export yaml_file=./config.yml
+export yaml_prefix="config_"
+source ./build_scripts/functions/parse_yaml.sh
+create_variables 
+
 source ./build_scripts/core_prepare.sh
 source ./build_scripts/core_build.sh
