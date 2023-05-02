@@ -37,7 +37,7 @@ source ./build_scripts/prepare/dependencies.sh
 # Step 1.3 - Create directory layout
 source ./build_scripts/prepare/directory_layout.sh
 
-# Step 1.4 - Create and setup SplashBuilder user
-source ./build_scripts/prepare/create_user.sh
+# Step 1.4 - Setup bash enviroment
+source ./build_scripts/prepare/modify_enviroment.sh
 
 chmod 777 -R $splash_partition_root
