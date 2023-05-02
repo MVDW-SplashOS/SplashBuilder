@@ -8,39 +8,6 @@
 # This tool is made to create a full SplashOS install.
 #  
 
-# Include dependency's
-source ./build_scripts/global_functions.sh
-source ./build_scripts/style/color.sh
-
-set -e
-
-# check if correct user is running script.
-if [ $USER != "splashbuilder" ]; then
-        printf $BRed
-	printf "ERROR: "
-	printf $IRed
-	printf "Please run this script as splashbuilder.\n"
-	exit 2
-fi
-
-
-
-# Print SplashOS builder info
-source ./build_scripts/style/print_logo.sh
-printf "\n\n"
-
-# Notify user its safer to run in vm
-printf $BIYellow
-printf "WARNING: "
-printf $Yellow
-printf "This script will reconfigure your system and install packages to build SplashOS.\n"
-printf "This script might break your system so use at your own risk, use a virtual machine to be safe.\n\n"
-
-
-f_prompt "Do you want to continue (y/n)?"
-
-# Override localisation settings
-export LC_ALL=C
 
 
 # Loading the config file 
