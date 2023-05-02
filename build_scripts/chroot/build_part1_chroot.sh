@@ -67,10 +67,9 @@ bash -e /splash_builder/bison-pass-2.sh "bison-${config_tools_list__bison__versi
 bash -e /splash_builder/grep.sh "grep-${config_tools_list__grep__version}.tar.xz"
 bash -e /splash_builder/bash.sh "bash-${config_tools_list__bash__version}.tar.gz"
 
-echo "---------------------------"
-echo "Build part 1/2 has been finished, please run build script 2/2 by running './build_part2_chroot.sh'"
-
-exec /usr/bin/bash --login
+cat << EOF | exec /usr/bin/bash --login
+./build_part2_chroot.sh
+EOF
 
 
 
