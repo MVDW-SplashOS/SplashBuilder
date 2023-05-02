@@ -1,6 +1,13 @@
 #!/bin/bash
 
 
+# Include and parse yaml script
+export yaml_file=./config.yml
+export yaml_prefix="config_"
+source ./build_scripts/functions/parse_yaml.sh
+create_variables 
+
+
 # All steps required to build SplashOS:
 # 
 # Step 1: Prepare the host system

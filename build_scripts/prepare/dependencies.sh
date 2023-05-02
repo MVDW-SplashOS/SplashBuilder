@@ -4,12 +4,6 @@ echo "test partition set: ${splash_partition_root:?}"
 mkdir -p ./sources
 chmod -v a+wt ./sources
 
-# Include and parse yaml script
-export yaml_file=./config.yml
-export yaml_prefix="config_"
-source ./build_scripts/parse_yaml.sh
-create_variables 
-
 
 # downloading all required tools
 for TOOL in ${config_tools_enabled_[*]}; do
