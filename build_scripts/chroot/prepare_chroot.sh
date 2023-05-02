@@ -89,4 +89,8 @@ echo "tester:x:101:101::/home/tester:/bin/bash" >> /etc/passwd
 echo "tester:x:101:" >> /etc/group
 install -o tester -d /home/tester
 
-exec /usr/bin/bash --login
+cat << EOF | exec /usr/bin/bash --login
+./build_part1_chroot.sh
+EOF
+
+

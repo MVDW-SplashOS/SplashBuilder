@@ -1,4 +1,4 @@
-. ./build_scripts/build/inc-start.sh $1 $(basename $0)
+. $DIST_ROOT/build_scripts/build/inc-start.sh $1 $(basename $0)
 
 echo ${splash_partition_root:?}
 echo ${SPLASHOS_TGT:?}
@@ -21,5 +21,5 @@ make DESTDIR=$splash_partition_root install
 
 rm -v $splash_partition_root/usr/lib/lib{stdc++,stdc++fs,supc++}.la
 
-#. $DIST_ROOT/build_env/build_scripts/inc-end.sh $1 $(basename $0)
+. $DIST_ROOT/build_scripts/build/inc-end.sh $1 $(basename $0)
 

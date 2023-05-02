@@ -1,7 +1,7 @@
 FILE=$1
 
 echo "-------------------------------------------------------"
-echo "Processing $2"
+echo "Processing $FILE"
 echo "-------------------------------------------------------"
 sleep 1
 
@@ -10,5 +10,4 @@ echo "Extracting..."
 tar --overwrite -xvf  $FILE
 DIR=$(echo $FILE | awk -F"\\\\.t" '{print $1}')
 cd $DIR
-echo "Changed to build path"
-pwd
+
