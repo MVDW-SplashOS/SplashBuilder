@@ -1,7 +1,32 @@
 #############################
-#
-#      PATH SECTION
-#
+#                           #
+#      RELEASE SECTION      #
+#                           #
+#############################
+
+# Name of the Linux distribution if you wanna make a SplashOS based distro.
+release_name: SplashOS
+
+# Version of the build 
+release_version: 0.0.1
+
+# Codename for this build
+release_codename: Kokomi
+
+# release cycle
+# Choice the following options:
+#   - release
+#   - rc
+#   - beta
+#   - alpha
+#   - pre-alpha 
+release_cycle: pre-alpha
+
+
+#############################
+#                           #
+#        PATH SECTION       #
+#                           #
 #############################
 
 # What type of location should SplashOS build in?
@@ -18,10 +43,32 @@ path_device: /dev/null
 # When path_type is set on the "partition" the "path_device" will be mounted on that location.
 path_build: /mnt/splashos
 
+
 #############################
-#
-#      TOOLS SECTION 
-#
+#                           #
+#      OUTPUT SECTION       #
+#                           #
+#############################
+
+# Enable or Disable to export as a single file.
+output_makefile: false
+
+# What type of file should be exported from the output?
+# Choice the following options:
+#   - iso(recommended): can be used on a vm or bare metal.
+#   - vmdk: for a vmware virtual machine
+#   - vdi: for a virtualbox virtual machine
+#   - qcow2: for a qemu virtual machine
+output_filetype: iso
+
+# Where should we export the file? 
+output_path: .
+
+
+#############################
+#                           #
+#       TOOLS SECTION       #
+#                           #
 #############################
 
 # Advanced users only, don't change unless you know what you are doing.
@@ -74,6 +121,7 @@ tools_enabled:
     - libpipeline
     - libtool
     - linux
+    - linux_conf
     - m4
     - make
     - man_db
@@ -348,6 +396,11 @@ tools_list:
         url: https://www.kernel.org/pub/linux/kernel/v6.x/linux-{VERSION}.tar.xz
         patch: false
         checksum: f91621912cd58ac6d4128d4057980e7d
+    linux_conf:
+        version: 6.1.11
+        url: https://www.enthix.net/SplashOS/downloads/source-packages/kernel/.config
+        patch: false
+        checksum: acd50efea9472f9e1ae7f03c648587e0
     m4:
         version: 1.4.19
         url: https://ftp.gnu.org/gnu/m4/m4-{VERSION}.tar.xz
