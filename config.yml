@@ -543,7 +543,7 @@ tools_list:
         checksum: 884250fd2a8a55f6322900ad4ab94d7b
     util_linux:
         version: 2.38.1
-        url: https://www.kernel.org/pub/linux/utils/util-linux/v{VERSION}/util-linux-{VERSION}.tar.xz
+        url: https://www.kernel.org/pub/linux/utils/util-linux/v2.38/util-linux-{VERSION}.tar.xz
         patch: false
         checksum: cd11456f4ddd31f7fbfdd9488c0c0d02
     vim:
