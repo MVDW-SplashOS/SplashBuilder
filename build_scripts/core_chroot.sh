@@ -46,4 +46,5 @@ cat << EOF | sudo chroot "$splash_partition_root" /usr/bin/env -i HOME=/root TER
 ./prepare_chroot.sh
 EOF
 
-
+echo "------------------------"
+echo "SplashOS has been fully build!"
