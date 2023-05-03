@@ -2,7 +2,9 @@
 
 make mrproper
 make defconfig
-make menuconfig #TODO: make a custom config file you can wget
+
+cp /sources/.config .
+#make menuconfig #TODO: make a custom config file you can wget
 
 make
 make modules_install
