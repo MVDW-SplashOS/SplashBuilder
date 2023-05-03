@@ -61,7 +61,6 @@ bash -e /splash_builder/linux.sh "linux-${config_tools_list__linux__version}.tar
 rm -rf /tmp/*
 find /usr/lib /usr/libexec -name \*.la -delete
 find /usr -depth -name $(uname -m)-splashos-linux-gnu\* | xargs rm -rf
-userdel -r tester
 
 echo "---------------------------"
 echo "Build part 2/2 has been finished, please configure the system by running './configure_chroot.sh'"
