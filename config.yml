@@ -400,7 +400,7 @@ tools_list:
         version: 6.1.11
         url: https://www.enthix.net/SplashOS/downloads/source-packages/kernel/.config
         patch: false
-        checksum: 0a6d7dfc882d16a70c2c988b09b94667
+        checksum: 47379514e80add8dcbbb6200dfc68f9a
     m4:
         version: 1.4.19
         url: https://ftp.gnu.org/gnu/m4/m4-{VERSION}.tar.xz
