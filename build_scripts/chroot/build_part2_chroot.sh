@@ -57,11 +57,12 @@ bash -e /splash_builder/utillinux-pass-2.sh "util-linux-${config_tools_list__uti
 bash -e /splash_builder/e2fsprogs.sh "e2fsprogs-${config_tools_list__e2fsprogs__version}.tar.gz"
 bash -e /splash_builder/linux.sh "linux-${config_tools_list__linux__version}.tar.xz"
 
+source /config_chroot.sh
+
 # Cleanup system
 rm -rf /tmp/*
 find /usr/lib /usr/libexec -name \*.la -delete
 find /usr -depth -name $(uname -m)-splashos-linux-gnu\* | xargs rm -rf
 
-echo "---------------------------"
-echo "Build part 2/2 has been finished, please configure the system by running './configure_chroot.sh'"
+
 
