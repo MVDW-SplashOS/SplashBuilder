@@ -131,6 +131,7 @@ tools_enabled:
     - mpc
     - mpfr
     - ncurses
+    - neofetch
     - ninja
     - openssl
     - patch
@@ -446,6 +447,11 @@ tools_list:
         url: https://invisible-mirror.net/archives/ncurses/ncurses-{VERSION}.tar.gz
         patch: false
         checksum: 5a62487b5d4ac6b132fe2bf9f8fad29b
+    neofetch:
+        version: 7.1.0
+        url: https://codeload.github.com/dylanaraps/neofetch/tar.gz/7.1.0
+        patch: https://www.enthix.net/SplashOS/downloads/patches/neofetch/neofetch.patch
+        checksum: 37ba9026fdd353f66d822fdce16420a8
     ninja:
         version: 1.11.1
         url: https://github.com/ninja-build/ninja/archive/v{VERSION}/ninja-{VERSION}.tar.gz

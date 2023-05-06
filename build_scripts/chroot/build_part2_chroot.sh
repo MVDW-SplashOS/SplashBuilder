@@ -55,6 +55,7 @@ bash -e /splash_builder/mandb.sh "man-db-${config_tools_list__man_db__version}.t
 bash -e /splash_builder/procpsng.sh "procps-ng-${config_tools_list__procps_ng__version}.tar.xz"
 bash -e /splash_builder/utillinux-pass-2.sh "util-linux-${config_tools_list__util_linux__version}.tar.xz"
 bash -e /splash_builder/e2fsprogs.sh "e2fsprogs-${config_tools_list__e2fsprogs__version}.tar.gz"
+bash -e /splash_builder/neofetch.sh "neofetch-${config_tools_list__neofetch__version}.tar.gz"
 bash -e /splash_builder/linux.sh "linux-${config_tools_list__linux__version}.tar.xz"
 
 source /config_chroot.sh
