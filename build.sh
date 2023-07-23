@@ -9,7 +9,8 @@
 #  
 
 # Include dependency's
-source ./build_scripts/functions/color.sh
+source ./build_scripts/utils/color.sh
+source ./build_scripts/utils/echo.sh
 
 set -e
 
@@ -24,7 +25,7 @@ then
 fi
 
 # Print SplashOS builder info
-source ./build_scripts/functions/print_logo.sh
+source ./build_scripts/utils/print_logo.sh
 printf "\n\n"
 
 # Notify user its safer to run in vm
@@ -64,7 +65,7 @@ export LC_ALL=C
 # Include and parse yaml script
 export yaml_file=./config.yml
 export yaml_prefix="config_"
-source ./build_scripts/functions/parse_yaml.sh
+source ./build_scripts/utils/parse_yaml.sh
 create_variables 
 
 #source ./build_scripts/core_prepare.sh
@@ -73,6 +74,6 @@ create_variables
 source ./build_scripts/core_chroot.sh
 
 
-echo "------------------------"
+separator
 echo "SplashOS has been fully build!"
 

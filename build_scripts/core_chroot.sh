@@ -14,7 +14,7 @@ echo ${SPLASHOS_TGT:?}
 
 # Copy Required scripts to the Chroot Enviroment
 cp -r ./build_scripts/chroot/* $splash_partition_root
-cp -r ./build_scripts/functions/parse_yaml.sh $splash_partition_root/splash_builder
+cp -r ./build_scripts/utils/parse_yaml.sh $splash_partition_root/splash_builder
 cp -r ./config.yml $splash_partition_root
 
 # Copy sources directory to Chroot enviroment

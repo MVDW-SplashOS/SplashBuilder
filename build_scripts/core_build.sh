@@ -21,7 +21,7 @@ export DIST_ROOT=$(pwd)
 #
 
 
-source ./build_scripts/functions/reset_enviroment.sh
+source ./build_scripts/utils/reset_enviroment.sh
 # -------------------------------------------------------------
 #
 #      STEP 2: Compiling a cross-toolchain
