@@ -29,4 +29,6 @@ useradd -D --gid 999
 sed -i '/MAIL/s/yes/no/' /etc/default/useradd
 
 
+passwd root
+
 . /splash_builder/inc-end.sh $1 $(basename $0)

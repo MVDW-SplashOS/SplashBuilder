@@ -67,6 +67,29 @@ output_path: .
 
 #############################
 #                           #
+#       BUILD SECTION       #
+#                           #
+#############################
+
+# Using precompiled binaries instead of fully compiling from source.
+# Setting this on true will result in faster building
+build_useprecompiled: false
+
+# Build target for spesific architecture
+# Choice the following options:
+#    - amd64 (recommended): For x86_64 cpu's
+#    - arm64: For ARM cpu's
+build_arch: amd64
+
+# The edition configuration used.
+# Choice the following options:
+#     - molecule: a minimal edition that is used as base for any other edition, molecule alone can be used for IOT devices.
+#     - desktop: Designed for your average non-technical user, uses GNOME shell with custom theme.
+build_edition: molecule
+
+
+#############################
+#                           #
 #       TOOLS SECTION       #
 #                           #
 #############################
@@ -133,6 +156,7 @@ tools_enabled:
     - ncurses
     - neofetch
     - ninja
+    - openrc # Testing
     - openssl
     - patch
     - perl
@@ -457,6 +481,11 @@ tools_list:
         url: https://github.com/ninja-build/ninja/archive/v{VERSION}/ninja-{VERSION}.tar.gz
         patch: false
         checksum: 32151c08211d7ca3c1d832064f6939b0
+    openrc:
+        version: 0.47.1
+        url: https://github.com/OpenRC/openrc/archive/{VERSION}/openrc-{VERSION}.tar.gz
+        patch: false
+        checksum: 6694165dd755193ac0826db008e87bfa
     openssl:
         version: 3.0.8
         url: https://www.openssl.org/source/openssl-{VERSION}.tar.gz

@@ -49,6 +49,7 @@ bash -e /splash_builder/texinfo-pass-2.sh "texinfo-${config_tools_list__texinfo_
 bash -e /splash_builder/vim.sh "vim-${config_tools_list__vim__version}.tar.xz"
 bash -e /splash_builder/markupsafe.sh "MarkupSafe-${config_tools_list__markupsafe__version}.tar.gz"
 bash -e /splash_builder/jinja2.sh "Jinja2-${config_tools_list__jinja2__version}.tar.gz"
+#bash -e /splash_builder/openrc.sh "openrc-${config_tools_list__openrc__version}.tar.gz"
 bash -e /splash_builder/systemd.sh "systemd-${config_tools_list__systemd__version}.tar.gz"
 bash -e /splash_builder/dbus.sh "dbus-${config_tools_list__dbus__version}.tar.xz"
 bash -e /splash_builder/mandb.sh "man-db-${config_tools_list__man_db__version}.tar.xz"

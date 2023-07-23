@@ -7,6 +7,8 @@
 #
 # This tool is made to create a full SplashOS install.
 #  
+
+
 echo ${splash_partition_root:?}
 echo ${SPLASHOS_TGT:?}
 
