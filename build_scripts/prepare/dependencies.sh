@@ -6,25 +6,19 @@ chmod -v a+wt ./sources
 export DOWNLOAD_RETRYS=0
 export DOWNLOAD_RETRYS_MAX=3
 
-# downloading all required tools
-for TOOL in ${config_tools_enabled_[*]}; do
-	eval "TOOL_VERSION=\${config_tools_list__${TOOL}__version}"
-	eval "TOOL_URL=\${config_tools_list__${TOOL}__url/\{VERSION\}/"$TOOL_VERSION"}"
-	eval "TOOL_URL=\${TOOL_URL/\{VERSION\}/"$TOOL_VERSION"}" # if there is a 2nd version string in the url(too lazy for a propper fix)
-	eval "TOOL_PATCH=\${config_tools_list__${TOOL}__patch/\{VERSION\}/"$TOOL_VERSION"}"
-	eval "TOOL_MD5=\${config_tools_list__${TOOL}__checksum}"
 
-	bn=$(basename $TOOL_URL)
+# Download sources
+wget -q https://www.enthix.net/SplashOS/downloads/configs/edition-packages/${config_release_version}/${config_build_edition}.yml -O ./edition-sources.yml
+export yaml_file=./edition-sources.yml
+export yaml_prefix="config_"
+source ./build_scripts/utils/parse_yaml.sh
+create_variables 
 
-	if ! test -f ./input/$bn; then
-		download_tool $TOOL $TOOL_VERSION
-	fi
 
-done
 
 download_tool() {
 	rm -rf "./input/$bn"
-	wget -q https://www.enthix.net/SplashOS/downloads/source-packages/${TOOL}/${TOOL}-${TOOL_VERSION}.tar.xz -O ./input/${TOOL}/${TOOL}-${TOOL_VERSION}.tar.xz
+	wget -q https://www.enthix.net/SplashOS/downloads/source-packages/${TOOL}/${TOOL}-${TOOL_VERSION}.tar.xz -O ./sources/${TOOL}-${TOOL_VERSION}.tar.xz
 	echo_ok "Downloaded package \e[1;37m${TOOL}\e[0m Successfully."
 }
 
@@ -44,3 +38,18 @@ check_tool() {
 	fi
 
 }
+
+# downloading all required tools
+for TOOL in ${config_tools_enabled_[*]}; do
+	eval "TOOL_VERSION=\${config_tools_list__${TOOL}__version}"
+	eval "TOOL_URL=\${config_tools_list__${TOOL}__url/\{VERSION\}/"$TOOL_VERSION"}"
+	eval "TOOL_URL=\${TOOL_URL/\{VERSION\}/"$TOOL_VERSION"}" # if there is a 2nd version string in the url(too lazy for a propper fix)
+	eval "TOOL_PATCH=\${config_tools_list__${TOOL}__patch/\{VERSION\}/"$TOOL_VERSION"}"
+	eval "TOOL_MD5=\${config_tools_list__${TOOL}__checksum}"
+
+
+	if ! test -f ./sources/${TOOL}-${TOOL_VERSION}.tar.xz; then
+		download_tool $TOOL $TOOL_VERSION
+	fi
+
+done

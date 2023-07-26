@@ -1,6 +1,5 @@
 . /splash_builder/inc-start.sh $1 $(basename $0)
 
-patch -Np1 -i ../coreutils-9.1-i18n-1.patch
 
 autoreconf -fiv
 FORCE_UNSAFE_CONFIGURE=1 ./configure \

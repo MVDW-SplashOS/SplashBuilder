@@ -2,7 +2,6 @@
 
 unset {C,CPP,CXX,LD}FLAGS
 
-patch -Np1 -i ../grub-2.06-upstream_fixes-1.patch
 
 ./configure --prefix=/usr          \
             --sysconfdir=/etc      \

@@ -68,9 +68,8 @@ export yaml_prefix="config_"
 source ./build_scripts/utils/parse_yaml.sh
 create_variables 
 
-#source ./build_scripts/core_prepare.sh
-#source ./build_scripts/core_build.sh
-
+source ./build_scripts/core_prepare.sh
+source ./build_scripts/core_build.sh
 source ./build_scripts/core_chroot.sh
 
 

@@ -9,7 +9,7 @@ tar -xf "../mpfr-${config_tools_list__mpfr__version}.tar.xz"
 mv -vn "mpfr-${config_tools_list__mpfr__version}" mpfr
 tar -xf "../gmp-${config_tools_list__gmp__version}.tar.xz"
 mv -vn "gmp-${config_tools_list__gmp__version}" gmp
-tar -xf "../mpc-${config_tools_list__mpc__version}.tar.gz"
+tar -xf "../mpc-${config_tools_list__mpc__version}.tar.xz"
 mv -vn "mpc-${config_tools_list__mpc__version}" mpc
 
 

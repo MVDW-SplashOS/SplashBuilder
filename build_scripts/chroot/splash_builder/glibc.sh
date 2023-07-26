@@ -1,7 +1,5 @@
 . /splash_builder/inc-start.sh $1 $(basename $0)
 
-patch -Np1 -i ../glibc-2.37-fhs-1.patch
-
 sed '/width -=/s/workend - string/number_length/' \
     -i stdio-common/vfprintf-process-arg.c
     
@@ -96,7 +94,7 @@ rpc: files
 EOF
 
 
-tar -xf ../../tzdata2022g.tar.gz
+tar -xf ../../tzdata-2022g.tar.xz --strip-components=1
 
 ZONEINFO=/usr/share/zoneinfo
 mkdir -pv $ZONEINFO/{posix,right}

@@ -8,7 +8,7 @@
 release_name: SplashOS
 
 # Version of the build 
-release_version: 0.0.1
+release_version: 0.0.1-dev
 
 # Codename for this build
 release_codename: Kokomi

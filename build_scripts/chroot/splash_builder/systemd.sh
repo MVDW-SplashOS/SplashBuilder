@@ -1,6 +1,5 @@
 . /splash_builder/inc-start.sh $1 $(basename $0)
 
-patch -Np1 -i ../systemd-252-security_fix-1.patch
 
 sed -i -e 's/GROUP="render"/GROUP="video"/' \
        -e 's/GROUP="sgx", //' rules.d/50-udev-default.rules.in
