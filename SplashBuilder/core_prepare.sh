@@ -26,18 +26,18 @@
 # -------------------------------------------------------------
 
 # Step 1.0 - Check, install and configure host system
-source ./build_scripts/prepare/system_requirements.sh
+source ./SplashBuilder/prepare/system_requirements.sh
 
 # Step 1.1 - Make partitions
-source ./build_scripts/prepare/partitions.sh
+source ./SplashBuilder/prepare/partitions.sh
 
 # Step 1.2 - Download dependencies
-source ./build_scripts/prepare/dependencies.sh
+source ./SplashBuilder/prepare/dependencies.sh
 
 # Step 1.3 - Create directory layout
-source ./build_scripts/prepare/directory_layout.sh
+source ./SplashBuilder/prepare/directory_layout.sh
 
 # Step 1.4 - Setup bash enviroment
-source ./build_scripts/prepare/modify_enviroment.sh
+source ./SplashBuilder/prepare/modify_enviroment.sh
 
 chmod 777 -R $splash_partition_root
