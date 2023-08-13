@@ -33,6 +33,12 @@ if [ -x "$(command -v apt-get)" ]; then sudo apt-get install binutils bison gawk
 elif [ -x "$(command -v dnf)" ];     then sudo dnf install binutils bison gawk gcc g++ make patch texinfo -y
 else echo "FAILED TO INSTALL PACKAGES: Package manager not found.">&2; fi
 
+if ! [ -f "/usr/bin/yq" ]; then
+	wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq
+	chmod +x /usr/bin/yq
+fi
+
+
 
 echo -n "Binutils: "; ld --version | head -n1 | cut -d" " -f3-
 bison --version | head -n1

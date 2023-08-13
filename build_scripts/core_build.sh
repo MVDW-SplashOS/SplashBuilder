@@ -22,18 +22,62 @@ export DIST_ROOT=$(pwd)
 
 
 source ./build_scripts/utils/reset_enviroment.sh
-# -------------------------------------------------------------
-#
-#      STEP 2: Compiling a cross-toolchain
-#
-# -------------------------------------------------------------
 
 
-source build_scripts/build/binutils-pass-1.sh "binutils-${config_tools_list__binutils__version}.tar.xz"
-source build_scripts/build/gcc-pass-1.sh "gcc-${config_tools_list__gcc__version}.tar.xz"
-source build_scripts/build/linux-headers.sh "linux-${config_tools_list__linux__version}.tar.xz"
-source build_scripts/build/glibc.sh "glibc-${config_tools_list__glibc__version}.tar.xz"
-source build_scripts/build/libstdcpp-pass-1.sh "gcc-${config_tools_list__gcc__version}.tar.xz"
+cleanup(){
+	cd $DIST_ROOT/sources
+	rm -rf manifest.yml
+	rm -rf build
+	rm -rf patch
+	
+	if [ -n "$1" ]; then
+		rm -rf $1
+	fi
+
+}
+
+step_list=()
+declare -A step_list_count
+
+yq eval '.build[] | .package + " " + .buildmode' "${DIST_ROOT}/edition-sources.yml" | while IFS= read -r build_info; do
+
+	cleanup "${package}-${package_version}"
+
+	
+
+	package=$(echo "$build_info" | awk '{print $1}')
+	buildmode=$(echo "$build_info" | awk '{print $2}')
+	package_version=$(yq eval '.packages[] | select(.package == "'"$package"'") | .version' "${DIST_ROOT}/edition-sources.yml")
+
+	step_list+=($package)
+
+
+	cd $DIST_ROOT/sources
+	tar --overwrite -xvf "${package}-${package_version}.tar.xz"
+
+
+	if [[ -z "${step_list_count[$package]}" ]]; then
+		step_list_count[$package]=1
+	else
+		((step_list_count[$package]++))
+	fi
+		
+	
+	echo "-------------------------------------------------------"
+	echo "Processing ${package}(step: ${step_list_count[$package]})"
+	echo "-------------------------------------------------------"
+	sleep 1
+
+	package_build_file=$(yq eval ".build.${step_list_count[$package]}.script" "${DIST_ROOT}/sources/manifest.yml")
+	cd "${package}-${package_version}"
+
+
+	source ../build/${package_build_file}
+
+	cleanup "${package}-${package_version}"
+    
+
+done
 
 
 # -------------------------------------------------------------
