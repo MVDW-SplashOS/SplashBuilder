@@ -70,7 +70,7 @@ create_variables
 
 source ./SplashBuilder/core_prepare.sh
 source ./SplashBuilder/core_build.sh
-source ./SplashBuilder/core_chroot.sh
+#source ./SplashBuilder/core_chroot.sh
 
 
 separator
