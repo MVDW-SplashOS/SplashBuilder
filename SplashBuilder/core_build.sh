@@ -17,5 +17,5 @@ source ./SplashBuilder/utils/reset_enviroment.sh
 
 source ./SplashBuilder/utils/builder.sh
 
-build
+build 0
 

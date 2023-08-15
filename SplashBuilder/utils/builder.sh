@@ -1,3 +1,4 @@
+export builder_currentstep=0
 
 cleanup() {
 	cd $DIST_ROOT/sources
@@ -16,15 +17,18 @@ build() {
 	build_count=$(echo "${build_data}" | yq eval ". | length")
 
 
-	for (( i=0; i<build_count; ++i)); do
+	for (( i=$1; i<build_count; ++i)); do
 	
+		builder_currentstep=$i;
+		
 		cleanup "${package}-${package_version}"
 
 		task=$(echo "${build_data}" | yq eval ".[$i].task")
 
 		
-		if [ "$task" = "exit_buildloop" ]; then
+		if [ "$task" = "next_step" ]; then
 			echo "Exit buildloop."
+			((builder_currentstep++));
 			break
 		elif [ "$task" = "compile" ]; then
 		
@@ -42,6 +46,8 @@ build() {
 		fi
 
 	done
+	
+	
 }
 
 task_compile(){
