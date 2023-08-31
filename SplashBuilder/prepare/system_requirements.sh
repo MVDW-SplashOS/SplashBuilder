@@ -29,9 +29,21 @@ unset MYSH
 # TODO: install when needed, do more checks
 
 # 
-if [ -x "$(command -v apt-get)" ]; then sudo apt-get install binutils bison gawk gcc g++ make patch texinfo libisl-dev wget -y
-elif [ -x "$(command -v dnf)" ];     then sudo dnf install binutils bison gawk gcc g++ make patch texinfo -y
-else echo "FAILED TO INSTALL PACKAGES: Package manager not found.">&2; fi
+if [ -x "$(command -v apt-get)" ]; then
+	# From the package manager
+	sudo apt remove golang # needs to be removed because debian only ships an older version
+	sudo apt install binutils bison gawk gcc g++ make patch texinfo libisl-dev wget -y
+	
+	# Install go lang
+	#rm -rf /usr/local/go
+	#tar -C /usr/local -xzf go1.21.0.linux-amd64.tar.gz
+	
+	
+elif [ -x "$(command -v dnf)" ]; then
+	sudo dnf install binutils bison gawk gcc g++ make patch texinfo -y
+else
+	echo "FAILED TO INSTALL PACKAGES: Package manager not found.">&2;
+fi
 
 if ! [ -f "/usr/bin/yq" ]; then
 	wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq

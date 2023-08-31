@@ -14,7 +14,7 @@ echo ${SPLASHOS_TGT:?}
 
 # Copy Required scripts to the Chroot Enviroment
 cp -r ./SplashBuilder/chroot/* $splash_partition_root
-cp -r ./SplashBuilder/utils/parse_yaml.sh $splash_partition_root/splash_builder
+cp -r ./SplashBuilder/utils/* $splash_partition_root/splash_builder
 cp -r ./config.yml $splash_partition_root
 cp -r ./edition-sources.yml $splash_partition_root
 
@@ -49,5 +49,3 @@ cat << EOF | sudo chroot "$splash_partition_root" /usr/bin/env -i HOME=/root TER
 ./prepare_chroot.sh
 EOF
 
-echo "------------------------"
-echo "SplashOS has been fully build!"
