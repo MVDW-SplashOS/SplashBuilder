@@ -18,6 +18,7 @@ SPLASHOS_TGT=$(uname -m)-splash-linux-gnu
 PATH=/usr/bin
 if [ ! -L /bin ]; then PATH=/bin:$PATH; fi
 PATH=$splash_partition_root/tools/bin:$PATH
+PATH=/usr/local/go/bin:$PATH
 CONFIG_SITE=$splash_partition_root/usr/share/config.site
 MAKEFLAGS="-j$(nproc)"
 export splash_partition_root LC_ALL SPLASHOS_TGT PATH CONFIG_SITE MAKEFLAGS
