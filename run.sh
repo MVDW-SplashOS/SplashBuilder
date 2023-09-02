@@ -60,7 +60,8 @@ f_prompt() {
 f_prompt
 
 export LC_ALL=C
-
+export builder_currentstep=0
+export builder_currentstep_env=0
 
 # Include and parse yaml script
 export yaml_file=./config.yml
