@@ -13,6 +13,8 @@ set -e
 export DIST_ROOT=$(pwd)
 
 
+export MAKEFLAGS="-j$(nproc)"
+
 #source ./SplashBuilder/utils/reset_enviroment.sh
 
 cleanup() {
@@ -169,6 +171,14 @@ wheel:x:97:
 users:x:999:
 nogroup:x:65534:
 EOF
+
+	touch /var/log/{btmp,lastlog,faillog,wtmp}
+	chgrp -v utmp /var/log/lastlog
+	chmod -v 664  /var/log/lastlog
+	chmod -v 600  /var/log/btmp
+
+	#reset enviroment
+	find /sources -maxdepth 1 -mindepth 1 -type d -exec rm -rf '{}' \;
 
 }
 
