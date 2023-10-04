@@ -15,8 +15,6 @@ export DIST_ROOT=$(pwd)
 
 export MAKEFLAGS="-j$(nproc)"
 
-#source ./SplashBuilder/utils/reset_enviroment.sh
-
 cleanup() {
 	cd $DIST_ROOT/sources
 	rm -rf manifest.yml
@@ -80,8 +78,8 @@ task_chane_env(){
 	
 cat << EOF | sudo chroot "$splash_partition_root" /usr/bin/env -i HOME=/root TERM="$TERM" PS1='(splash chroot) \u:\w\$ ' PATH=/usr/bin:/usr/sbin /bin/bash --login
 	echo "Builder Current Step:"
-	echo $builder_currentstep
-	 ./core_build.sh env_chroot $builder_currentstep
+	echo $i
+	 ./core_build.sh env_chroot $i
 EOF
 }
 
@@ -183,39 +181,29 @@ EOF
 }
 
 
+# Check where the the build configuration must start
+[ "$1" != "env_chroot" ] && start_pos=0 || start_pos=$2
 
 
-
-if [ "$1" = "env_chroot" ]; then
-	build_data=$(yq eval ".build[${2}].build" "${DIST_ROOT}/edition-sources.yml")
-else
+# Get build data from build configuration file
+if [ "$1" != "env_chroot" ]; then
 	build_data=$(yq eval ".build" "${DIST_ROOT}/edition-sources.yml")
+else
+	build_data=$(yq eval ".build[${start_pos}].build" "${DIST_ROOT}/edition-sources.yml")
 fi
 
 build_count=$(echo "${build_data}" | yq eval ". | length")
 
-echo "Start running build"
-
-
-if [ "$1" = "env_chroot" ]; then
-	seti=0
-else 
-	seti=23
-fi
 	
-for (( i=seti; i<build_count; ++i)); do
-
-	if [ "$1" = "env_chroot" ]; then
-		builder_currentstep_env=$i
-	else 
-		builder_currentstep=$i
-	fi
+# Run Build
+for (( i=$start_pos; i<build_count; ++i)); do
 	
+	# Cleanup the temporarily files
 	cleanup "${package}-${package_version}"
 
+	# Get spesific task
 	task=$(echo "${build_data}" | yq eval ".[$i].task")
 
-	
 	if [ "$task" = "change_enviroment" ]; then
 		enviroment=$(echo "${build_data}" | yq eval ".[$i].enviroment")
 		echo "At the change enviroment step."
@@ -228,7 +216,7 @@ for (( i=seti; i<build_count; ++i)); do
 		fi
 	elif [ "$task" = "setup_chroot" ]; then
 		task_setup_chroot
-	
+
 	elif [ "$task" = "compile" ]; then
 	
 		package=$(echo "${build_data}" | yq eval ".[$i].package")
