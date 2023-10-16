@@ -42,10 +42,16 @@ task_compile(){
 	
 	cd "${package}-${package_version}"
 
-
-	package_build_file=$(yq eval ".build.${buildmode}.script" "${DIST_ROOT}/sources/manifest.yml")
+	package_build=$(yq eval ".build.${buildmode}" "${DIST_ROOT}/sources/manifest.yml")
+	package_build_script=$(echo "${package_build}" | yq eval ".script")
+	package_build_patch=$(echo "${package_build}" | yq eval ".patch")
 	
-	source "../build/${package_build_file}"
+	
+	if [ "${package_build_patch}" != "false" ]; then
+		patch -Np1 -i "../patch/${package_build_patch}"
+	fi
+	
+	source "../build/${package_build_script}"
 
 	cleanup "${package}-${package_version}"
 }
