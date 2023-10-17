@@ -69,25 +69,48 @@ task_chane_env(){
 	# Preparing Virtual Kernel File System
 	mkdir -pv $splash_partition_root/{dev,proc,sys,run}
 
-	mount -v --bind /dev $splash_partition_root/dev
-
-	mount -v --bind /dev/pts $splash_partition_root/dev/pts
-	mount -vt proc proc $splash_partition_root/proc
-	mount -vt sysfs sysfs $splash_partition_root/sys
-	mount -vt tmpfs tmpfs $splash_partition_root/run
-
-
-	if [ -h $splash_partition_root/dev/shm ]; then
-	  mkdir -pv $splash_partition_root/$(readlink $splash_partition_root/dev/shm)
-	else
-	  mount -t tmpfs -o nosuid,nodev tmpfs $splash_partition_root/dev/shm
+	# Check if directories are already mounted before attempting to mount
+	if ! mountpoint -q $splash_partition_root/dev; then
+		mount -v --bind /dev $splash_partition_root/dev
 	fi
+
+	if ! mountpoint -q $splash_partition_root/dev/pts; then
+		mount -v --bind /dev/pts $splash_partition_root/dev/pts
+	fi
+
+	if ! mountpoint -q $splash_partition_root/proc; then
+		mount -vt proc proc $splash_partition_root/proc
+	fi
+
+	if ! mountpoint -q $splash_partition_root/sys; then
+		mount -vt sysfs sysfs $splash_partition_root/sys
+	fi
+
+	if ! mountpoint -q $splash_partition_root/run; then
+		mount -vt tmpfs tmpfs $splash_partition_root/run
+	fi
+	
+	if [ -h $splash_partition_root/dev/shm ]; then
+		mkdir -pv $splash_partition_root/$(readlink $splash_partition_root/dev/shm)
+	elif ! mountpoint -q $splash_partition_root/dev/shm; then
+		mount -t tmpfs -o nosuid,nodev tmpfs $splash_partition_root/dev/shm
+	fi
+	
+	
+	
 	
 cat << EOF | sudo chroot "$splash_partition_root" /usr/bin/env -i HOME=/root TERM="$TERM" PS1='(splash chroot) \u:\w\$ ' PATH=/usr/bin:/usr/sbin /bin/bash --login
 	echo "Builder Current Step:"
 	echo $i
 	./core_build.sh env_chroot $i
 EOF
+
+	umount $splash_partition_root/dev/shm
+	umount $splash_partition_root/run
+	umount $splash_partition_root/sys
+	umount $splash_partition_root/proc
+	umount $splash_partition_root/dev/pts
+	umount $splash_partition_root/dev
 }
 
 
