@@ -245,7 +245,16 @@ for (( i=0; i<build_count; ++i)); do
 		fi
 	elif [ "$task" = "setup_chroot" ]; then
 		task_setup_chroot
-
+		
+	elif [ "$task" = "custom" ]; then
+		commands=$(echo "${build_data}" | yq eval ".[$i].commands")
+		commands_count=$(echo "${commands}" | yq eval ". | length")
+		
+		for (( i2=0; i2<commands_count; ++i2)); do
+			command=$(echo "${commands}" | yq eval ".[$i2]")
+			eval ${command}
+		done
+		
 	elif [ "$task" = "compile" ]; then
 	
 		package=$(echo "${build_data}" | yq eval ".[$i].package")
