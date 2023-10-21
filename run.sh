@@ -70,8 +70,44 @@ source ./SplashBuilder/utils/parse_yaml.sh
 create_variables 
 
 source ./SplashBuilder/core_prepare.sh
+
+
+# Unmount all drives
+if mountpoint -q $splash_partition_root/dev; then
+	umount $splash_partition_root/dev
+fi
+
+if mountpoint -q $splash_partition_root/dev/pts; then
+	umount $splash_partition_root/dev/pts
+fi
+
+if mountpoint -q $splash_partition_root/proc; then
+	umount $splash_partition_root/proc
+fi
+
+if mountpoint -q $splash_partition_root/sys; then
+	umount $splash_partition_root/sys
+fi
+
+if mountpoint -q $splash_partition_root/run; then
+	umount $splash_partition_root/run
+fi
+
+if mountpoint -q $splash_partition_root/dev/shm; then
+	umount $splash_partition_root/dev/shm
+fi
+
+
+
+
+
+
+
+
+
+
+source ./SplashBuilder/utils/reset_enviroment.sh
 source ./SplashBuilder/core_build.sh
-#source ./SplashBuilder/core_chroot.sh
 
 
 separator
