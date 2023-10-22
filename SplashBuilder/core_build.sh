@@ -62,9 +62,6 @@ task_chane_env(){
 	cp -r $DIST_ROOT/SplashBuilder/core_build.sh $splash_partition_root
 	
 	cp -r $DIST_ROOT/sources $splash_partition_root
-	
-	# Change Ownership
-	chown -R root:root $splash_partition_root/{usr,lib,var,etc,bin,sbin,tools,lib64}
 
 	# Preparing Virtual Kernel File System
 	mkdir -pv $splash_partition_root/{dev,proc,sys,run}
