@@ -31,8 +31,8 @@ unset MYSH
 # 
 if [ -x "$(command -v apt-get)" ]; then
 	# From the package manager
-	sudo apt remove golang # needs to be removed because debian only ships an older version
-	sudo apt install binutils bison gawk gcc g++ make patch texinfo libisl-dev wget -y
+	#sudo apt remove golang # needs to be removed because debian only ships an older version
+	sudo apt install binutils bison gawk gcc g++ make patch texinfo libisl-dev wget golang -y
 	
 	# Install go lang
 	#rm -rf /usr/local/go
