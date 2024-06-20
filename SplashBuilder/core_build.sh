@@ -16,8 +16,17 @@ export DIST_ROOT=$(pwd)
 
 export MAKEFLAGS="-j$(nproc)"
 
+join_path() {
+   base_path=${1}
+   sub_path=${2}
+   full_path="${base_path:+$base_path/}$sub_path"
+   full_path=$(realpath ${full_path})
+   echo $full_path
+}
+
+
 cleanup() {
-	cd $DIST_ROOT/sources
+	cd $(join_path $DIST_ROOT sources)
 	rm -rf manifest.yml
 	rm -rf build
 	rm -rf patch
@@ -30,7 +39,7 @@ cleanup() {
 
 
 task_compile(){
-	cd "$DIST_ROOT/sources"
+	cd $(join_path $DIST_ROOT sources)
 
 	tar --overwrite -xvf "${package}-${package_version}.tar.xz"
 
