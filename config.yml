@@ -75,6 +75,11 @@ output_path: .
 # Setting this on true will result in faster building
 build_useprecompiled: false
 
+# Cache-bust downloads from syspkg with ?seed=<timestamp>. Keeps repacked
+# packages propagating immediately despite the Cloudflare cache. Disable
+# (false) only if syspkg sends proper short/no-cache Cache-Control headers.
+download_cachebust: true
+
 # Build target for spesific architecture
 # Choice the following options:
 #    - amd64 (recommended): For x86_64 cpu's

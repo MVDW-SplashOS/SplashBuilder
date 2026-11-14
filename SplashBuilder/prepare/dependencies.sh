@@ -4,24 +4,48 @@ mkdir -p ./sources
 chmod -v a+wt ./sources
 
 
+# Cache-busting seed: one per run. syspkg sits behind Cloudflare, which can
+# serve stale tarballs (stale body AND stale Last-Modified) for a long time.
+# Appending ?seed=<timestamp> makes every request a fresh URL -> CDN cache
+# miss -> the origin's truthful headers/body. wget -N cannot be combined with
+# a changing URL (each seed is a "new" file to it), so the freshness decision
+# is made explicitly with a HEAD request instead. Disable with
+# download_cachebust: false in config.yml.
+SEED=$(date +%s)
+if [ "${config_download_cachebust:-true}" = "false" ]; then
+	cachebust=false
+else
+	cachebust=true
+fi
+
 # Download sources
 if [ $config_build_edition != "custom" ]; then
-	wget -q https://syspkg.splashos.com/configs/edition-packages/${config_release_version}/${config_build_edition}.yml -O ./edition-sources.yml
+	edition_url="https://syspkg.splashos.com/configs/edition-packages/${config_release_version}/${config_build_edition}.yml"
+	$cachebust && edition_url="${edition_url}?seed=${SEED}"
+	wget -q "$edition_url" -O ./edition-sources.yml
 fi
 
 
 download_tool() {
-	rm -rf "./input/$bn"
+	local url="https://syspkg.splashos.com/source-packages/${package}/${package}-${version}.tar.xz"
+	local dest="./sources/${package}-${version}.tar.xz"
+	$cachebust && url="${url}?seed=${SEED}"
 
-	# -N (timestamping) re-downloads a package whenever the copy on syspkg is
-	# newer than the cached one, so repacked/updated packages propagate
-	# automatically. NOTE: syspkg sits behind Cloudflare — if a repacked
-	# package seems to never arrive, the CDN edge is serving a stale copy
-	# (body AND Last-Modified), which defeats -N. Purge the Cloudflare cache
-	# for /source-packages/* after publishing, or set short/no cache TTL.
-	wget -N -q https://syspkg.splashos.com/source-packages/${package}/${package}-${version}.tar.xz -P ./sources
-	if test -f ./sources/${package}-${version}.tar.xz; then
-		echo_ok "Fetched/verified package \e[1;37m${package}($version)\e[0m Successfully."
+	# Skip the body transfer when the origin copy is not newer than the
+	# cached one (HEAD on the seeded URL returns truthful headers)
+	if test -f "$dest"; then
+		lm=$(curl -sI --max-time 30 "$url" | sed -n 's/^[Ll]ast-[Mm]odified: //p' | tr -d '\r')
+		remote_ts=$(date -d "$lm" +%s 2>/dev/null || echo 0)
+		if [ "$remote_ts" -gt 0 ] && [ "$remote_ts" -le "$(stat -c %Y "$dest")" ]; then
+			echo_ok "Package \e[1;37m${package}($version)\e[0m is up to date."
+			return 0
+		fi
+	fi
+
+	# .part then rename so a failed download never leaves a broken tarball
+	wget -q "$url" -O "${dest}.part" && mv "${dest}.part" "$dest"
+	if test -f "$dest"; then
+		echo_ok "Fetched package \e[1;37m${package}($version)\e[0m Successfully."
 	else
 		echo_fail "Failed to download package \e[1;37m${package}($version)\e[0m."
 		exit 1
