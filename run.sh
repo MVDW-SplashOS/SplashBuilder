@@ -77,16 +77,20 @@ export yaml_prefix="config_"
 source ./SplashBuilder/utils/parse_yaml.sh
 create_variables 
 
-source ./SplashBuilder/core_prepare.sh
-
-
-# Unmount all drives
-if mountpoint -q $splash_partition_root/dev; then
-	umount $splash_partition_root/dev
+# Unmount virtual kernel filesystems left over from a previous (interrupted)
+# session BEFORE the prepare phase — core_prepare does a recursive chmod over
+# the build tree, which fails on mounted proc/sys (Operation not permitted)
+# and aborts the build.
+if mountpoint -q $splash_partition_root/dev/shm; then
+	umount $splash_partition_root/dev/shm
 fi
 
 if mountpoint -q $splash_partition_root/dev/pts; then
 	umount $splash_partition_root/dev/pts
+fi
+
+if mountpoint -q $splash_partition_root/dev; then
+	umount $splash_partition_root/dev
 fi
 
 if mountpoint -q $splash_partition_root/proc; then
@@ -101,9 +105,7 @@ if mountpoint -q $splash_partition_root/run; then
 	umount $splash_partition_root/run
 fi
 
-if mountpoint -q $splash_partition_root/dev/shm; then
-	umount $splash_partition_root/dev/shm
-fi
+source ./SplashBuilder/core_prepare.sh
 
 
 

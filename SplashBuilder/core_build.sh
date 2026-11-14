@@ -146,12 +146,11 @@ cat << EOF | sudo chroot "$splash_partition_root" /usr/bin/env -i HOME=/root TER
 	./core_build.sh env_chroot $i ${chroot_resume:-0}
 EOF
 
-	umount $splash_partition_root/dev/shm
-	umount $splash_partition_root/run
-	umount $splash_partition_root/sys
-	umount $splash_partition_root/proc
-	umount $splash_partition_root/dev/pts
-	umount $splash_partition_root/dev
+	# Unmount in reverse order, guarded so an already-unmounted tree or a
+	# busy mount does not abort the build (set -e)
+	for vfs in dev/shm run sys proc dev/pts dev; do
+		mountpoint -q "$splash_partition_root/$vfs" && umount "$splash_partition_root/$vfs"
+	done
 }
 
 

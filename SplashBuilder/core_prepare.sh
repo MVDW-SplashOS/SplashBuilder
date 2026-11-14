@@ -40,4 +40,9 @@ source ./SplashBuilder/prepare/directory_layout.sh
 # Step 1.4 - Setup bash enviroment
 source ./SplashBuilder/prepare/modify_enviroment.sh
 
-chmod 777 -R $splash_partition_root
+# Make the build tree writable. Virtual kernel filesystems (proc, sys, dev,
+# run) are skipped: if a previous session left them mounted, chmod cannot
+# touch their contents (Operation not permitted) and would abort the build.
+find $splash_partition_root -mindepth 1 -maxdepth 1 \
+	! -name proc ! -name sys ! -name dev ! -name run \
+	-exec chmod -R 777 {} +
