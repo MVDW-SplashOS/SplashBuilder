@@ -63,6 +63,14 @@ export LC_ALL=C
 export builder_currentstep=0
 export builder_currentstep_env=0
 
+# Build environment
+# These are normally set in ~/.bashrc (see prepare/modify_enviroment.sh), but
+# that file is only sourced by *interactive* shells, so 'sudo ./run.sh' does
+# not have them. Define them here so they are always present.
+export splash_partition_root=/mnt/splashos
+export SPLASHOS_TGT="$(uname -m)-splash-linux-gnu"
+export CONFIG_SITE="$splash_partition_root/usr/share/config.site"
+
 # Include and parse yaml script
 export yaml_file=./config.yml
 export yaml_prefix="config_"
@@ -106,8 +114,34 @@ fi
 
 
 
-source ./SplashBuilder/utils/reset_enviroment.sh
-source ./SplashBuilder/core_build.sh
+# Ask whether to recover the previous build (if a snapshot exists)
+recover_build=false
+case "$1" in
+	recover) recover_build=true ;;
+esac
+
+if [ "$recover_build" = false ] && [ -f "$splash_partition_root/.build_state" ]; then
+	printf $BIYellow
+	printf "A previous build snapshot was found in $splash_partition_root\n"
+	printf "Recover the build from it instead of starting over? (y/N) "
+	printf $White
+	printf " "
+	read recover_choice
+	case "$recover_choice" in
+		y|Y) recover_build=true ;;
+	esac
+fi
+
+if [ "$recover_build" = true ]; then
+	echo "Recovering previous build..."
+else
+	source ./SplashBuilder/utils/reset_enviroment.sh
+	source ./SplashBuilder/core_build.sh fresh
+fi
+
+if [ "$recover_build" = true ]; then
+	source ./SplashBuilder/core_build.sh recover
+fi
 
 
 separator

@@ -13,6 +13,23 @@ echo "RUNNING BUILD SCRIPT"
 set -e
 export DIST_ROOT=$(pwd)
 
+# Build environment
+# These are normally set in ~/.bashrc (see prepare/modify_enviroment.sh), but
+# that file is only sourced by *interactive* shells, so scripts run with sudo
+# or from the chroot do not have them. If SPLASHOS_TGT is empty, GCC's
+# configure treats the build as native and fails with:
+#   "bootstrapping with --disable-libstdcxx is not supported"
+: "${splash_partition_root:=/mnt/splashos}"
+: "${SPLASHOS_TGT:=$(uname -m)-splash-linux-gnu}"
+export splash_partition_root SPLASHOS_TGT
+
+# Make sure the cross toolchain from step 2 is findable
+if [ -x "$splash_partition_root/tools/bin/gcc" ]; then
+	case ":$PATH:" in
+		*":$splash_partition_root/tools/bin:"*) ;;
+		*) export PATH="$splash_partition_root/tools/bin:$PATH" ;;
+	esac
+fi
 
 export MAKEFLAGS="-j$(nproc)"
 
@@ -41,6 +58,12 @@ cleanup() {
 task_compile(){
 	cd $(join_path $DIST_ROOT sources)
 
+	# Remove leftovers from a previous (interrupted) attempt of this package so
+	# extraction and configure always start from a clean tree
+	if [ -d "${package}-${package_version}" ]; then
+		rm -rf "${package}-${package_version}"
+	fi
+
 	tar --overwrite -xvf "${package}-${package_version}.tar.xz"
 
 	echo "-------------------------------------------------------"
@@ -54,8 +77,18 @@ task_compile(){
 	package_build=$(yq eval ".build.${buildmode}" "${DIST_ROOT}/sources/manifest.yml")
 	package_build_script=$(echo "${package_build}" | yq eval ".script")
 	package_build_patch=$(echo "${package_build}" | yq eval ".patch")
-	
-	
+
+	# Snapshot the build config of this task, so an interrupted build can be
+	# recovered and this task re-run (see 'recover' mode)
+	rm -rf "$snapshot_dir"
+	mkdir -p "$snapshot_dir"
+	cp "${DIST_ROOT}/sources/manifest.yml" "$snapshot_dir/"
+	cp -r "${DIST_ROOT}/sources/build" "$snapshot_dir/build"
+	if [ -d "${DIST_ROOT}/sources/patch" ]; then
+		cp -r "${DIST_ROOT}/sources/patch" "$snapshot_dir/patch"
+	fi
+
+
 	if [ "${package_build_patch}" != "false" ]; then
 		patch -Np1 -i "../patch/${package_build_patch}"
 	fi
@@ -70,7 +103,9 @@ task_chane_env(){
 	cp -r $DIST_ROOT/edition-sources.yml $splash_partition_root
 	cp -r $DIST_ROOT/SplashBuilder/core_build.sh $splash_partition_root
 	
-	cp -r $DIST_ROOT/sources $splash_partition_root
+	# -T merges into an existing sources dir instead of nesting it, so the
+	# chroot can be re-entered when recovering an interrupted build
+	cp -rT $DIST_ROOT/sources $splash_partition_root/sources
 
 	# Preparing Virtual Kernel File System
 	mkdir -pv $splash_partition_root/{dev,proc,sys,run}
@@ -105,10 +140,10 @@ task_chane_env(){
 	
 	
 	
-cat << EOF | sudo chroot "$splash_partition_root" /usr/bin/env -i HOME=/root TERM="$TERM" PS1='(splash chroot) \u:\w\$ ' PATH=/usr/bin:/usr/sbin /bin/bash --login
+cat << EOF | sudo chroot "$splash_partition_root" /usr/bin/env -i HOME=/root TERM="$TERM" PS1='(splash chroot) \u:\w\$ ' PATH=/usr/bin:/usr/sbin SPLASHOS_TGT="$SPLASHOS_TGT" /bin/bash --login
 	echo "Builder Current Step:"
 	echo $i
-	./core_build.sh env_chroot $i
+	./core_build.sh env_chroot $i ${chroot_resume:-0}
 EOF
 
 	umount $splash_partition_root/dev/shm
@@ -218,6 +253,76 @@ EOF
 
 [ "$1" != "env_chroot" ] && start_pos=0 || start_pos=$2
 
+# --- Recovery / checkpointing -------------------------------------------------
+# Progress is checkpointed on the build partition after every successful task:
+#   .build_state     - index of the next task to run (shell-sourceable)
+#   .build_snapshot/ - build config (manifest.yml, build/, patch/) of the task
+#                      that was running, restored when the build is recovered
+# 'core_build.sh recover' (offered by run.sh) continues from the last
+# checkpoint instead of wiping the partition and starting over.
+if [ "$1" = "env_chroot" ]; then
+	# Inside the chroot the build partition root is "/"
+	state_file="/build_state"
+	snapshot_dir="/build_snapshot"
+else
+	state_file="$splash_partition_root/.build_state"
+	snapshot_dir="$splash_partition_root/.build_snapshot"
+fi
+
+case "$1" in
+	env_chroot) edition_file="/edition-sources.yml" ;;
+	*)          edition_file="${DIST_ROOT}/edition-sources.yml" ;;
+esac
+
+save_checkpoint() {
+	# $1 = next top-level task index, $2 = next chroot task index
+	edition_hash=$(md5sum "$edition_file" 2>/dev/null | cut -d' ' -f1)
+	cat > "$state_file" <<EOF
+BUILD_STEP=$1
+CHROOT_STEP=${2:-0}
+SPLASHOS_TGT=$SPLASHOS_TGT
+EDITION_HASH=$edition_hash
+EOF
+}
+
+first_step=0
+chroot_resume=0
+
+if [ "$1" = "env_chroot" ]; then
+	# $3 = optional position inside the chroot task list to resume from
+	first_step=${3:-0}
+elif [ "$1" = "recover" ]; then
+	if [ ! -f "$state_file" ]; then
+		echo "No build snapshot found at $state_file, nothing to recover."
+		echo "Start a fresh build instead."
+		exit 1
+	fi
+
+	expected_tgt="$SPLASHOS_TGT"
+	source "$state_file"
+
+	if [ -n "$expected_tgt" ] && [ "$SPLASHOS_TGT" != "$expected_tgt" ]; then
+		echo "Snapshot was taken for SPLASHOS_TGT=$SPLASHOS_TGT but the current target is $expected_tgt."
+		echo "Remove $state_file to start a fresh build."
+		exit 1
+	fi
+
+	current_hash=$(md5sum "$edition_file" 2>/dev/null | cut -d' ' -f1)
+	if [ -n "$EDITION_HASH" ] && [ -n "$current_hash" ] && [ "$EDITION_HASH" != "$current_hash" ]; then
+		echo "edition-sources.yml changed since the snapshot was taken;"
+		echo "task indexes may no longer match. Remove $state_file to start a fresh build."
+		exit 1
+	fi
+
+	first_step=${BUILD_STEP:-0}
+	chroot_resume=${CHROOT_STEP:-0}
+	echo "Recovering build from task $first_step (chroot step: $chroot_resume)"
+else
+	# Fresh build: discard any previous snapshot
+	rm -rf "$snapshot_dir"
+	save_checkpoint 0 0
+fi
+
 # Get build data from build configuration file
 if [ "$1" != "env_chroot" ]; then
 	build_data=$(yq eval ".build" "${DIST_ROOT}/edition-sources.yml")
@@ -226,9 +331,14 @@ else
 fi
 
 build_count=$(echo "${build_data}" | yq eval ". | length")
+
+if [ "$first_step" -ge "$build_count" ]; then
+	echo "Build already complete, nothing to do."
+	exit 0
+fi
 	
 # Run Build
-for (( i=0; i<build_count; ++i)); do
+for (( i=${first_step}; i<build_count; ++i)); do
 	echo "running loop";
 	
 	# Cleanup the temporarily files
@@ -238,6 +348,20 @@ for (( i=0; i<build_count; ++i)); do
 	task=$(echo "${build_data}" | yq eval ".[$i].task")
 
 	echo "TASK: $task"
+
+	# If the build config for this task is missing (it is removed by cleanup
+	# after every pass), restore it from the snapshot taken when it last ran.
+	# Only restore when the snapshot belongs to the same package, so a
+	# mid-run injected config is never overwritten with a stale one.
+	if [ "$task" = "compile" ] && [ -f "$snapshot_dir/manifest.yml" ] \
+	   && [ ! -f "${DIST_ROOT}/sources/manifest.yml" ]; then
+		task_package=$(echo "${build_data}" | yq eval ".[$i].package" | tr '[:upper:]' '[:lower:]')
+		snapshot_package=$(yq eval '.package' "$snapshot_dir/manifest.yml" | tr '[:upper:]' '[:lower:]')
+		if [ "$task_package" = "$snapshot_package" ]; then
+			echo "Restoring build config for ${task_package} from snapshot..."
+			cp -rT "$snapshot_dir" "${DIST_ROOT}/sources"
+		fi
+	fi
 
 	if [ "$task" = "change_enviroment" ]; then
 		enviroment=$(echo "${build_data}" | yq eval ".[$i].enviroment")
@@ -272,6 +396,13 @@ for (( i=0; i<build_count; ++i)); do
 		echo "Unknown task type '${task}', exiting.."
 		exit
 	
+	fi
+
+	# Checkpoint after every successful pass so the build can be resumed here
+	if [ "$1" = "env_chroot" ]; then
+		save_checkpoint "$start_pos" "$((i+1))"
+	else
+		save_checkpoint "$((i+1))" 0
 	fi
 
 done
