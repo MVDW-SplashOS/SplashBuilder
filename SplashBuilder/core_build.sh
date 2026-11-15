@@ -11,6 +11,9 @@
 echo "RUNNING BUILD SCRIPT"
 
 set -e
+# pipefail: task output is piped through `tee` for logging; without this a
+# failing recipe would hide behind tee's success status.
+set -o pipefail
 export DIST_ROOT=$(pwd)
 
 # Build environment
@@ -40,6 +43,82 @@ join_path() {
    full_path=$(realpath ${full_path})
    echo $full_path
 }
+
+
+# ---------------------------------------------------------------------------
+# Build logging
+#
+#   $splash_partition_root/.build_logs/index.log                     one line per task/run
+#   $splash_partition_root/.build_logs/<pkg>-<ver>-<mode>-<ts>.log   full task output
+#
+# The dot-prefixed directory survives `rm -rf $splash_partition_root/*`
+# (reset_enviroment.sh), and resolves to the same directory in the host phase
+# ($splash_partition_root/.build_logs) and the chroot phase (/.build_logs,
+# because the chroot env passes splash_partition_root=/).
+#
+# Opt-in recipe tracing: run the build with SPLASHBUILDER_DEBUG=1 to add
+# `set -x` to the recipe shell (very verbose, goes to the task log only).
+# ---------------------------------------------------------------------------
+build_log_dir() {
+	join_path "${splash_partition_root:-/}" .build_logs
+}
+
+log_run_start() {
+	local log_dir
+	log_dir=$(build_log_dir)
+	mkdir -p "$log_dir" 2>/dev/null || true
+	echo "[run] start $(date -Ins) mode=${1:-unknown} start_pos=${start_pos:-?} first_step=${first_step:-?} target=${SPLASHOS_TGT:-?} root=${splash_partition_root:-?}" >> "$log_dir/index.log" 2>/dev/null || true
+	prune_build_logs
+}
+
+log_task_start() {
+	# $1=task $2=free-text detail
+	local log_dir
+	log_dir=$(build_log_dir)
+	mkdir -p "$log_dir" 2>/dev/null || true
+	echo "[task] start $(date -Ins) task=$1 $2" >> "$log_dir/index.log" 2>/dev/null || true
+	prune_build_logs
+}
+
+log_task_end() {
+	# $1=task $2=status $3=free-text detail
+	local log_dir
+	log_dir=$(build_log_dir)
+	mkdir -p "$log_dir" 2>/dev/null || true
+	echo "[task] end   $(date -Ins) task=$1 status=$2 $3" >> "$log_dir/index.log" 2>/dev/null || true
+}
+
+prune_build_logs() {
+	# Keep the newest 50 task logs; index.log is never pruned.
+	local log_dir old
+	log_dir=$(build_log_dir)
+	while read -r old; do
+		rm -f -- "$old"
+	done < <(ls -1t "$log_dir"/*.log 2>/dev/null | grep -v '/index\.log$' | tail -n +51)
+}
+
+# On any nonzero exit: record the failing task in index.log and append a
+# system snapshot (memory, pressure, disk) to the task's own log, so an OOM
+# or ENOSPC kill can be ruled in/out from the log alone.
+build_failure_trap() {
+	local status=$?
+	if [ "$status" != 0 ]; then
+		if [ -n "${CURRENT_TASK:-}" ]; then
+			log_task_end "$CURRENT_TASK" "$status" "index=${CURRENT_TASK_INDEX:-?} FAILED"
+		fi
+		if [ -n "${TASK_LOG_FILE:-}" ] && [ -f "$TASK_LOG_FILE" ]; then
+			{
+				echo "[splashbuilder] task FAILED with status $status; system snapshot:"
+				free -m
+				echo "-- memory pressure:"
+				cat /proc/pressure/memory 2>/dev/null || true
+				echo "-- disk:"
+				df -m /
+			} >> "$TASK_LOG_FILE" 2>&1 || true
+		fi
+	fi
+}
+trap 'build_failure_trap' EXIT
 
 
 cleanup() {
@@ -89,11 +168,26 @@ task_compile(){
 	fi
 
 
-	if [ "${package_build_patch}" != "false" ]; then
-		patch -Np1 -i "../patch/${package_build_patch}"
-	fi
-	
-	source "../build/${package_build_script}"
+	# Run patch + recipe in a subshell whose full output is teed to a per-task
+	# log file. pipefail + set -e keep the abort-on-failure behavior identical
+	# to a plain `source`; the EXIT trap (see top) records the failure in
+	# index.log and appends a system snapshot to the task log.
+	TASK_LOG_FILE="$(build_log_dir)/${package}-${package_version}-${buildmode}-$(date +%Y%m%d-%H%M%S).log"
+	mkdir -p "$(build_log_dir)" 2>/dev/null || true
+	echo "[splashbuilder] full task log: $TASK_LOG_FILE"
+
+	(
+		set -e
+		trap 'echo "[splashbuilder] FAILED (status $?) at ${BASH_SOURCE[0]} line ${LINENO:-?}"' ERR
+		if [ "${SPLASHBUILDER_DEBUG:-0}" = "1" ]; then
+			set -x
+		fi
+		if [ "${package_build_patch}" != "false" ]; then
+			patch -Np1 -i "../patch/${package_build_patch}"
+		fi
+
+		source "../build/${package_build_script}"
+	) 2>&1 | tee "$TASK_LOG_FILE"
 
 	cleanup "${package}-${package_version}"
 }
@@ -140,7 +234,7 @@ task_chane_env(){
 	
 	
 	
-cat << EOF | sudo chroot "$splash_partition_root" /usr/bin/env -i HOME=/root TERM="$TERM" PS1='(splash chroot) \u:\w\$ ' PATH=/usr/bin:/usr/sbin SPLASHOS_TGT="$SPLASHOS_TGT" /bin/bash --login
+cat << EOF | sudo chroot "$splash_partition_root" /usr/bin/env -i HOME=/root TERM="$TERM" PS1='(splash chroot) \u:\w\$ ' PATH=/usr/bin:/usr/sbin LC_ALL=C SPLASHOS_TGT="$SPLASHOS_TGT" splash_partition_root=/ /bin/bash --login
 	echo "Builder Current Step:"
 	echo $i
 	./core_build.sh env_chroot $i ${chroot_resume:-0}
@@ -331,6 +425,8 @@ fi
 
 build_count=$(echo "${build_data}" | yq eval ". | length")
 
+log_run_start "${1:-fresh}"
+
 if [ "$first_step" -ge "$build_count" ]; then
 	echo "Build already complete, nothing to do."
 	exit 0
@@ -347,6 +443,12 @@ for (( i=${first_step}; i<build_count; ++i)); do
 	task=$(echo "${build_data}" | yq eval ".[$i].task")
 
 	echo "TASK: $task"
+
+	# Task context for the logging helpers / EXIT trap (see top of file)
+	CURRENT_TASK="$task"
+	CURRENT_TASK_INDEX="$i"
+	TASK_LOG_FILE=""
+	log_task_start "$task" "index=$i"
 
 	# If the build config for this task is missing (it is removed by cleanup
 	# after every pass), restore it from the snapshot taken when it last ran.
@@ -395,6 +497,15 @@ for (( i=${first_step}; i<build_count; ++i)); do
 		echo "Unknown task type '${task}', exiting.."
 		exit
 	
+	fi
+
+	# Reached only on success (a failing task aborts via set -e and the EXIT
+	# trap records it). Package details for compile tasks come from this
+	# iteration's globals.
+	if [ "$task" = "compile" ]; then
+		log_task_end "$task" 0 "index=$i package=$package version=$package_version mode=$buildmode log=$TASK_LOG_FILE"
+	else
+		log_task_end "$task" 0 "index=$i"
 	fi
 
 	# Checkpoint after every successful pass so the build can be resumed here
