@@ -93,6 +93,11 @@ resolve_parentconfig() {
 			echo_fail "Failed to merge parentconfig chain at '$f'."
 			exit 1
 		}
+		# yq >= 4.4x evaluates eval-all expressions once per input document
+		# and emits one result per document (older versions emitted a single
+		# result). Keep only the first document — version-independent.
+		yq eval-all 'select(fi == 0)' "$tmp" > "${tmp}.single"
+		mv "${tmp}.single" "$tmp"
 		mv "$tmp" "$flat_file"
 	done
 
