@@ -117,6 +117,19 @@ target partition (`core_build.sh`, `config.yml`, `edition-sources.yml`,
 `.build_state` and `.build_logs` are kept: the state file makes further reruns
 print "Build already complete" instead of wiping the partition.
 
+## Edition chaining via parentconfig
+
+Edition configs can inherit from a parent (`molecule` ← `distro` ←
+`server`/`workstation`; `bootloader` chains on `molecule` directly). The
+`parentconfig` key is resolved at **fetch time** in
+`prepare/dependencies.sh` (via `utils/resolve_parentconfig.sh`): parents are
+fetched from syspkg recursively and the chain is flattened into a single
+`edition-sources.yml` — root's build list first, child's appended, package
+pins merged with the child winning on duplicates, cycles/missing parents
+abort. `core_build.sh` always sees one flat task list, so checkpoint/recover
+and chroot indexing are unaffected. Edition files live in the `configuration`
+repo (`edition-packages/<release>/<edition>.yml`).
+
 ## Conventions and gotchas learned in practice
 
 - Never rely on `~/.bashrc` for build variables: it is only sourced by
