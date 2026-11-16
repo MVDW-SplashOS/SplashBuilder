@@ -354,9 +354,12 @@ EOF
 # 'core_build.sh recover' (offered by run.sh) continues from the last
 # checkpoint instead of wiping the partition and starting over.
 if [ "$1" = "env_chroot" ]; then
-	# Inside the chroot the build partition root is "/"
-	state_file="/build_state"
-	snapshot_dir="/build_snapshot"
+	# Inside the chroot the build partition root is "/"; the host reads and
+	# writes .build_state/.build_snapshot there, so the dot-names must match
+	# (without them the chroot checkpoints landed in build_state, which the
+	# host's recover logic never looks at).
+	state_file="/.build_state"
+	snapshot_dir="/.build_snapshot"
 else
 	state_file="$splash_partition_root/.build_state"
 	snapshot_dir="$splash_partition_root/.build_snapshot"
@@ -483,7 +486,10 @@ for (( i=${first_step}; i<build_count; ++i)); do
 		
 		for (( i2=0; i2<commands_count; ++i2)); do
 			command=$(echo "${commands}" | yq eval ".[$i2]")
-			eval ${command}
+			# Must be quoted: an unquoted expansion re-joins the command with
+			# spaces, which destroys newlines and breaks multi-line commands
+			# (e.g. heredocs) even when the edition YAML is correct.
+			eval "${command}"
 		done
 		
 	elif [ "$task" = "compile" ]; then
