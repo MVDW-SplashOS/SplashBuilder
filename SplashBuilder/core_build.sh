@@ -513,9 +513,15 @@ for (( i=${first_step}; i<build_count; ++i)); do
 	if [ "$task" = "change_enviroment" ]; then
 		enviroment=$(echo "${build_data}" | yq eval ".[$i].enviroment")
 		echo "At the change enviroment step."
-		
+
 		if [ "$enviroment" = "chroot" ]; then
 			task_chane_env
+			# The recovery resume index (CHROOT_STEP) applies only to the
+			# chroot section the build stopped in. Once that section has
+			# run, any LATER chroot section must start from its own
+			# beginning — otherwise its task list is compared against a
+			# stale index and gets skipped entirely.
+			chroot_resume=0
 		else
 			echo "Unknown enviroment type '${enviroment}', exiting.."
 			exit
