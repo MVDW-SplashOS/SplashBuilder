@@ -365,6 +365,36 @@ else
 	snapshot_dir="$splash_partition_root/.build_snapshot"
 fi
 
+# Final cleanup stage: remove everything the build put on the target
+# partition that is not part of the finished system (LFS does the same when
+# the build is complete: delete the temp toolchain and the build leftovers).
+#
+# Host-side only; runs once after the last task succeeded:
+#   core_build.sh, config.yml, edition-sources.yml, sources/
+#       -> copied in by task_chane_env for the chroot phase
+#   tools/
+#       -> the cross toolchain (LFS temp tools)
+#   .build_snapshot/
+#       -> build config snapshots; BUILD_STEP == build_count at this point,
+#          so the restore logic can never fire again
+# .build_state and .build_logs are deliberately kept: the state file makes a
+# rerun print "Build already complete" instead of wiping the partition, and
+# the logs stay available for diagnostics.
+task_cleanup() {
+	echo "Cleanup: removing build leftovers from $splash_partition_root"
+	local before after
+	before=$(df -m "$splash_partition_root" | awk 'NR==2 {print $3}')
+	rm -rf "$splash_partition_root/core_build.sh" \
+	       "$splash_partition_root/config.yml" \
+	       "$splash_partition_root/edition-sources.yml" \
+	       "$splash_partition_root/sources" \
+	       "$splash_partition_root/tools" \
+	       "$splash_partition_root/.build_snapshot"
+	after=$(df -m "$splash_partition_root" | awk 'NR==2 {print $3}')
+	log_task_end "cleanup" 0 "index=end freed=$((before - after)) MiB"
+	echo "Cleanup: freed $((before - after)) MiB."
+}
+
 case "$1" in
 	env_chroot) edition_file="/edition-sources.yml" ;;
 	*)          edition_file="${DIST_ROOT}/edition-sources.yml" ;;
@@ -431,6 +461,16 @@ build_count=$(echo "${build_data}" | yq eval ". | length")
 log_run_start "${1:-fresh}"
 
 if [ "$first_step" -ge "$build_count" ]; then
+	# The build finished. Make sure the final cleanup ran even when the last
+	# checkpoint was written by an older builder version without the cleanup
+	# stage (idempotent: removes nothing on an already-clean partition).
+	if [ "$1" != "env_chroot" ]; then
+		CURRENT_TASK="cleanup"
+		CURRENT_TASK_INDEX="end"
+		TASK_LOG_FILE=""
+		log_task_start "cleanup" "index=end"
+		task_cleanup
+	fi
 	echo "Build already complete, nothing to do."
 	exit 0
 fi
@@ -522,6 +562,17 @@ for (( i=${first_step}; i<build_count; ++i)); do
 	fi
 
 done
+
+# --- Final cleanup stage (host side only) ------------------------------------
+# Only reached when every task succeeded; a failure aborts earlier via set -e
+# and leaves the state file intact for recovery.
+if [ "$1" != "env_chroot" ]; then
+	CURRENT_TASK="cleanup"
+	CURRENT_TASK_INDEX="end"
+	TASK_LOG_FILE=""
+	log_task_start "cleanup" "index=end"
+	task_cleanup
+fi
 	
 	
 
