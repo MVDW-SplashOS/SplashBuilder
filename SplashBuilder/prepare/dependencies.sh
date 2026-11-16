@@ -20,9 +20,22 @@ fi
 
 # Download sources
 if [ $config_build_edition != "custom" ]; then
+	fetch_edition_config() {
+		# $1 = edition name, $2 = destination file
+		local url="https://syspkg.splashos.com/configs/edition-packages/${config_release_version}/${1}.yml"
+		$cachebust && url="${url}?seed=${SEED}"
+		wget -q "$url" -O "$2"
+	}
+
 	edition_url="https://syspkg.splashos.com/configs/edition-packages/${config_release_version}/${config_build_edition}.yml"
 	$cachebust && edition_url="${edition_url}?seed=${SEED}"
 	wget -q "$edition_url" -O ./edition-sources.yml
+
+	# Edition configs can chain via parentconfig (molecule <- distro <-
+	# server/workstation). Flatten the chain into one task list before
+	# anything reads edition-sources.yml (see the resolver for details).
+	source ./SplashBuilder/utils/resolve_parentconfig.sh
+	resolve_parentconfig "$config_build_edition"
 fi
 
 
