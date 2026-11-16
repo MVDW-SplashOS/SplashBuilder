@@ -26,13 +26,16 @@ export DIST_ROOT=$(pwd)
 : "${SPLASHOS_TGT:=$(uname -m)-splash-linux-gnu}"
 export splash_partition_root SPLASHOS_TGT
 
-# Make sure the cross toolchain from step 2 is findable
-if [ -x "$splash_partition_root/tools/bin/gcc" ]; then
-	case ":$PATH:" in
-		*":$splash_partition_root/tools/bin:"*) ;;
-		*) export PATH="$splash_partition_root/tools/bin:$PATH" ;;
-	esac
-fi
+# Make sure the cross toolchain is findable. Unconditional on purpose: a
+# nonexistent dir on PATH is harmless, and on a FRESH build tools/ is empty
+# at this point — gcc pass1 installs the cross-gcc into it and its recipe
+# immediately invokes $SPLASHOS_TGT-gcc (limits.h step). With the old
+# [ -x tools/bin/gcc ] gate the prepend never fired on fresh builds and
+# gcc pass1 failed with "command not found".
+case ":$PATH:" in
+	*":$splash_partition_root/tools/bin:"*) ;;
+	*) export PATH="$splash_partition_root/tools/bin:$PATH" ;;
+esac
 
 export MAKEFLAGS="-j$(nproc)"
 
