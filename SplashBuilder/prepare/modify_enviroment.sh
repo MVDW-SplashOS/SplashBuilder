@@ -1,7 +1,10 @@
 # Modify enviroment to build SplashOS
 
-mv $HOME/.bash_profile $HOME/.bash_profile.bak
-mv $HOME/.bashrc $HOME/.bashrc.bak
+# Guarded moves: on a re-run the originals were already moved away by a
+# previous build (a plain mv aborts the whole build via set -e). -bv keeps
+# the older .bak instead of destroying it when one already exists.
+[ ! -e $HOME/.bash_profile ] || mv -bv $HOME/.bash_profile $HOME/.bash_profile.bak
+[ ! -e $HOME/.bashrc ] || mv -bv $HOME/.bashrc $HOME/.bashrc.bak
 
 
 cat > $HOME/.bash_profile  << "EOF"
@@ -9,18 +12,21 @@ exec env -i HOME=$HOME TERM=$TERM PS1='\u:\w\$ ' /bin/bash
 EOF
 
 
-cat > $HOME/.bashrc  << "EOF"
+# Unquoted EOF so the CURRENT build root (from config.yml, set by run.sh /
+# partitions.sh) is baked into the file; $ signs that must stay literal for
+# the generated shell code are escaped.
+cat > $HOME/.bashrc  << EOF
 set +h
 umask 022
-splash_partition_root=/mnt/splashos
+splash_partition_root=$splash_partition_root
 LC_ALL=POSIX
-SPLASHOS_TGT=$(uname -m)-splash-linux-gnu
+SPLASHOS_TGT=\$(uname -m)-splash-linux-gnu
 PATH=/usr/bin
-if [ ! -L /bin ]; then PATH=/bin:$PATH; fi
-PATH=$splash_partition_root/tools/bin:$PATH
-PATH=/usr/local/go/bin:$PATH
-CONFIG_SITE=$splash_partition_root/usr/share/config.site
-MAKEFLAGS="-j$(nproc)"
+if [ ! -L /bin ]; then PATH=/bin:\$PATH; fi
+PATH=\$splash_partition_root/tools/bin:\$PATH
+PATH=/usr/local/go/bin:\$PATH
+CONFIG_SITE=\$splash_partition_root/usr/share/config.site
+MAKEFLAGS="-j\$(nproc)"
 export splash_partition_root LC_ALL SPLASHOS_TGT PATH CONFIG_SITE MAKEFLAGS
 EOF
 

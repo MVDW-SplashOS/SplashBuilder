@@ -29,7 +29,16 @@ if [ $config_build_edition != "custom" ]; then
 
 	edition_url="https://syspkg.splashos.com/configs/edition-packages/${config_release_version}/${config_build_edition}.yml"
 	$cachebust && edition_url="${edition_url}?seed=${SEED}"
-	wget -q "$edition_url" -O ./edition-sources.yml
+	if ! wget -q "$edition_url" -O ./edition-sources.yml; then
+		echo_fail "Failed to fetch edition config '\e[1;37m${config_build_edition}\e[0m' for release ${config_release_version} from syspkg (does edition-packages/${config_release_version}/${config_build_edition}.yml exist?)."
+		exit 1
+	fi
+	# A 200 response can still be an error page / empty body; downstream yq
+	# would fail with confusing errors on that, so check the shape up front.
+	if [ ! -s ./edition-sources.yml ] || ! grep -q '^packages:' ./edition-sources.yml; then
+		echo_fail "Fetched edition config '\e[1;37m${config_build_edition}\e[0m' is empty or malformed."
+		exit 1
+	fi
 
 	# Edition configs can chain via parentconfig (molecule <- distro <-
 	# server/workstation). Flatten the chain into one task list before

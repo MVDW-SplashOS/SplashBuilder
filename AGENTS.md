@@ -55,7 +55,11 @@ flowchart TD
 Key environment variables (set in `run.sh` / `core_build.sh`, normally also in
 `~/.bashrc` created by `prepare/modify_enviroment.sh`):
 
-- `splash_partition_root` – target system root (default `/mnt/splashos`)
+- `splash_partition_root` – target system root, taken from the PATH SECTION
+  of `config.yml`: `path_build` is the mount point/build directory, and with
+  `path_type: partition` the builder mounts `path_device` on it
+  (`prepare/partitions.sh`). Default fallback in `core_build.sh` is
+  `/mnt/splashos`.
 - `SPLASHOS_TGT` – cross target triple, e.g. `x86_64-splash-linux-gnu`
 - `CONFIG_SITE` – cached configure results for cross-compilation
 

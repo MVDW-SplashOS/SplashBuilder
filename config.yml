@@ -33,15 +33,15 @@ release_cycle: pre-alpha
 # Choice the following options:
 #   - directory 
 #   - partition (recommended)
-path_type: directory
+path_type: partition
 
 # What partition should be mounted?
 # Note: only required when path_type is set on "partition"
-path_device: /dev/null
+path_device: /dev/vda4
 
 # The path where SplashOS should be build in
 # When path_type is set on the "partition" the "path_device" will be mounted on that location.
-path_build: /mnt/splashos
+path_build: /mnt/bootmanager
 
 
 #############################
@@ -89,5 +89,7 @@ build_arch: amd64
 # The edition configuration used.
 # Choice the following options:
 #     - molecule: a minimal edition that is used as base for any other edition, molecule alone can be used for IOT devices.
-#     - desktop: Designed for your average non-technical user, uses GNOME shell with custom theme.
-build_edition: molecule
+#     - distro: a full SplashOS desktop system (molecule + systemd/dracut/GRUB).
+#     - bootloader: the SplashBootManager edition (LinuxBoot-style boot manager,
+#       molecule + kexec/efibootmgr/rust; no systemd, no initramfs, no GRUB).
+build_edition: bootloader

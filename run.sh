@@ -63,19 +63,35 @@ export LC_ALL=C
 export builder_currentstep=0
 export builder_currentstep_env=0
 
-# Build environment
-# These are normally set in ~/.bashrc (see prepare/modify_enviroment.sh), but
-# that file is only sourced by *interactive* shells, so 'sudo ./run.sh' does
-# not have them. Define them here so they are always present.
-export splash_partition_root=/mnt/splashos
-export SPLASHOS_TGT="$(uname -m)-splash-linux-gnu"
-export CONFIG_SITE="$splash_partition_root/usr/share/config.site"
-
 # Include and parse yaml script
 export yaml_file=./config.yml
 export yaml_prefix="config_"
 source ./SplashBuilder/utils/parse_yaml.sh
-create_variables 
+create_variables
+
+# Build environment
+# These are normally set in ~/.bashrc (see prepare/modify_enviroment.sh), but
+# that file is only sourced by *interactive* shells, so 'sudo ./run.sh' does
+# not have them. Define them here so they are always present.
+#
+# The build target location comes from the PATH SECTION of config.yml:
+#   path_type: directory  -> build in a plain directory (path_build)
+#   path_type: partition  -> mount path_device on path_build, build there
+# (partitions.sh performs the mount; everything downstream uses
+# $splash_partition_root).
+case "${config_path_build:-}" in
+	"")
+		printf $BRed
+		printf "ERROR: "
+		printf $IRed
+		printf "config.yml has no path_build set.\n"
+		exit 2
+		;;
+	*) ;;
+esac
+export splash_partition_root="$config_path_build"
+export SPLASHOS_TGT="$(uname -m)-splash-linux-gnu"
+export CONFIG_SITE="$splash_partition_root/usr/share/config.site"
 
 # Unmount virtual kernel filesystems left over from a previous (interrupted)
 # session BEFORE the prepare phase — core_prepare does a recursive chmod over

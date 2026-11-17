@@ -10,13 +10,17 @@
 
 mapfile -t disks < <(sudo fdisk -l | awk '/^\/dev/ {print $1}')
 
-splash_partition_root_device=/dev/vda4
-splash_partition_root=/mnt/splashos
+# Target locations come from the PATH SECTION of config.yml (parsed by
+# run.sh): path_type "partition" mounts path_device on path_build, path_type
+# "directory" builds directly inside the path_build directory. No mkfs here:
+# the partition is expected to be formatted already (a fresh build wipes it
+# in reset_enviroment.sh anyway).
+splash_partition_root="$config_path_build"
 
 printf $Blue
 
 echo "---------------------------------------------------"
-echo "Please select the partition to build SplashOS on: "
+echo "Partitions available on this system:"
 count_partitions=-1
 
 for line in "${disks[@]}"; do
@@ -24,30 +28,23 @@ for line in "${disks[@]}"; do
 	printf "[${count_partitions}] "
 	printf $line
 	printf "\n"
-	
+
 done
 
-printf $BBlue
-printf "Where should SplashOS be installed on [0-${count_partitions}]?"
 printf $White
-printf " "
 
 
-echo "${disks[2]}";
+if [ "$config_path_type" = "partition" ]; then
+	mkdir -p $splash_partition_root
 
-
-
-#yes | mkfs -v -t ext4 $splash_partition_root_device 
-
-
-mkdir -p $splash_partition_root
-
-if findmnt -rno source $splash_partition_root; then
-	echo "Partition already mounted"
+	if findmnt -rno source $splash_partition_root; then
+		echo "Partition already mounted"
+	else
+		echo "Partition not mounted, mounting $config_path_device on $splash_partition_root..."
+		mount -v $config_path_device $splash_partition_root
+	fi
 else
-	echo "Partition not mounted, mounting..."
-	#mount -v -t ext4 $splash_partition_root_device /mnt/splashos
+	mkdir -p $splash_partition_root
 fi
-
 
 
