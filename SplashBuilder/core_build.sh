@@ -37,7 +37,24 @@ case ":$PATH:" in
 	*) export PATH="$splash_partition_root/tools/bin:$PATH" ;;
 esac
 
-export MAKEFLAGS="-j$(nproc)"
+# One make job per core, but no more than memory allows: the heaviest
+# C++ units (gcc's gimple-match-*.cc / insn-*.cc, later mozjs and rust)
+# need up to ~2 GiB each, and -j$(nproc) on a 12-core/16 GiB machine with
+# no active swap got gcc pass 2 OOM-killed (make "Error 137"). Budget
+# 2 GiB of RAM+swap per job. SPLASH_JOBS overrides the computed value.
+splash_build_jobs() {
+	local cores mem_kib jobs
+	cores=$(nproc)
+	mem_kib=$(awk '/^(MemTotal|SwapTotal):/ {sum += $2} END {print sum + 0}' /proc/meminfo 2>/dev/null)
+	jobs=$cores
+	if [ "${mem_kib:-0}" -gt 0 ]; then
+		local mem_jobs=$(( mem_kib / (2 * 1024 * 1024) ))
+		[ "$mem_jobs" -lt 1 ] && mem_jobs=1
+		[ "$mem_jobs" -lt "$jobs" ] && jobs=$mem_jobs
+	fi
+	echo "${SPLASH_JOBS:-$jobs}"
+}
+export MAKEFLAGS="-j$(splash_build_jobs)"
 
 join_path() {
    base_path=${1}
