@@ -35,7 +35,19 @@ if [ $config_build_edition != "custom" ]; then
 	fi
 	# A 200 response can still be an error page / empty body; downstream yq
 	# would fail with confusing errors on that, so check the shape up front.
-	if [ ! -s ./edition-sources.yml ] || ! grep -q '^packages:' ./edition-sources.yml; then
+	# A valid edition has its own package list and/or a parent to inherit
+	# one from: leaf editions such as `desktop` only set parentconfig and
+	# add build tasks, without a packages: key of their own.
+	edition_shape_ok=false
+	if [ -s ./edition-sources.yml ]; then
+		if grep -q '^packages:' ./edition-sources.yml; then
+			edition_shape_ok=true
+		elif grep -qE '^parentconfig: *[A-Za-z0-9_"-]' ./edition-sources.yml && \
+		     ! grep -qE '^parentconfig: *"?false' ./edition-sources.yml; then
+			edition_shape_ok=true
+		fi
+	fi
+	if [ "$edition_shape_ok" != true ]; then
 		echo_fail "Fetched edition config '\e[1;37m${config_build_edition}\e[0m' is empty or malformed."
 		exit 1
 	fi
@@ -45,6 +57,13 @@ if [ $config_build_edition != "custom" ]; then
 	# anything reads edition-sources.yml (see the resolver for details).
 	source ./SplashBuilder/utils/resolve_parentconfig.sh
 	resolve_parentconfig "$config_build_edition"
+
+	# After flattening, the build needs a package list to download.
+	if [ "$(yq eval '.packages | length' ./edition-sources.yml 2>/dev/null)" = "0" ] || \
+	   [ -z "$(yq eval '.packages | length' ./edition-sources.yml 2>/dev/null)" ]; then
+		echo_fail "Edition '\e[1;37m${config_build_edition}\e[0m' has no packages after resolving its parentconfig chain."
+		exit 1
+	fi
 fi
 
 
