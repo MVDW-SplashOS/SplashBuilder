@@ -37,11 +37,11 @@ path_type: partition
 
 # What partition should be mounted?
 # Note: only required when path_type is set on "partition"
-path_device: /dev/vda4
+path_device: /dev/vda3
 
 # The path where SplashOS should be build in
 # When path_type is set on the "partition" the "path_device" will be mounted on that location.
-path_build: /mnt/bootmanager
+path_build: /mnt/splashos
 
 
 #############################
@@ -89,7 +89,10 @@ build_arch: amd64
 # The edition configuration used.
 # Choice the following options:
 #     - molecule: a minimal edition that is used as base for any other edition, molecule alone can be used for IOT devices.
-#     - distro: a full SplashOS desktop system (molecule + systemd/dracut/GRUB).
+#     - distro: the shared bootable base (molecule + systemd/dracut/GRUB).
+#     - desktop: the immutable desktop. Flatpak is the only package manager,
+#       AppImages are supported. Chain: distro -> desktop-base (immutable +
+#       Flatpak/AppImage) -> desktop-gnome (temporary session) -> desktop.
 #     - bootloader: the SplashBootManager edition (LinuxBoot-style boot manager,
 #       molecule + kexec/efibootmgr/rust; no systemd, no initramfs, no GRUB).
-build_edition: bootloader
+build_edition: desktop
