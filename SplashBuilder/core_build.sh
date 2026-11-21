@@ -431,6 +431,28 @@ EDITION_HASH=$edition_hash
 EOF
 }
 
+# edition_prefix_unchanged OLD NEW BUILD_STEP CHROOT_STEP
+# Succeeds when OLD and NEW define the same top-level tasks before
+# BUILD_STEP and, within task BUILD_STEP, the same chroot tasks before
+# CHROOT_STEP. OLD must be the config the checkpoint was written with.
+edition_prefix_unchanged() {
+	local old=$1 new=$2 step=$3 chroot_step=$4 i
+	[ -f "$old" ] && [ -f "$new" ] || return 1
+	[ "$(md5sum "$old" | cut -d' ' -f1)" = "$EDITION_HASH" ] || return 1
+	for ((i = 0; i < step; i++)); do
+		[ "$(yq -o=json eval ".build[$i]" "$old")" = "$(yq -o=json eval ".build[$i]" "$new")" ] || return 1
+	done
+	# The resumed task itself must still be the same kind of task, and its
+	# completed chroot steps must match one by one.
+	[ "$(yq -o=json eval ".build[$step] | del(.build)" "$old")" = \
+	  "$(yq -o=json eval ".build[$step] | del(.build)" "$new")" ] || return 1
+	for ((i = 0; i < chroot_step; i++)); do
+		[ "$(yq -o=json eval ".build[$step].build[$i]" "$old")" = \
+		  "$(yq -o=json eval ".build[$step].build[$i]" "$new")" ] || return 1
+	done
+	return 0
+}
+
 first_step=0
 chroot_resume=0
 
@@ -455,9 +477,19 @@ elif [ "$1" = "recover" ]; then
 
 	current_hash=$(md5sum "$edition_file" 2>/dev/null | cut -d' ' -f1)
 	if [ -n "$EDITION_HASH" ] && [ -n "$current_hash" ] && [ "$EDITION_HASH" != "$current_hash" ]; then
-		echo "edition-sources.yml changed since the snapshot was taken;"
-		echo "task indexes may no longer match. Remove $state_file to start a fresh build."
-		exit 1
+		# The edition config changed (e.g. a package was added to fix a
+		# failed build). Resuming is still safe when everything that already
+		# ran is unchanged: the top-level tasks before BUILD_STEP and, inside
+		# the task being resumed, the chroot tasks before CHROOT_STEP. The
+		# copy on the partition is the config the snapshot was taken with
+		# (task_chane_env copies it in; verified via EDITION_HASH).
+		old_edition="$splash_partition_root/edition-sources.yml"
+		if ! edition_prefix_unchanged "$old_edition" "$edition_file" "${BUILD_STEP:-0}" "${CHROOT_STEP:-0}"; then
+			echo "edition-sources.yml changed since the snapshot was taken, including"
+			echo "tasks that already ran. Remove $state_file to start a fresh build."
+			exit 1
+		fi
+		echo "edition-sources.yml changed after the resume point; the completed tasks are unchanged, resuming."
 	fi
 
 	first_step=${BUILD_STEP:-0}
