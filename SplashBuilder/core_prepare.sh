@@ -40,9 +40,11 @@ source ./SplashBuilder/prepare/directory_layout.sh
 # Step 1.4 - Setup bash enviroment
 source ./SplashBuilder/prepare/modify_enviroment.sh
 
-# Make the build tree writable. Virtual kernel filesystems (proc, sys, dev,
-# run) are skipped: if a previous session left them mounted, chmod cannot
-# touch their contents (Operation not permitted) and would abort the build.
-find $splash_partition_root -mindepth 1 -maxdepth 1 \
-	! -name proc ! -name sys ! -name dev ! -name run \
-	-exec chmod -R 777 {} +
+# No recursive chmod of the build tree. run.sh requires root and every build
+# step runs as root, so nothing needs the tree to be world-writable. The old
+# `chmod -R 777` ran on every run.sh invocation (recover included) and
+# stripped setuid bits (dbus-daemon-launch-helper, polkit-agent-helper-1, su,
+# passwd), made /etc/shadow world-readable and /etc, /usr, /var
+# world-writable, which breaks polkit, GDM logins and bus activation.
+# Only the build root itself needs to be enterable.
+chmod 755 "$splash_partition_root"
